@@ -1,0 +1,5 @@
+.project {
+  &__list {
+    @include flex(center, space-around);
+  }
+}

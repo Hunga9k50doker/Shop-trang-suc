@@ -1,0 +1,61 @@
+.box {
+  position: relative;
+  background: rgb(167, 125, 125);
+  width: 600px;
+  height: 600px;
+  margin: 5rem 2rem 0 2rem;
+  @include flex(center, center);
+  flex-direction: column;
+  box-shadow: 0 0 0.35rem rgba($black-color, 0.15);
+  overflow: hidden;
+  &__header {
+    flex: 3;
+  }
+  &__body {
+    width: 100%;
+    flex: 1;
+    @include flex(center, space-around);
+  }
+  &__overlay {
+    color: $black-color;
+    background: $third-color;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 50%;
+    box-shadow: 0 0 0.35rem rgba($black-color, 0.3);
+    transition: all 0.5s ease-in;
+    transform: translateY(-200%);
+    opacity: 0;
+    @include flex(flex-start, space-around);
+    flex-direction: column;
+    padding-left: 2rem;
+    &__moreDesc {
+      margin-bottom: 50px;
+      p {
+        font-size: 1rem;
+      }
+    }
+    &__close {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      .btn__close {
+        box-shadow: 0 0 0.35rem rgba($black-color, 0.15);
+        border-radius: 0;
+        background-color: rgb(138, 120, 120);
+        transition: all 0.5s ease-in;
+        &:hover {
+          background-color: $danger-color;
+        }
+      }
+      align-items: flex-end;
+      float: right;
+    }
+  }
+  &__overlay.active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
