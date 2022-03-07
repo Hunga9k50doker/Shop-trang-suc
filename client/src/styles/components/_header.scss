@@ -1,63 +1,30 @@
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
+  background: $primary-color;
+  color: $white-color;
   width: 100%;
-  z-index: 10;
-  height: 5rem;
-  @include flex(center, space-around);
-  &__menu {
-    position: relative;
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
+  font-size: 1.2rem;
+  padding: 0 1.2rem;
+  @include flex(center, space-between);
+  ul {
+    height: 100%;
+    @include flex(center, center);
+    li {
+      height: 100%;
+      @include flex(center, center);
 
-    &:after {
-      content: "";
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transition: all 0.3s ease;
-      transform: translate(-50%, 10px) rotate(0deg);
-      background: $white-color;
-      height: 2px;
-      width: 30px;
-    }
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: 40%;
-      left: 50%;
-      transition: all 0.3s ease;
-      transform: translate(-50%, -10px) rotate(0deg);
-      background: $white-color;
-      height: 2px;
-      width: 30px;
+      p {
+        color: $white-color;
+      }
     }
   }
-  &__menu.active {
-    &:after {
-      content: "";
-      position: absolute;
-      top: 40%;
-      left: 50%;
-      transition: all 0.3s ease;
-      transform: translate(-50%, 0px) rotate(45deg);
-      background: $white-color;
-      height: 2px;
-      width: 30px;
-    }
-    &:before {
-      content: "";
-      position: absolute;
-      bottom: 40%;
-      left: 50%;
-      transition: all 0.3s ease;
-
-      transform: translate(-50%, -8px) rotate(-45deg);
-      background: $white-color;
-      height: 2px;
-      width: 30px;
+  .login,
+  .register {
+    cursor: pointer;
+    &:hover {
+      i,
+      p {
+        color: $second-color;
+      }
     }
   }
 }

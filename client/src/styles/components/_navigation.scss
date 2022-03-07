@@ -1,0 +1,98 @@
+.nav {
+  @include flex(center, space-around);
+  background: $white-color;
+  padding: 1.2rem 4rem;
+  font-size: 1.2rem;
+  &__logo {
+    width: 300px;
+    margin-left: 2rem;
+  }
+  &__right {
+    margin-right: 2rem;
+    i {
+      cursor: pointer;
+      font-size: 1.4rem;
+      margin: 0 5px;
+    }
+  }
+  &__list {
+    flex: 1;
+    @include flex(center, center);
+  }
+  &__item {
+    position: relative;
+    height: 100%;
+    padding: 1rem 1.2rem;
+    &:hover {
+      cursor: pointer;
+      &::after {
+        transform: scaleX(0);
+        transform-origin: center right;
+        background: linear-gradient(to right, $white-color, $primary-color);
+      }
+
+      &::before {
+        transform: scaleX(1);
+        transition-delay: 0.2s;
+        transform-origin: center left;
+        background: linear-gradient(to right, $white-color, $primary-color);
+      }
+      .sub__nav {
+        transform: scaleY(1) translateX(-50%);
+      }
+    }
+    &:after,
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: calc(100% - 1.2rem);
+      height: 2.4px;
+      transition: transform 0.3s ease;
+    }
+    &:after {
+      transform-origin: left center;
+      transform: scaleX(1);
+    }
+    &:before {
+      transform: scaleX(0);
+      transform-origin: center right;
+    }
+    .sub__nav {
+      @include flex(flex-start, center);
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      min-width: 300px;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      padding: 1rem;
+      background: #fff;
+      transition: all 0.3s ease;
+      transform: scaleY(0) translateX(-50%);
+      transform-origin: center top;
+
+      &__title {
+        font-size: 1.1rem;
+        text-align: center;
+        text-overflow: nowrap;
+      }
+      &__item {
+        font-size: 1rem;
+        padding: 0 1rem;
+        min-width: 150px;
+
+        color: $text-color;
+        @include flex(flex-start, center);
+        flex-direction: column;
+        a {
+          margin: 5px 0;
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

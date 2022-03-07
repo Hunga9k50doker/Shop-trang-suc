@@ -1,8 +1,5 @@
 import React from "react";
-export default function Project() {
-  return (
-    <div className="product">
-    Product
-    </div>
-  );
+
+export default function Product() {
+  return <div>Product</div>;
 }

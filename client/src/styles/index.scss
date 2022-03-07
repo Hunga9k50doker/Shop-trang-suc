@@ -1,13 +1,15 @@
 @import "./mixin";
 @import "./variables";
 @import "./base";
-
-@import "./components//mainLayout";
-@import "./components/home";
-@import "./components/contact";
-@import "./components/product";
+@import "../App.scss";
 @import "./components/header";
-@import "./components/menu";
+@import "./components/navigation";
+@import "./components//mainLayout";
 
-@import "./components/button";
-@import "./components/box-item";
+@import "./components/home";
+@import "./components/jewels";
+@import "./components/watches";
+@import "./components/gifts";
+@import "./components/contact";
+
+@import "./components/product";
