@@ -1,0 +1,42 @@
+.card__item {
+  position: relative;
+  margin: 1rem 0;
+  background: $third-color;
+  width: 300px;
+  height: 300px;
+  cursor: pointer;
+  @include flex(center, center);
+  flex-direction: column;
+  &:hover {
+    img {
+      transform: scale(1.2);
+    }
+  }
+  &__header {
+    position: relative;
+    min-height: 60%;
+    flex: 1;
+    @include flex(center, center);
+    img {
+      transform-style: preserve-3d;
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      transform: scale(1);
+      transition: transform 0.3s ease;
+    }
+  }
+  &__body {
+    @include flex(center, center);
+    flex-direction: column;
+    padding-bottom: 1rem;
+  }
+  &__title {
+    font-weight: 300;
+  }
+  &__price {
+    font-style: italic;
+    font-weight: 300;
+    color: $primary-color;
+  }
+}

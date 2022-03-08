@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function Watches() {
-  return <div className="watches">Watches</div>;
+  let [path, setPath] = useState("");
+  path = window.location.pathname;
+  useEffect(() => setPath(), [path]);
+
+  return <div className="watches">{path}</div>;
 }

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/img/logo/DC_Logo_New_opt.png";
-
+import Modal from "../common/Modal";
 const arrNav = [
   {
     nav_title: "Trang chủ",
@@ -15,7 +15,7 @@ const arrNav = [
   },
   {
     nav_title: "Trang sức",
-    path: "",
+    path: "#",
 
     sub_nav: [
       {
@@ -58,7 +58,7 @@ const arrNav = [
   },
   {
     nav_title: "Đồng hồ",
-    path: "",
+    path: "#",
 
     sub_nav: [
       {
@@ -99,7 +99,7 @@ const arrNav = [
   },
   {
     nav_title: "Quà tặng",
-    path: "",
+    path: "#",
     sub_nav: [
       {
         sub_nav_title: "",
@@ -135,6 +135,7 @@ const arrNav = [
 ];
 
 export default function Navigation() {
+  const [active, setActive] = useState(false);
   return (
     <div className={`nav `}>
       <div className="nav__logo">
@@ -170,8 +171,14 @@ export default function Navigation() {
         ))}
       </ul>
       <div className="nav__right">
-        <i className="bx bx-search-alt-2"></i>
-        <i className="bx bx-cart-alt"></i>
+        <div className={`nav__right__item ${active ? "active" : ""}`}>
+          <i className={`bx bx-search-alt-2 `}></i>
+          <Modal />
+        </div>
+        <div className="nav__right__item">
+          <i className="bx bx-cart-alt"></i>
+          {/* <i className={`bx bx-search-alt-2 ${active ? "active" : ""}`}></i> */}
+        </div>
       </div>
     </div>
   );

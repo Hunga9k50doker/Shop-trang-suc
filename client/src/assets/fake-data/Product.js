@@ -1,36 +1,31 @@
-const img_01 = require("../img/dici_banner_1_opt.jpg").default;
+import {
+  product_img_01,
+  product_img_02,
+  product_img_03,
+  product_img_04,
+} from "../img";
 
-const arrProj = [
+const arrPro = [
   {
-    title: "Setsail",
-    img: img_01,
-    path: "/",
-    desc: "Dolore ipsum amet sanctus est dolores nonumy aliquyam et ipsum, sed gubergren labore dolore et sed diam at clita, ipsum.",
-    frontend: "HTML, CSS, JS, ReactJs",
-    backend: "Coming soon",
-    otherDesc:
-      "Kasd kasd amet lorem justo justo dolore elitr. Sanctus sit sadipscing nonumy rebum dolores ea ipsum lorem elitr. Accusam amet.",
+    img: product_img_01,
+    title: "Bông tai vàng 18K đính đá Citrine",
+    price: 12000000,
   },
   {
-    title: "Setsail",
-    img: img_01,
-    path: "/",
-    desc: "Dolore ipsum amet sanctus est dolores nonumy aliquyam et ipsum, sed gubergren labore dolore et sed diam at clita, ipsum.",
-    frontend: "HTML, CSS, JS, ReactJs",
-    backend: "Coming soon",
-    otherDesc:
-      "Kasd kasd amet lorem justo justo dolore elitr. Sanctus sit sadipscing nonumy rebum dolores ea ipsum lorem elitr. Accusam amet.",
+    img: product_img_02,
+    title: "Dây chuyền vàng 18K ",
+    price: 120011000,
   },
   {
-    title: "Setsail",
-    img: img_01,
-    path: "/",
-    desc: "Dolore ipsum amet sanctus est dolores nonumy aliquyam et ipsum, sed gubergren labore dolore et sed diam at clita, ipsum.",
-    frontend: "HTML, CSS, JS, ReactJs",
-    backend: "Coming soon",
-    otherDesc:
-      "Kasd kasd amet lorem justo justo dolore elitr. Sanctus sit sadipscing nonumy rebum dolores ea ipsum lorem elitr. Accusam amet.",
+    img: product_img_03,
+    title: "Nhẫn kim tiền vàng Y 18k",
+    price: 12320000,
+  },
+  {
+    img: product_img_04,
+    title: "Nhẫn vàng trắng 20k đính đá",
+    price: 12350000,
   },
 ];
 
-export default arrProj;
+export default arrPro;

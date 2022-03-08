@@ -1,0 +1,39 @@
+.footer {
+  position: relative;
+  bottom: 0;
+  background: $white-color;
+  padding-top: 2rem;
+  color: $four-color;
+  border-top: 2px solid $third-color;
+  p {
+    font-size: 1rem;
+    color: $text-color;
+  }
+  a {
+    margin: 8px 4px;
+  }
+  &__logo {
+    max-width: 240px;
+  }
+  &__item {
+    &:last-child {
+      margin-bottom: 2rem;
+    }
+  }
+  &__title {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  &__address {
+    font-size: 0.7rem;
+    color: $text-color;
+    margin: 1rem 0;
+  }
+  .copy__right {
+    background: $primary-color;
+    text-align: center;
+    color: $white-color;
+    padding: 8px 0;
+  }
+}

@@ -14,7 +14,6 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  overflow: hidden;
 }
 
 a {
@@ -39,7 +38,6 @@ li {
   display: block;
   margin: 0;
   padding: 0.2rem;
-  height: 100%;
 }
 
 img {
@@ -61,6 +59,14 @@ input {
 .hidden {
   display: none !important;
   transform: scaleY(0);
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($primary-color, 0.5);
 }
 .strong {
   position: relative;
