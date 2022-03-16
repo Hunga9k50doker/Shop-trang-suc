@@ -1,0 +1,72 @@
+.form {
+  position: relative;
+  margin: auto;
+  z-index: 25;
+  &__body {
+    overflow: hidden;
+    height: 50px;
+    .form__input {
+      width: 50vw;
+      outline: none;
+      border: none;
+      border-radius: 0;
+    }
+    .btn {
+      &:hover {
+        background: $second-color;
+      }
+    }
+    .btn__search {
+      border-radius: 0;
+      padding: 12px 8px 8px 8px;
+      color: $white-color;
+      background: $primary-color;
+      font-size: 1.2rem;
+    }
+  }
+  &__render {
+    @include flex(center, center);
+    .card__item {
+      width: 180px;
+      height: 180px;
+      margin: 1rem 4px;
+      padding-top: 2rem;
+      padding-bottom: 1rem;
+    }
+    p {
+      font-size: 0.8rem;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+}
+
+.form__contact {
+  @include flex(center, center);
+  padding: 2rem;
+  flex-direction: column;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  .form__input {
+    border-radius: 4px;
+  }
+  .form__title {
+    color: $white-color;
+    font-size: 1.6rem;
+    text-align: left;
+    // width: 100%;
+  }
+  .btn__submit {
+    background: $primary-color;
+    color: $white-color;
+    border-radius: 4px;
+    height: calc(100% - 7px);
+    margin-left: 8px;
+    i {
+      margin-right: 8px;
+    }
+  }
+}

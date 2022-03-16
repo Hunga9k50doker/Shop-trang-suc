@@ -1,4 +1,10 @@
 .main {
   min-height: 100vh;
-  padding-bottom: 4rem;
+  // padding-bottom: 4rem;
+  background: $white-color;
+}
+.main__admin {
+  background: rgb(243, 210, 239);
+  overflow: hidden;
+  height: 100vh;
 }

@@ -1,5 +1,30 @@
 .product {
+  margin-top: 4rem;
   &__list {
     @include flex(center, space-around);
+  }
+  &__img {
+    @include flex(center, center);
+
+    .product__slide__img {
+      @include flex(center, center);
+      margin: 1rem 2rem;
+      flex-direction: column;
+      img {
+        cursor: pointer;
+        width: 50px;
+        margin: 0.5rem;
+        height: 50px;
+        border: 2px solid $third-color;
+      }
+    }
+    .product__item__img {
+      background: $third-color;
+      width: 300px;
+      height: 300px;
+      img {
+        cursor: pointer;
+      }
+    }
   }
 }

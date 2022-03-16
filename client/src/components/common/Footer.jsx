@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { Link } from "react-router-dom";
 import { logo } from "../../assets/img";
@@ -20,23 +21,23 @@ export default function Footer() {
               <h3 className="footer__title">Về Diamound</h3>
               <li className="footer__item">
                 <i className="bx bx-plus"></i>
-                <Link to="#">Trang chủ</Link>
+                <Link to="/">Trang chủ</Link>
               </li>
               <li className="footer__item">
                 <i className="bx bx-plus"></i>
-                <Link to="#">Trang sức</Link>
+                <Link to="/trang-suc/nhan/">Trang sức</Link>
               </li>{" "}
               <li className="footer__item">
                 <i className="bx bx-plus"></i>
-                <Link to="#">Đồng hồ</Link>
+                <Link to="/dong-ho/gucci/">Đồng hồ</Link>
               </li>{" "}
               <li className="footer__item">
                 <i className="bx bx-plus"></i>
-                <Link to="#">Quà tặng</Link>
+                <Link to="qua-tang/cho-nang/">Quà tặng</Link>
               </li>{" "}
               <li className="footer__item">
                 <i className="bx bx-plus"></i>
-                <Link to="#">Liên hệ</Link>
+                <Link to="/lien-he/">Liên hệ</Link>
               </li>
             </ul>
           </div>
@@ -88,9 +89,15 @@ export default function Footer() {
         </div>
       </div>
       <div className="container-fluid">
-        <div className="row">
-          <div className="copy__right">
-            &copy; Copyright 2022. All rights reserved
+        <div className="row ">
+          <div className="footer__copy">
+            <div className="copy__right">
+              &copy; Copyright 2022. All rights reserved
+            </div>
+            <div className="copy__left">
+              <a href="#"> Privacy Policy</a>
+              <a href="#">Terms & Conditions</a>
+            </div>
           </div>
         </div>
       </div>

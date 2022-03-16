@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
+import AdminLayout from "./components/layout/AdminLayout";
 
 import Home from "./pages/Home";
 import Jewels from "./pages/Jewels";
@@ -8,17 +9,26 @@ import Watches from "./pages/Watches";
 import Gifts from "./pages/Gifts";
 import Contact from "./pages/Contact";
 
+import HomeAdmin from "./pages/admin/Home";
+import OrderAdmin from "./pages/admin/Order";
+import ProductAdmin from "./pages/admin/Product";
+import CustomerAdmin from "./pages/admin/Customer";
+import StatusAdmin from "./pages/admin/Status";
+import SettingAdmin from "./pages/admin/Setting";
+
 import Product from "./pages/Product";
+import Wishlist from "./pages/Wishlist";
+import MyCart from "./pages/MyCart";
+
 import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
     <div>
       <BrowserRouter>
-      
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            <Route extract path="/" element={<Home />}></Route>
+            <Route path="/" element={<Home />}></Route>
             {/* trang suc */}
             <Route path="trang-suc/nhan" element={<Jewels />}></Route>
             <Route path="trang-suc/nhan-cap" element={<Jewels />}></Route>
@@ -52,10 +62,27 @@ export default function App() {
             {/* lien he */}
             <Route path="lien-he/" element={<Contact />}></Route>
             {/* product detail */}
-            <Route path="product" element={<Product />}></Route>
+            <Route path="chi-tiet/:slug" element={<Product />}></Route>
+            {/* cart */}
+            <Route path="gio-hang-cua-ban/" element={<MyCart />}></Route>
+            {/* wishlist */}
+            <Route
+              path="danh-sach-san-pham-yeu-thich/"
+              element={<Wishlist />}
+            ></Route>
+            {/* not found */} <Route path="*" element={<NotFound />}></Route>
           </Route>
-          <Route path="*" element={<NotFound />}>
-            {" "}
+          {/* ====================admin========================== */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={<HomeAdmin />}></Route>
+            <Route path="/admin/don-dat-hang/" element={<OrderAdmin />}></Route>
+            <Route path="/admin/san-pham/" element={<ProductAdmin />}></Route>
+            <Route
+              path="/admin/khach-hang/"
+              element={<CustomerAdmin />}
+            ></Route>
+            <Route path="/admin/trang-thai/" element={<StatusAdmin />}></Route>
+            <Route path="/admin/cai-dat/" element={<SettingAdmin />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

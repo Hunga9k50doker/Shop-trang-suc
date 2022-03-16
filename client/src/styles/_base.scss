@@ -15,7 +15,16 @@ body {
   -ms-user-select: none;
   user-select: none;
 }
-
+table {
+  margin: auto;
+  margin-top: 2rem;
+  td,
+  th {
+    border: 1px solid #ccc;
+    padding: 1rem 2rem;
+    text-align: center;
+  }
+}
 a {
   color: unset;
   text-decoration: none;
@@ -52,10 +61,17 @@ input {
   border-radius: 4px;
 }
 
-// .active {
-//   color: $primary-color;
-// }
-// thanh dọc nằm giữa 2 item vd: login and register
+.selected {
+  color: $primary-color;
+}
+.btn {
+  color: $white-color;
+  background: $black-color;
+  &:hover {
+    color: $white-color;
+    background: $primary-color;
+  }
+}
 .hidden {
   display: none !important;
   transform: scaleY(0);
@@ -64,9 +80,12 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba($primary-color, 0.5);
+  z-index: 20;
+  display: flex;
+  // transition-duration: 0.2s ease;
 }
 .strong {
   position: relative;

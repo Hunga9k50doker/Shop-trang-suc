@@ -4,15 +4,29 @@
 @import "../App.scss";
 @import "./components/header";
 @import "./components/navigation";
-@import "./components//mainLayout";
+@import "./components/mainLayout";
+@import "./components/banner";
 @import "./components/footer";
 
+// scss common
 @import "./components/home";
 @import "./components/jewels";
 @import "./components/watches";
 @import "./components/gifts";
 @import "./components/contact";
 
+//scss admin page
+// @import "./components/";
+
 @import "./components/product";
+@import "./components/wishlist";
+
+
+//scss component
+
 @import "./components/card-item";
+@import "./components/modal";
+@import "./components/forms";
+@import "./components/sidebars";
+
 

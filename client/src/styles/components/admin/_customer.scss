@@ -1,0 +1,25 @@
+.home {
+  &__title {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+    margin: 1rem 0;
+    strong {
+      color: $primary-color;
+    }
+  }
+  &__theme {
+    width: 100%;
+    text-align: center;
+    img {
+      width: 110px;
+      height: 10px;
+      &:nth-child(2) {
+        width: 53px;
+        height: 53px;
+      }
+    }
+  }
+
+}

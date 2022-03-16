@@ -40,3 +40,21 @@
     color: $primary-color;
   }
 }
+
+.card__item__style__01 {
+  background: $white-color;
+  border-radius: 2rem;
+  @include box_shadow(0.15);
+  @include flex(center, center);
+  .card__item__percent {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    .card__item__percent__value {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
