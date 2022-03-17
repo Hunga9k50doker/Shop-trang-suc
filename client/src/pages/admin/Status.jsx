@@ -128,7 +128,6 @@ const StatusAdmin = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Tên tài khoản</td>
                     <td>Tên khách hàng</td>
                     <td>Số điện thoại</td>
                     <td>Tên sản phẩm</td>
@@ -142,7 +141,6 @@ const StatusAdmin = () => {
                   {dataTable_02.map((e, id) => (
                     <tr key={id}>
                       <td>{id}</td>
-                      <td>{e.usename}</td>
                       <td>{e.name_customer}</td>
                       <td>{e.sdt}</td>
                       <td>{e.product_name}</td>

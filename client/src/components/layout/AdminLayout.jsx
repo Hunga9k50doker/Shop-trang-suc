@@ -7,10 +7,10 @@ export default function AdminLayout() {
       <div className="main main__admin">
         <div className="container-fluid">
           <div className="row">
-            <div className="ps-0 col col-xxl-3 col-xl-3 col-md-6 col-sm-12">
+            <div className="ps-0 col col-xxl-3 col-xl-3 col-md-4 col-sm-12">
               <SideBarLeftAdmin />
             </div>
-            <div className="pe-0 col col-xxl-9 col-xl-9 col-md-6 col-sm-12">
+            <div className="pe-0 col col-xxl-9 col-xl-9 col-md-8 col-sm-12">
               <Outlet />
             </div>
           </div>

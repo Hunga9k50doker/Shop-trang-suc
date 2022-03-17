@@ -93,8 +93,8 @@ const SideBarLeftAdmin = () => {
 const SideBarRightAdmin = () => {
   return (
     <div className="sidebar">
-      <div className="sidebar__right__admin">
-        <div className="sidebar__right__item ps-4 pt-4 pe-4">
+      <div className="sidebar__right__admin  pb-4 ">
+        <div className="sidebar__right__item  ps-4 pt-4 pe-4">
           <h5 className="sidebar__item__title">Tổng quan</h5>
           <ul className="item__list">
             {DataOverall.map((e, id) => (

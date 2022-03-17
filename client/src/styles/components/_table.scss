@@ -12,7 +12,18 @@
     font-size: 12px;
     color: $text-color;
   }
+  .btn__add {
+    background: $primary-color;
+    @include box_shadow(0.15);
+    &:hover {
+      background: $second-color;
+    }
+  }
   input {
     @include box_shadow(0.15);
+  }
+  img {
+    width: 50px;
+    height: 50px;
   }
 }

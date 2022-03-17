@@ -126,14 +126,17 @@ const HomeAdmin = () => {
     <div className="home__admin">
       <div className="container p-0">
         <div className="row ">
-          <div className=" col col-xxl-8 col-xl-8 col-md-12 col-sm-12">
+          <div className=" col col-xxl-8 col-xl-8 col-md-6 col-sm-12">
             <div className="account ms-4 p-2 mt-2 mb-4">
               <img src={userAvatar} alt="" />
               <p className="account__title">NH2310</p>
             </div>
             <div className="row">
               {data.map((e, id) => (
-                <div key={id} className="col mb-4 col-xxl-6 col-md-6 col-sm-12">
+                <div
+                  key={id}
+                  className="col mb-4 col-xxl-6 col-md-12 col-sm-12"
+                >
                   <CardStyleOne
                     title={e.title}
                     subtitle={e.subtitle}
@@ -144,7 +147,7 @@ const HomeAdmin = () => {
               ))}
             </div>
             <div className="row">
-              <div className="revenue__month p-2 ">
+              <div className="revenue__month p-2 mb-4 ">
                 <RevenueByMonthsChart />
               </div>
             </div>

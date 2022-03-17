@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../../components/common/Table";
-
+import Button from "../../components/common/Button";
+import { product_img_12 } from "../../assets/img";
 const dataTable_02 = [
   {
     usename: "12e1ew",
@@ -85,7 +86,7 @@ const ProductAdmin = () => {
     <div className="product__admin">
       <div className="container mt-4">
         <div className="row">
-          <div className="col">
+          <div className="col col-xl-12 col-md-12 col-sm-12 ">
             <Table title="Danh sách sản phẩm">
               <input
                 type="text"
@@ -93,16 +94,16 @@ const ProductAdmin = () => {
                 id="search_order"
                 placeholder="Tìm kiếm sản phẩm..."
               />
+              <Button content="Thêm sản phẩm" classNameBtn="ms-4 btn__add" />
               <table className="p-4">
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Tên tài khoản</td>
-                    <td>ID đặt hàng</td>
+                    <td></td>
                     <td>Tên sản phẩm</td>
                     <td>Giá</td>
-                    <td>Thời gian</td>
-                    <td className="col-span-1">Chỉnh sửa</td>
+                    <td>Thời gian cập nhật</td>
+                    <td>Chỉnh sửa</td>
                     <td>Xóa</td>
                   </tr>
                 </thead>
@@ -110,8 +111,9 @@ const ProductAdmin = () => {
                   {dataTable_02.map((e, id) => (
                     <tr key={id}>
                       <td>{id}</td>
-                      <td>{e.usename}</td>
-                      <td>{e.id_order}</td>
+                      <td>
+                        <img src={product_img_12} alt="" />
+                      </td>
                       <td>{e.product_name}</td>
                       <td>{e.price}</td>
                       <td>{e.date}</td>

@@ -12,6 +12,7 @@ import {
   DoughnutController,
 } from "chart.js";
 import Table from "../../components/common/Table";
+import Button from "../../components/common/Button";
 const dataTable_01 = [
   {
     province: "TP. Hồ Chí Minh",
@@ -264,17 +265,21 @@ const OrderAdmin = () => {
                   <div className="col-6">
                     <ul className="table__body__data">
                       <li>
-                        <span ></span>
-                        23,213K</li>
+                        <span></span>
+                        23,213K
+                      </li>
                       <li>
-                        <span ></span>
-                        15,13K</li>
+                        <span></span>
+                        15,13K
+                      </li>
                       <li>
-                        <span ></span>
-                        10,23K</li>
+                        <span></span>
+                        10,23K
+                      </li>
                       <li>
-                        <span ></span>
-                        5,3K</li>
+                        <span></span>
+                        5,3K
+                      </li>
                     </ul>
                   </div>
                   <div className="col-6">
@@ -307,6 +312,7 @@ const OrderAdmin = () => {
                   <td>Tên sản phẩm</td>
                   <td>Giá</td>
                   <td>Thời gian</td>
+                  <td>Xác nhận</td>
                 </tr>
               </thead>
               <tbody>
@@ -319,6 +325,9 @@ const OrderAdmin = () => {
                     <td>{e.product_name}</td>
                     <td>{e.price}</td>
                     <td>{e.date}</td>
+                    <td>
+                      <Button content="Đóng gói" />
+                    </td>
                   </tr>
                 ))}
               </tbody>

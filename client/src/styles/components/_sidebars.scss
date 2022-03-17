@@ -9,6 +9,7 @@
   &__left__admin {
     position: fixed;
     width: 24vw;
+    min-width: 320px;
     left: 0;
     top: 0;
     bottom: 0;
@@ -74,7 +75,7 @@
     }
   }
   &__right__admin {
-    height: 100vh;
+    min-height: 100vh;
     .item__list {
       .item {
         @include flex(center, flex-start);
