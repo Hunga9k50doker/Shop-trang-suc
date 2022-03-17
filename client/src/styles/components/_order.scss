@@ -1,0 +1,38 @@
+.order__admin {
+  .table__body {
+    &__data {
+      font-weight: 500;
+      font-size: 1rem;
+      li {
+        @include flex(center, flex-start);
+        span {
+          margin-right: 8px;
+          display: block;
+          width: 10px;
+          height: 5px;
+          background: #000;
+        }
+        &:first-child {
+          span {
+            background: #098035;
+          }
+        }
+        &:nth-child(2) {
+          span {
+            background: #2bff88;
+          }
+        }
+        &:nth-child(3) {
+          span {
+            background: #2bd2ff;
+          }
+        }
+        &:nth-child(4) {
+          span {
+            background: #fa8bff;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,11 +1,18 @@
 .sidebar {
   background: $white-color;
-  height: 100vh;
+
+  @include box_shadow(0.15);
   &__list {
     width: 100%;
+    height: 100%;
   }
   &__left__admin {
-    height: 100%;
+    position: fixed;
+    width: 24vw;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: $white-color;
     @include flex(center, space-around);
     flex-direction: column;
   }
@@ -67,6 +74,7 @@
     }
   }
   &__right__admin {
+    height: 100vh;
     .item__list {
       .item {
         @include flex(center, flex-start);

@@ -30,6 +30,12 @@
     position: relative;
     height: 100%;
     padding: 1rem 1.2rem;
+    .nav__item__Navlink {
+      color: $black-color;
+    }
+    .nav__item__Navlink.selected {
+      color: $primary-color;
+    }
     &:hover {
       cursor: pointer;
       &::after {

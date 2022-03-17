@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { NavLink, Link } from "react-router-dom";
 
 const arrItemAdmin = [
@@ -59,19 +59,12 @@ const DataOverall = [
   },
 ];
 const SideBarLeftAdmin = () => {
-  // const handleClick = (e) => {
-  //   const itemLinks = document.querySelectorAll(".selected");
-  //   for (let i of itemLinks) {
-  //     i.classList.remove("selected");
-  //   }
-  //   e.target.addEventListener("click", () =>
-  //     e.target.classList.add("selected")
-  //   );
-  // };
   return (
     <div className="sidebar">
       <div className="sidebar__left__admin">
-        <i className="header__icon bx bxs-category-alt"></i>
+        {/* <Link to="/">
+        </Link> */}
+        <i className="header__icon bx bxs-category-alt mt-5 mb-5"></i>
         <ul className="sidebar__list pe-0">
           {arrItemAdmin.map((e, id) => (
             <li key={id} className="sidebar__item slidebar__left__item pe-0">
@@ -79,8 +72,6 @@ const SideBarLeftAdmin = () => {
                 className={({ isActive }) =>
                   isActive ? " selected  p-2 pe-0" : "  p-2 pe-0"
                 }
-                //  exact={true} activeClassName="selected"
-
                 to={e.link}
               >
                 <p className="sidebar__item__icon">
@@ -91,7 +82,7 @@ const SideBarLeftAdmin = () => {
             </li>
           ))}
         </ul>
-        <Link to={"/"} title="Đăng xuất" className="sidebar__item__logout">
+        <Link to={"/"} title="Đăng xuất" className="sidebar__item__logout p-4">
           <i className="bx bx-log-out-circle m-2"></i>
           Đăng xuất
         </Link>

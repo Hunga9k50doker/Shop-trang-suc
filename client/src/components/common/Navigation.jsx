@@ -148,7 +148,17 @@ export default function Navigation() {
         <ul className="nav__list">
           {arrNav.map((e, id) => (
             <li key={id} className="nav__item">
-              <NavLink className="nav__item__Navlink" to={e.path}>
+              <NavLink
+                // className={({ isActive }) =>
+                //   isActive
+                //     ? "nav__item__Navlink selected "
+                //     : " nav__item__Navlink "
+                // }
+                // className="nav__item__Navlink"
+                // activeclassname="selected"
+                to={e.path}
+                // exact
+              >
                 {e.nav_title}
               </NavLink>
               <div
@@ -163,7 +173,13 @@ export default function Navigation() {
                     <h3 className="sub__nav__title">{element.sub_nav_title}</h3>
                     <li className="sub__nav__item">
                       {element.sub_nav_desc.map((ele, ix) => (
-                        <NavLink key={ix} to={ele.path}>
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive ? "selected " : "  "
+                          }
+                          key={ix}
+                          to={ele.path}
+                        >
                           {ele.title}
                         </NavLink>
                       ))}
@@ -174,7 +190,11 @@ export default function Navigation() {
             </li>
           ))}
           <li className="nav__item">
-            <NavLink className="nav__item__Navlink" to={"/admin"}>
+            <NavLink
+              // className={({ isActive }) => (isActive ? " selected " : "  ")}
+              // className="nav__item__Navlink"
+              to={"/admin"}
+            >
               Admin
             </NavLink>
           </li>
@@ -192,7 +212,7 @@ export default function Navigation() {
           >
             <i className="bx bx-heart"></i>
           </Link>
-          <Link to='/gio-hang-cua-ban/' className="nav__right__item">
+          <Link to="/gio-hang-cua-ban/" className="nav__right__item">
             <i className="bx bx-cart-alt"></i>
           </Link>
         </div>

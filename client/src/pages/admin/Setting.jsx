@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const SettingAdmin = () => {
-  return (
-    <div>SettingAdmin</div>
-  )
-}
+  return <div className="setting__admin m-auto">Coming soon!</div>;
+};
 
-export default SettingAdmin
+export default SettingAdmin;
