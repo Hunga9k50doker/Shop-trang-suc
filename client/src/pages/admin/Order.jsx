@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  DoughnutController,
-} from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import Table from "../../components/common/Table";
 import Button from "../../components/common/Button";
+import Modal from "../../components/common/Modal";
+import { FormDetail } from "../../components/common/Forms";
 const dataTable_01 = [
   {
     province: "TP. Hồ Chí Minh",
@@ -130,100 +122,37 @@ const dataTable_02 = [
     date: "23/2/2022 13:03 pm",
   },
 ];
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  DoughnutController,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(ArcElement, Title, Tooltip, Legend);
+
 const OrderAdmin = () => {
-  const revenueByMonths = {
-    labels: [
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "July",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-      "Jan",
-    ],
-    revenuedata: [250, 200, 300, 280, 100, 220, 310, 190, 200, 120, 250, 350],
-  };
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-      },
-      yAxes: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      title: {
-        display: false,
-      },
-    },
-    elements: {
-      bar: {
-        backgroundColor: "#F7CE68",
-        borderRadius: 20,
-        borderSkipped: "bottom",
-      },
-    },
-  };
-
-  const chartData = {
-    // type: "doughnut",
-    labels: revenueByMonths.labels,
-
-    datasets: [
-      {
-        label: "Doanh thu",
-        data: revenueByMonths.revenuedata,
-      },
-    ],
-  };
-
+  const [viewDetail, setViewDetail] = useState(false);
   const dataOrder = {
-    labels: ["Red", "Blue", "Yellow"],
+    labels: ["Trên 20k", "Trên 15k", "Trên 10k", "Trên 5k"],
     datasets: [
       {
-        label: "My First Dataset",
-        data: [300, 50, 100],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-        ],
-        hoverOffset: 4,
+        label: "# of votes",
+        data: [23, 15, 10, 5],
+        backgroundColor: ["#098035", "#2bff88", "#2bd2ff", "#fa8bff"],
+        borderColor: ["rgba(255, 255, 132, 1)"],
+        borderWidth: 1,
       },
     ],
   };
   const config = {
-    type: "bar",
+    type: "dought",
     data: dataOrder,
+    maintainAspectRatio: false,
+
+    legend: {
+      labels: {
+        fontSize: 25,
+      },
+    },
   };
 
+  // useEffect(() => {
+  //   setViewDetail();
+  // }, [viewDetail]);
   return (
     <div className="order__admin">
       <div className="container mt-4">
@@ -282,11 +211,12 @@ const OrderAdmin = () => {
                       </li>
                     </ul>
                   </div>
-                  <div className="col-6">
-                    <Bar
-                      options={chartOptions}
-                      data={chartData}
-                      height={`250px`}
+                  <div className="col col-6 ">
+                    <Doughnut
+                      data={dataOrder}
+                      height={400}
+                      width={600}
+                      options={config}
                     />
                   </div>
                 </div>
@@ -300,7 +230,7 @@ const OrderAdmin = () => {
               type="text"
               name="search_order"
               id="search_order"
-              placeholder="Tìm kiếm đơn đặt hàng,sdt,tên khách hàng,..."
+              placeholder="Tìm kiếm sdt..."
             />
             <table>
               <thead>
@@ -309,10 +239,10 @@ const OrderAdmin = () => {
                   <td>Tên tài khoản</td>
                   <td>Số điện thoại</td>
                   <td>ID đặt hàng</td>
-                  <td>Tên sản phẩm</td>
-                  <td>Giá</td>
+                  <td>Tổng tiền</td>
                   <td>Thời gian</td>
-                  <td>Xác nhận</td>
+                  <td>Chi tiết</td>
+                  <td>Trạng thái</td>
                 </tr>
               </thead>
               <tbody>
@@ -322,11 +252,29 @@ const OrderAdmin = () => {
                     <td>{e.usename}</td>
                     <td>{e.sdt}</td>
                     <td>{e.id_order}</td>
-                    <td>{e.product_name}</td>
                     <td>{e.price}</td>
                     <td>{e.date}</td>
+                    <td
+                      className="view__details"
+                      onClick={(current) =>
+                        current
+                          ? setViewDetail(!viewDetail)
+                          : console.log(current)
+                      }
+                    >
+                      Xem chi tiết
+                      {viewDetail ? (
+                        <Modal>
+                          <FormDetail title={e.id_order}>
+                            <p>adsad</p>
+                          </FormDetail>
+                        </Modal>
+                      ) : (
+                        ""
+                      )}
+                    </td>
                     <td>
-                      <Button content="Đóng gói" />
+                      <Button content="Xác nhận" />
                     </td>
                   </tr>
                 ))}

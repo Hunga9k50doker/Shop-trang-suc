@@ -14,22 +14,22 @@
         }
         &:first-child {
           span {
-            background: #098035;
+            background: $theme-color-order-1;
           }
         }
         &:nth-child(2) {
           span {
-            background: #2bff88;
+            background: $theme-color-order-2;
           }
         }
         &:nth-child(3) {
           span {
-            background: #2bd2ff;
+            background: $theme-color-order-3;
           }
         }
         &:nth-child(4) {
           span {
-            background: #fa8bff;
+            background: $theme-color-order-4;
           }
         }
       }

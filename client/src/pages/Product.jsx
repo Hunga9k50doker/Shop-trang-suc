@@ -28,6 +28,7 @@ export default function Product() {
                   <div className="product__detail">
                     <div className="product__title">{e.title}</div>
                     <p className="product__price">Giá: {e.price} vnd</p>
+                    
                   </div>
                 </div>
               </div>

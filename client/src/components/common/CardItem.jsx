@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
 const CardItem = (props) => {
+
   return (
     <div className="card__item">
+      <i
+        onClick={(e) => e.preventDefault()}
+        className={`card__icon__like bx ${props.like ? "bxs-heart" : "bx-heart"}`}
+      ></i>
       <div className="card__item__header">
         <img src={props.img} alt="" />
       </div>
@@ -30,14 +35,6 @@ const CardStyleOne = (props) => {
           value={props.percent}
           strokeWidth={10}
           styles={buildStyles({
-            // background:
-            //   props.percent < 50
-            //     ? {
-            //         fill: "#3e98c7",
-            //       }
-            //     : {
-            //         fill: "#3398c7",
-            //       },
             pathColor:
               props.percent < 50
                 ? `rgba(62, 152, 199, ${props.percent / 100})`

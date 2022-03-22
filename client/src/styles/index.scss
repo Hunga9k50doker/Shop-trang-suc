@@ -1,7 +1,6 @@
 @import "./mixin";
 @import "./variables";
 @import "./base";
-@import "../App.scss";
 @import "./components/header";
 @import "./components/navigation";
 @import "./components/mainLayout";
@@ -20,12 +19,13 @@
 // @import "./components/";
 
 @import "./components/product";
-@import "./components/wishlist";
 
 //scss component
-
 @import "./components/card-item";
-@import "./components/modal";
 @import "./components/forms";
+@import "./components/accordion";
+@import "./components/filter";
 @import "./components/sidebars";
 @import "./components/table";
+
+@import "../App.scss";

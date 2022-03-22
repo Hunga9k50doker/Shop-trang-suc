@@ -130,10 +130,9 @@ const StatusAdmin = () => {
                     <td>ID</td>
                     <td>Tên khách hàng</td>
                     <td>Số điện thoại</td>
-                    <td>Tên sản phẩm</td>
-                    <td>Giá (Vnđ)</td>
                     <td>Thời gian đặt hàng</td>
                     <td>Trạng thái</td>
+                    <td>Tổng tiền</td>
                     <td>Chi tiết</td>
                   </tr>
                 </thead>
@@ -143,10 +142,9 @@ const StatusAdmin = () => {
                       <td>{id}</td>
                       <td>{e.name_customer}</td>
                       <td>{e.sdt}</td>
-                      <td>{e.product_name}</td>
-                      <td>{e.price}</td>
                       <td>{e.date}</td>
                       <td className="status">{e.status}</td>
+                      <td>123231</td>
                       <td className="view__details">Xem chi tiết</td>
                     </tr>
                   ))}

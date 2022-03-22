@@ -7,3 +7,21 @@
 @mixin box_shadow($alpha) {
   box-shadow: 0 1px 4px rgba(0, 0, 0, $alpha);
 }
+
+@mixin mobile {
+    @media only screen and (max-width: $mobile-width) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+@mixin smallpc {
+    @media only screen and (max-width: $smpc-width) {
+        @content;
+    }
+}

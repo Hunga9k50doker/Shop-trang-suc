@@ -70,3 +70,69 @@
     }
   }
 }
+
+.form__login,
+.form__register {
+  background: $four-color;
+  @include box_shadow(0.2);
+  border-radius: 4px;
+  .form__list {
+    @include flex(center, center);
+    flex-direction: column;
+    width: 100%;
+    .form__item {
+      position: relative;
+      color: $text-color;
+      max-width: 276px;
+      i {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translate(0, -50%);
+        color: $black-color;
+      }
+      input {
+        padding-right: 2rem;
+      }
+      p {
+        color: $text-color;
+        font-size: 12px;
+        text-align: center;
+      }
+      .label__register,
+      .label__login {
+        cursor: pointer;
+        &:hover {
+          color: $primary-color;
+        }
+      }
+      .btn__submit {
+        background: $primary-color;
+        width: 100%;
+        color: $white-color;
+        &:hover {
+          background: $second-color;
+        }
+      }
+    }
+  }
+}
+
+.form__submit {
+  .form__title {
+    color: $black-color;
+  }
+  .form__subtitle {
+    color: $text-color;
+  }
+  input,
+  textarea {
+    border: 1px solid #ccc;
+    border-radius: 2rem;
+    width: 100%;
+    margin: 10px 0;
+  }
+  textarea {
+    padding: 1rem;
+  }
+}

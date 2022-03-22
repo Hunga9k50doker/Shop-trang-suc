@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { to_slug } from "../utils/utils";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
 import { banner_sub_02, product_img_01 } from "../assets/img";
-import arrPro from "../assets/fake-data/Product";
 
 const whitelistData = [
   {
@@ -69,8 +67,8 @@ export default function Wishlist() {
   return (
     <div className="wishlist">
       <Banner img={banner_sub_02} title="Danh sách yêu thích" />
-      <div className="container">
-        <table className="wishlist__table mb-4">
+      <div className="container ">
+        <table className="wishlist__table mb-4" style={{ marginTop: "8rem" }}>
           <thead>
             <tr>
               <th>

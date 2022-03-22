@@ -1,6 +1,30 @@
-.component {
-}
-
 .main {
   color: $text-color;
+}
+
+.wishlist,
+.mycart {
+  .banner__body {
+    left: 50%;
+  }
+  .banner__title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  .wishlist__trash {
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }
+  .last__row {
+    .btn {
+      font-size: 12px;
+    }
+    .wishlist__delete__selected {
+      &:hover {
+        background-color: var(--bs-danger);
+      }
+    }
+  }
 }

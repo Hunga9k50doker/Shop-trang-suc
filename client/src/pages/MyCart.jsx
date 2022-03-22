@@ -8,14 +8,14 @@ import arrPro from "../assets/fake-data/Product";
 export default function MyCart() {
   const [price, setPrice] = useState("122000");
   // const [price, setPrice] = useState();
-  console.log(price);
+  // console.log(price);
   useEffect(() => setPrice(), []);
   const { slug } = useParams();
   return (
-    <div className="wishlist">
+    <div className="mycart">
       <Banner img={banner_sub_02} title="Giỏ Hàng" />
       <div className="container">
-        <table className="wishlist__table">
+        <table className="mycart__table " style={{ marginTop: "8rem" }}>
           <thead>
             <tr>
               <th>
@@ -26,6 +26,7 @@ export default function MyCart() {
               <th>Tên sản phẩm</th>
               <th>Số lượng</th>
               <th>Giá</th>
+              <th>Trạng thái</th>
               <th>Tổng tiền</th>
             </tr>
           </thead>
@@ -45,13 +46,13 @@ export default function MyCart() {
                 <input
                   defaultValue={1}
                   type="number"
-                  min={0}
+                  min={1}
                   max={1000}
                   onChange={(e) => setPrice(e.target.value * price)}
                 />
               </tr>
               <td className="wishlist__price">{price}</td>
-              <td>Còn trong kho</td>
+              <td>Còn hàng</td>
               <td>
                 <Button content="Thêm vào giỏ hàng" />
               </td>

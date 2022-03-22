@@ -8,14 +8,33 @@
   @include flex(center, center);
   flex-direction: column;
   &:hover {
+    .card__icon__like {
+      color: $black-color;
+    }
     img {
       transform: scale(1.2);
+    }
+  }
+  .card__icon__like {
+    // color: $black-color;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    z-index: 60;
+    text-align: right;
+    padding: 5px 5px 0 0;
+    top: 0;
+    right: 0;
+    font-size: 1.2rem;
+    &:hover {
+      color: $primary-color !important;
     }
   }
   &__header {
     position: relative;
     min-height: 60%;
     flex: 1;
+    width: 100%;
     @include flex(center, center);
     img {
       transform-style: preserve-3d;

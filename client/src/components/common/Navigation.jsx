@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../../assets/img/logo/DC_Logo_New_opt.png";
 import Modal from "./Modal";
@@ -137,9 +137,18 @@ const arrNav = [
 
 export default function Navigation() {
   const [active, setActive] = useState(false);
+  const navRef = useRef(null);
+  useEffect(
+    () =>
+      window.addEventListener("scroll", () => {
+        const currentOffsetY = window.pageYOffset;
+        navRef.current.style.top = currentOffsetY > 30 ? "0" : "2.9rem";
+      }),
+    []
+  );
   return (
     <div className="container-fluid">
-      <div className={`nav `}>
+      <div ref={navRef} className={`nav `}>
         <div className="nav__logo">
           <NavLink to="/">
             <img src={logo} alt="" />
@@ -148,19 +157,7 @@ export default function Navigation() {
         <ul className="nav__list">
           {arrNav.map((e, id) => (
             <li key={id} className="nav__item">
-              <NavLink
-                // className={({ isActive }) =>
-                //   isActive
-                //     ? "nav__item__Navlink selected "
-                //     : " nav__item__Navlink "
-                // }
-                // className="nav__item__Navlink"
-                // activeclassname="selected"
-                to={e.path}
-                // exact
-              >
-                {e.nav_title}
-              </NavLink>
+              <NavLink to={e.path}>{e.nav_title}</NavLink>
               <div
                 className={` sub__nav ${
                   e.nav_title === "Trang chủ"

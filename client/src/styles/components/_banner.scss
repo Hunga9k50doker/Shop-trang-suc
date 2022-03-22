@@ -3,7 +3,14 @@
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-
+  top: 5rem;
+  @include smallpc {
+    top: 10rem;
+    .banner__title {
+      margin: 10px;
+      font-size: 1rem;
+    }
+  }
   &__body {
     text-align: center;
     position: absolute;
@@ -19,11 +26,19 @@
       margin: 1.6rem;
       font-size: 2.4rem;
       text-transform: uppercase;
+      @include smallpc {
+        margin: 10px;
+        font-size: 1rem;
+      }
     }
     .banner__subtitle {
       text-transform: uppercase;
       color: $text-color;
       margin-bottom: 2rem;
+      @include smallpc {
+        margin: 0;
+        font-size: 12px;
+      }
     }
     .sub__img {
       img {
@@ -31,12 +46,18 @@
       }
     }
   }
-  &__img {
-    // position: absolute;
-    // top: 50%;
-    // left: 50%;
 
-    // transform: translate(-50%, -50%);
+  &__body:not(.home__banner) {
+    width: 100%;
+    top: unset;
+    left: unset;
+    transform: translate(0, 0);
+    .banner__title {
+      font-size: 2rem;
+      width: 100%;
+      text-align: center;
+      margin: 2rem 0 0 0;
+    }
   }
   .btn__view__more {
     margin-top: 2rem;
@@ -45,6 +66,14 @@
     border-radius: 20px;
     font-size: 0.8rem;
     padding: 10px 20px;
-    
+  }
+  .sub__link {
+    @include flex(center, center);
+    p {
+      @include flex(center, center);
+      i {
+        margin: 0 4px;
+      }
+    }
   }
 }

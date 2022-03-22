@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
-
+import { Filter } from "./Filter";
+import Accordion from "./Accordion";
 const arrItemAdmin = [
   {
     title: "Trang Chủ",
@@ -33,7 +34,34 @@ const arrItemAdmin = [
     icon: "bx bx-cog",
   },
 ];
-
+const arrAccodion = [
+  {
+    title: "Trang sức",
+    subtitle: [
+      {
+        title: "Kim cương",
+      },
+      {
+        title: "Ecz-cz",
+      },
+      { title: "Không đính đá" },
+    ],
+  },
+  {
+    title: "Đồng hồ",
+    subtitle: [{ title: "Gucci" }, { title: "Citizen" }, { title: "Casio" }],
+  },
+  {
+    title: "Quà tặng",
+    subtitle: [
+      { title: "Cho chàng" },
+      { title: "Cho nàng" },
+      { title: "Cho cha" },
+      { title: "Cho mẹ" },
+      { title: "Cho bé" },
+    ],
+  },
+];
 const DataOverall = [
   {
     title: "Đơn đặt hàng",
@@ -156,4 +184,128 @@ const SideBarRightAdmin = () => {
   );
 };
 
-export { SideBarLeftAdmin, SideBarRightAdmin };
+const SideBarFilter = () => {
+  return (
+    <div className="sidebar__right__filter">
+      <div className="row col-12">
+        <Filter title="Danh mục sản phẩm">
+          {arrAccodion.map((acc, i) => (
+            <li key={i} className="filter__item filter__item__product">
+              <Accordion title={acc.title}>
+                {acc.subtitle.map((sub, index) => (
+                  <p key={index} className="content__item">
+                    {" "}
+                    {sub.title}{" "}
+                  </p>
+                ))}
+              </Accordion>
+            </li>
+          ))}
+        </Filter>
+      </div>
+      <div className="row col-12">
+        <Filter title="Lọc theo chất liệu">
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="gold" id="gold" />
+            <label htmlFor="gold">Vàng</label>
+          </li>
+
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="silver" id="silver" />
+            <label htmlFor="silver">Bạc</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="alloy" id="alloy" />
+            <label htmlFor="alloy">Hợp kim cao cấp</label>
+          </li>
+          <li className="filter__item">
+            <input
+              type="checkbox"
+              className="me-2"
+              name="platinum"
+              id="platinum"
+            />
+            <label htmlFor="platinum">Platinum</label>
+          </li>
+        </Filter>
+      </div>
+      <div className="row col-12">
+        <Filter title="Lọc theo chất liệu vàng">
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="24k" id="24k" />
+            <label htmlFor="24k">24K</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="22k" id="22k" />
+            <label htmlFor="22k">22K</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="18k" id="18k" />
+            <label htmlFor="18k">18K</label>
+          </li>
+        </Filter>
+      </div>
+      <div className="row col-12">
+        <Filter title="Lọc theo giới tính">
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="nam" id="nam" />
+            <label htmlFor="nam">Nam</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="nu" id="nu" />
+            <label htmlFor="nu">Nữ</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="unisex" id="unisex" />
+            <label htmlFor="unisex">Unisex</label>
+          </li>
+        </Filter>
+      </div>
+      <div className="row col-12">
+        <Filter title="Lọc theo màu chất liệu">
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="white" id="white" />
+            <label htmlFor="white">Trắng</label>
+          </li>
+
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="yellow" id="yellow" />
+            <label htmlFor="yellow">Vàng</label>
+          </li>
+          <li className="filter__item">
+            <input type="checkbox" className="me-2" name="pink" id="pink" />
+            <label htmlFor="pink">Hồng</label>
+          </li>
+          <li className="filter__item">
+            <input
+              type="checkbox"
+              className="me-2"
+              name="white-pink"
+              id="white-pink"
+            />
+            <label htmlFor="white-pink">Trắng + hồng</label>
+          </li>
+          <li className="filter__item">
+            <input
+              type="checkbox"
+              className="me-2"
+              name="white-yellow"
+              id="white-yellow"
+            />
+            <label htmlFor="white-yellow">Trắng + vàng</label>
+          </li>
+          <li className="filter__item">
+            <input
+              type="checkbox"
+              className="me-2"
+              name="pink-yellow"
+              id="pink-yellow"
+            />
+            <label htmlFor="pink-yellow">Hồng + vàng</label>
+          </li>
+        </Filter>
+      </div>
+    </div>
+  );
+};
+export { SideBarLeftAdmin, SideBarRightAdmin, SideBarFilter };

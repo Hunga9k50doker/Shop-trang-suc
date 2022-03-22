@@ -14,6 +14,7 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  behavior: "smooth";
 }
 table {
   margin: auto;
@@ -120,9 +121,22 @@ input {
   width: 100vw;
   height: 100vh;
   background: rgba($primary-color, 0.5);
-  z-index: 20;
+  z-index: 999;
   display: flex;
+  flex-direction: column;
   // transition-duration: 0.2s ease;
+  .modal__close {
+    i:hover {
+      cursor: pointer;
+      color: $four-color;
+    }
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: right;
+    color: $white-color;
+    margin-right: 2rem;
+    margin-top: 0.5rem;
+  }
 }
 .strong {
   position: relative;

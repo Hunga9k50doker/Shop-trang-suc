@@ -1,0 +1,43 @@
+.accordion {
+  width: 100%;
+  overflow: hidden;
+  &__title {
+    @include flex(center, space-between);
+    &:hover {
+      p {
+        color: $primary-color;
+      }
+    }
+    i {
+      transition: all 0.3s ease;
+      transform: rotate(0);
+    }
+  }
+  &__content {
+    @include flex(flex-start, center);
+    overflow: hidden;
+    flex-direction: column;
+    max-height: 0;
+    transition: all 0.4s ease-in;
+    .content__item {
+      font-size: 300;
+      width: 100%;
+      color: $text-color;
+      margin-left: 10px;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}
+.accordion.active {
+  i {
+    transform: rotate(180deg);
+  }
+  .accordion__title {
+    // background: $;
+  }
+  .accordion__content {
+    max-height: 10rem;
+  }
+}

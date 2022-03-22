@@ -114,7 +114,7 @@ const RevenueByMonthsChart = () => {
   };
   return (
     <>
-      <div className="title mb-0">Doanh thu các tháng</div>
+      <div className="title mb-0">Doanh thu các tháng (triệu vnđ)</div>
       <div>
         <Bar options={chartOptions} data={chartData} height={`250px`} />
       </div>
