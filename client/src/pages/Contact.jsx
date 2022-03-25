@@ -3,11 +3,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FormSubmit } from "../components/common/Forms";
-
+import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import { banner_sub_02 } from "../assets/img";
 export default function Contact() {
   return (
+    <Helmet title='Liên hệ'>
     <div className="contact main">
       <Banner img={banner_sub_02} title={"Liên hệ"}>
         <div className="sub__link">
@@ -73,5 +74,6 @@ export default function Contact() {
         </div>
       </div>
     </div>
+    </Helmet>
   );
 }

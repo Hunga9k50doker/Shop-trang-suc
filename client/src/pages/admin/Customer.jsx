@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../components/common/Table";
+import Helmet from "../../components/common/Helmet";
 
 const dataTable_02 = [
   {
@@ -71,7 +72,7 @@ const dataTable_02 = [
 ];
 const CustomerAdmin = () => {
   return (
-    <div>
+    <Helmet title='Quản lý người dùng' >
       <div className="container">
         <div className="row mt-4">
           <div className="col">
@@ -112,7 +113,7 @@ const CustomerAdmin = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Helmet>
   );
 };
 

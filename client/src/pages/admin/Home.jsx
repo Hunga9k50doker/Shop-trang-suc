@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import Helmet from "../../components/common/Helmet";
 import { SideBarRightAdmin } from "../../components/common/SideBars";
 import { CardStyleOne } from "../../components/common/CardItem";
 import userAvatar from "../../assets/img/other/useraccountdefault.png";
@@ -123,6 +124,8 @@ const RevenueByMonthsChart = () => {
 };
 const HomeAdmin = () => {
   return (
+    <Helmet title='Trang chủ quản lý'>
+
     <div className="home__admin">
       <div className="container p-0">
         <div className="row ">
@@ -158,6 +161,7 @@ const HomeAdmin = () => {
         </div>
       </div>
     </div>
+    </Helmet>
   );
 };
 

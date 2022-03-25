@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/common/Button";
+import Helmet from "../components/common/Helmet";
 
 export default function NotFound() {
   const Style = styled.div`
@@ -24,6 +25,7 @@ export default function NotFound() {
     }
   `;
   return (
+    <Helmet title='Trang không tồn tại'>
     <Style>
       <div className="not__found">
         <h5>Trang này hiện không tồn tại</h5>
@@ -35,5 +37,6 @@ export default function NotFound() {
         </Link>
       </div>
     </Style>
+    </Helmet>
   );
 }

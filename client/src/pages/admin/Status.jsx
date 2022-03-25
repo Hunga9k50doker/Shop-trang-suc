@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
 
 const dataTable_02 = [
@@ -113,6 +114,8 @@ const StatusAdmin = () => {
   });
 
   return (
+    <Helmet title='Quản lý trạng thái'>
+
     <div className="status__admin">
       <div className="container mt-4">
         <div className="row ">
@@ -155,6 +158,7 @@ const StatusAdmin = () => {
         </div>
       </div>
     </div>
+    </Helmet>
   );
 };
 

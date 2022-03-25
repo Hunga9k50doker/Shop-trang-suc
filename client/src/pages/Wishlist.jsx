@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
+import Helmet from "../components/common/Helmet";
 import { banner_sub_02, product_img_01 } from "../assets/img";
 
 const whitelistData = [
@@ -65,6 +66,8 @@ export default function Wishlist() {
   };
 
   return (
+    <Helmet title='Danh sách yêu thích'>
+
     <div className="wishlist">
       <Banner img={banner_sub_02} title="Danh sách yêu thích" />
       <div className="container ">
@@ -137,5 +140,6 @@ export default function Wishlist() {
         </table>
       </div>
     </div>
+    </Helmet>
   );
 }

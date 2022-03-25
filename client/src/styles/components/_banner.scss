@@ -49,8 +49,8 @@
 
   &__body:not(.home__banner) {
     width: 100%;
-    top: unset;
-    left: unset;
+    top: 0;
+    left: 0;
     transform: translate(0, 0);
     .banner__title {
       font-size: 2rem;

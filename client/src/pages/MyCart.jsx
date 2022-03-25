@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { to_slug } from "../utils/utils";
+import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
 import { banner_sub_02, product_img_01 } from "../assets/img";
@@ -12,6 +13,7 @@ export default function MyCart() {
   useEffect(() => setPrice(), []);
   const { slug } = useParams();
   return (
+    <Helmet title="Giỏ hàng">
     <div className="mycart">
       <Banner img={banner_sub_02} title="Giỏ Hàng" />
       <div className="container">
@@ -61,5 +63,6 @@ export default function MyCart() {
         </table>
       </div>
     </div>
+    </Helmet>
   );
 }

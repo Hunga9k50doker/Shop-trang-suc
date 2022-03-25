@@ -1,12 +1,13 @@
+.component {
+  min-height: 100vh;
+}
 .main {
   color: $text-color;
+  min-height: 100vh;
 }
 
 .wishlist,
 .mycart {
-  .banner__body {
-    left: 50%;
-  }
   .banner__title {
     font-size: 1.6rem;
     text-align: center;
@@ -26,5 +27,15 @@
         background-color: var(--bs-danger);
       }
     }
+  }
+}
+
+.sort {
+  width: 100%;
+  select {
+    float: right;
+    outline: none;
+    padding: 5px 10px;
+    margin-right: 10px;
   }
 }

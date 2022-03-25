@@ -1,7 +1,13 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useCallback, useMemo } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
+import Button from "./Button";
+import CheckBox from "./CheckBox";
+import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
+import InfinityList from "./InfinityList";
+import arrPro from "../../assets/fake-data/Product";
 const arrItemAdmin = [
   {
     title: "Trang Chủ",
@@ -86,6 +92,32 @@ const DataOverall = [
     icon: "bx bx-dollar",
   },
 ];
+const dataFilter = {
+  colors: [
+    { color: "Vàng", display: "Vàng" },
+    { color: "Trắng", display: "Trắng" },
+    { color: "Hồng", display: "Hồng" },
+    { color: "Vàng Trắng", display: "Vàng + Trắng" },
+    { color: "Hồng Trắng", display: "Hồng + Trắng" },
+    { color: "Hồng Vàng", display: "Hồng + Vàng" },
+  ],
+  materials: [
+    { material: "Vàng", display: "Vàng" },
+    { material: "Bạc", display: "Bạc" },
+    { material: "Hợp kim cao cấp", display: "Hợp kim cao cấp" },
+    { material: "Platinum", display: "Platinum" },
+  ],
+  material_golds: [
+    { material_gold: "24k", display: "24K" },
+    { material_gold: "22k", display: "22K" },
+    { material_gold: "18k", display: "18K" },
+  ],
+  sexs: [
+    { sex: "Nam", display: "Nam" },
+    { sex: "Nữ", display: "Nữ" },
+    { sex: "Unisex", display: "Unisex" },
+  ],
+};
 const SideBarLeftAdmin = () => {
   return (
     <div className="sidebar">
@@ -183,127 +215,230 @@ const SideBarRightAdmin = () => {
     </div>
   );
 };
-
 const SideBarFilter = () => {
+  const initFilter = {
+    // category: [],
+    color: [],
+    material: [],
+    material_gold: [],
+    sex: [],
+  };
+  const [productList, setProductList] = useState(arrPro);
+  const [filter, setFilter] = useState(initFilter);
+  const filterSelect = (type, checked, item) => {
+    if (checked) {
+      switch (type) {
+        case "COLOR":
+          setFilter({ ...filter, color: [...filter.color, item.color] });
+          break;
+        case "MATERIAL":
+          setFilter({
+            ...filter,
+            material: [...filter.material, item.material],
+          });
+          break;
+        case "MATERIAL_GOLD":
+          setFilter({
+            ...filter,
+            material_gold: [...filter.material_gold, item.material_gold],
+          });
+          break;
+        case "SEX":
+          setFilter({ ...filter, sex: [...filter.sex, item.sex] });
+          break;
+        default:
+      }
+    } else {
+      switch (type) {
+        case "COLOR":
+          const newColor = filter.color.filter((e) => e !== item.color);
+          setFilter({ ...filter, color: newColor });
+          break;
+        case "MATERIAL":
+          const newMaterial = filter.material.filter(
+            (e) => e !== item.material
+          );
+          setFilter({ ...filter, material: newMaterial });
+          break;
+        case "MATERIAL_GOLD":
+          const newMaterial_Gold = filter.material_gold.filter(
+            (e) => e !== item.material_gold
+          );
+          setFilter({ ...filter, material_gold: newMaterial_Gold });
+          break;
+        case "SEX":
+          const newSex = filter.sex.filter((e) => e !== item.sex);
+          setFilter({ ...filter, sex: newSex });
+          break;
+        default:
+      }
+    }
+  };
+  const filterSort = (value) => {
+    switch (value) {
+      case 0:
+        break;
+      case 1:
+        sortLowToHigh(productList);
+        break;
+      case 2:
+        sortHighToLow(productList);
+        break;
+      default:
+    }
+  };
+  const clearFilter = () => setFilter(initFilter);
+  const updateProducts = useCallback(() => {
+    let temp = arrPro;
+    if (filter.color.length > 0) {
+      temp = temp.filter((e) => {
+        const check = e.colors.find((color) => filter.color.includes(color));
+        return check !== undefined;
+      });
+    }
+    if (filter.material.length > 0) {
+      temp = temp.filter((e) => {
+        const check = e.materials.find((material) =>
+          filter.material.includes(material)
+        );
+        return check !== undefined;
+      });
+    }
+    if (filter.material_gold.length > 0) {
+      temp = temp.filter((e) => {
+        const check = e.material_golds.find((materialGold) =>
+          filter.material_gold.includes(materialGold)
+        );
+        return check !== undefined;
+      });
+    }
+    if (filter.sex.length > 0) {
+      temp = temp.filter((e) => {
+        const check = e.sexs.find((sex) => filter.sex.includes(sex));
+        return check !== undefined;
+      });
+    }
+
+    setProductList(temp);
+  }, [filter, arrPro]);
+  useMemo(() => {
+    updateProducts();
+  }, [updateProducts]);
+  
   return (
-    <div className="sidebar__right__filter">
-      <div className="row col-12">
-        <Filter title="Danh mục sản phẩm">
-          {arrAccodion.map((acc, i) => (
-            <li key={i} className="filter__item filter__item__product">
-              <Accordion title={acc.title}>
-                {acc.subtitle.map((sub, index) => (
-                  <p key={index} className="content__item">
-                    {" "}
-                    {sub.title}{" "}
-                  </p>
+    <div className="container">
+      <div className="row">
+        <div className="col col-xl-3 col-md-3 col-sm-12">
+          <div className="sidebar__right__filter">
+            {console.log(productList)}
+            {/* {console.log(filter)} */}
+
+            <div className="row row__header">
+              <Filter title="Danh mục sản phẩm">
+                {arrAccodion.map((acc, i) => (
+                  <li key={i} className="filter__item filter__item__product">
+                    <Accordion title={acc.title}>
+                      {acc.subtitle.map((sub, index) => (
+                        <p key={index} className="content__item">
+                          {" "}
+                          {sub.title}{" "}
+                        </p>
+                      ))}
+                    </Accordion>
+                  </li>
                 ))}
-              </Accordion>
-            </li>
-          ))}
-        </Filter>
-      </div>
-      <div className="row col-12">
-        <Filter title="Lọc theo chất liệu">
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="gold" id="gold" />
-            <label htmlFor="gold">Vàng</label>
-          </li>
-
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="silver" id="silver" />
-            <label htmlFor="silver">Bạc</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="alloy" id="alloy" />
-            <label htmlFor="alloy">Hợp kim cao cấp</label>
-          </li>
-          <li className="filter__item">
-            <input
-              type="checkbox"
-              className="me-2"
-              name="platinum"
-              id="platinum"
-            />
-            <label htmlFor="platinum">Platinum</label>
-          </li>
-        </Filter>
-      </div>
-      <div className="row col-12">
-        <Filter title="Lọc theo chất liệu vàng">
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="24k" id="24k" />
-            <label htmlFor="24k">24K</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="22k" id="22k" />
-            <label htmlFor="22k">22K</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="18k" id="18k" />
-            <label htmlFor="18k">18K</label>
-          </li>
-        </Filter>
-      </div>
-      <div className="row col-12">
-        <Filter title="Lọc theo giới tính">
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="nam" id="nam" />
-            <label htmlFor="nam">Nam</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="nu" id="nu" />
-            <label htmlFor="nu">Nữ</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="unisex" id="unisex" />
-            <label htmlFor="unisex">Unisex</label>
-          </li>
-        </Filter>
-      </div>
-      <div className="row col-12">
-        <Filter title="Lọc theo màu chất liệu">
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="white" id="white" />
-            <label htmlFor="white">Trắng</label>
-          </li>
-
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="yellow" id="yellow" />
-            <label htmlFor="yellow">Vàng</label>
-          </li>
-          <li className="filter__item">
-            <input type="checkbox" className="me-2" name="pink" id="pink" />
-            <label htmlFor="pink">Hồng</label>
-          </li>
-          <li className="filter__item">
-            <input
-              type="checkbox"
-              className="me-2"
-              name="white-pink"
-              id="white-pink"
-            />
-            <label htmlFor="white-pink">Trắng + hồng</label>
-          </li>
-          <li className="filter__item">
-            <input
-              type="checkbox"
-              className="me-2"
-              name="white-yellow"
-              id="white-yellow"
-            />
-            <label htmlFor="white-yellow">Trắng + vàng</label>
-          </li>
-          <li className="filter__item">
-            <input
-              type="checkbox"
-              className="me-2"
-              name="pink-yellow"
-              id="pink-yellow"
-            />
-            <label htmlFor="pink-yellow">Hồng + vàng</label>
-          </li>
-        </Filter>
+              </Filter>
+            </div>
+            <div className="row ">
+              <Filter title="Lọc theo chất liệu">
+                {dataFilter.materials.map((e, index) => (
+                  <li key={index} className="filter__item">
+                    <CheckBox
+                      label={e.display}
+                      onChange={(input) =>
+                        filterSelect("MATERIAL", input.checked, e)
+                      }
+                      checked={filter.material.includes(e.material)}
+                    />
+                  </li>
+                ))}
+              </Filter>
+            </div>
+            <div className="row ">
+              <Filter title="Lọc theo chất liệu vàng">
+                {dataFilter.material_golds.map((e, index) => (
+                  <li key={index} className="filter__item">
+                    <CheckBox
+                      label={e.display}
+                      onChange={(input) =>
+                        filterSelect("MATERIAL_GOLD", input.checked, e)
+                      }
+                      checked={filter.material_gold.includes(e.material_gold)}
+                    />
+                  </li>
+                ))}
+              </Filter>
+            </div>
+            <div className="row ">
+              <Filter title="Lọc theo giới tính">
+                {dataFilter.sexs.map((e, index) => (
+                  <li key={index} className="filter__item">
+                    <CheckBox
+                      label={e.display}
+                      onChange={(input) =>
+                        filterSelect("SEX", input.checked, e)
+                      }
+                      checked={filter.sex.includes(e.sex)}
+                    />
+                  </li>
+                ))}
+              </Filter>
+            </div>
+            <div className="row ">
+              <Filter title="Lọc theo màu chất liệu">
+                {dataFilter.colors.map((e, index) => (
+                  <li key={index} className="filter__item">
+                    <CheckBox
+                      label={e.display}
+                      onChange={(input) =>
+                        filterSelect("COLOR", input.checked, e)
+                      }
+                      checked={filter.color.includes(e.color)}
+                    />
+                  </li>
+                ))}
+              </Filter>
+            </div>
+            <div className="row">
+              <div className="col-6 ">
+                <Button
+                  onClick={clearFilter}
+                  content="Xóa bộ lọc"
+                  classNameBtn="delete__filter mt-4"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col col-xl-9 col-md-9 col-sm-12">
+          <div className="row">
+            <div className="sort">
+              <select onChange={(e) => filterSort(e.target.value)}>
+                <option value="0">Mới cập nhật (mặc định)</option>
+                <option value="1">Giá từ thấp tới cao</option>
+                <option value="2">Giá từ cao tới thấp</option>
+              </select>
+            </div>
+          </div>
+          <InfinityList data={productList} />
+          {/* {productList.map((e, id) => (
+              <div key={id} className="col col-xl-4 col-md-6 col-sm-12">
+                <Link to={`/chi-tiet/${to_slug(e.title)}`}>
+                  <CardItem img={e.img} title={e.title} price={e.price} />
+                </Link>
+              </div>
+            ))} */}
+        </div>
       </div>
     </div>
   );

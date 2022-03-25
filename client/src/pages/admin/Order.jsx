@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
 import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
@@ -154,6 +155,8 @@ const OrderAdmin = () => {
   //   setViewDetail();
   // }, [viewDetail]);
   return (
+    <Helmet title='Quản lý đơn hàng'>
+
     <div className="order__admin">
       <div className="container mt-4">
         <div className="row">
@@ -284,6 +287,7 @@ const OrderAdmin = () => {
         </div>
       </div>
     </div>
+    </Helmet>
   );
 };
 
