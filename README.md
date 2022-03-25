@@ -5,4 +5,4 @@ nhảy đến thư mục client: cd client
 Fe: css(scss), ReactJS
 Be: express, nodejs
 Db: mongodb
-other: boxicon( thư viện icon), bootstrap
+other: boxicon( thư viện icon), bootstrap, chartJS
