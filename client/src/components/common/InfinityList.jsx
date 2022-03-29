@@ -28,7 +28,6 @@ const InfinityList = (props) => {
           window.scrollY + window.innerHeight >=
           listRef.current.clientHeight + listRef.current.offsetTop + 200
         ) {
-          console.log("bottom reach");
           setLoad(true);
         }
       }
@@ -55,13 +54,12 @@ const InfinityList = (props) => {
   return (
     <div className="row" ref={listRef}>
       {data.map((e, id) => (
-        <div key={id} className="col col-xl-4 col-md-6 col-sm-12">
-          <Link to={`/chi-tiet/${to_slug(e.title)}`}>
+        <div key={id} className="col col-xl-4 col-md-6 col-sm-12 pe-0">
+          <Link style={{ width: "100%" }} to={`/chi-tiet/${to_slug(e.title)}`}>
             <CardItem img={e.img} title={e.title} price={e.price} />
           </Link>
         </div>
       ))}
-     
     </div>
   );
 };

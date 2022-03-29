@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
 const CardItem = (props) => {
-
+  const heartIconRef = useRef(null);
+  const [like, setLike] = useState(false);
+  useEffect(() => {
+    heartIconRef.current.addEventListener("click", () => setLike(!like));
+  }, [like]);
   return (
     <div className="card__item">
       <i
+        ref={heartIconRef}
         onClick={(e) => e.preventDefault()}
-        className={`card__icon__like bx ${props.like ? "bxs-heart" : "bx-heart"}`}
+        className={`card__icon__like bx ${like ? "bxs-heart" : "bx-heart"}`}
       ></i>
       <div className="card__item__header">
         <img src={props.img} alt="" />

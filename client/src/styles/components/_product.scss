@@ -27,4 +27,24 @@
       }
     }
   }
+  &__price {
+    font-size: 1.4rem;
+    color: $primary-color;
+    margin-left: 0;
+  }
+  &__add__wishlist {
+    i {
+      color: $primary-color;
+    }
+  }
+  &__other_desc {
+    i {
+      color: $primary-color;
+    }
+    p {
+      font-style: italic;
+      font-size: 14px;
+      color: $text-color;
+    }
+  }
 }
