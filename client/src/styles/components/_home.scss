@@ -1,9 +1,46 @@
 .home {
+  position: relative;
   &__title {
     font-size: 1.6rem;
     text-transform: uppercase;
     text-align: center;
     width: 100%;
-    margin: 1rem 0;
+    margin: 8rem 0 1rem 0;
+    strong {
+      color: $primary-color;
+    }
+  }
+  &__theme {
+    width: 100%;
+    text-align: center;
+    img {
+      width: 110px;
+      height: 10px;
+      &:nth-child(2) {
+        width: 53px;
+        height: 53px;
+      }
+    }
+  }
+}
+.home__admin {
+  .account {
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    background: rgba($white-color, 0.3);
+    border-radius: 1rem;
+    @include flex(center, flex-start);
+    @include box_shadow(0.2);
+    img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+  }
+  .revenue__month {
+    background: $third-color;
+    border-radius: 1rem;
+    @include box_shadow(0.15);
   }
 }

@@ -1,6 +1,41 @@
 .component {
+  min-height: 100vh;
 }
-
 .main {
   color: $text-color;
+  min-height: 100vh;
+}
+
+.wishlist,
+.mycart {
+  .banner__title {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+  .wishlist__trash {
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }
+  .last__row {
+    .btn {
+      font-size: 12px;
+    }
+    .wishlist__delete__selected {
+      &:hover {
+        background-color: var(--bs-danger);
+      }
+    }
+  }
+}
+
+.sort {
+  width: 100%;
+  select {
+    float: right;
+    outline: none;
+    padding: 5px 10px;
+    margin-right: 10px;
+  }
 }

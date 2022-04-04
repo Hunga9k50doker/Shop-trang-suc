@@ -14,8 +14,54 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  behavior: "smooth";
 }
+table {
+  margin: auto;
+  margin-top: 2rem;
+  background: $white-color;
+  @include box_shadow(0.2);
 
+  td,
+  th {
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    text-align: center;
+  }
+
+  thead {
+    color: $white-color;
+    background: $primary-color;
+    font-weight: 500;
+    border-bottom: 2px solid #333;
+  }
+  tbody {
+    tr {
+      &:hover {
+        background: $third-color;
+      }
+    }
+  }
+  .status {
+    font-weight: 500;
+  }
+  .bx-trash {
+    cursor: pointer;
+    &:hover {
+      color: red;
+    }
+  }
+  .bx-edit-alt,
+  .view__details {
+    cursor: pointer;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+}
+.table > :not(:first-child) {
+  border-top: 0;
+}
 a {
   color: unset;
   text-decoration: none;
@@ -50,12 +96,20 @@ input {
   padding: 10px 20px;
   outline: none;
   border-radius: 4px;
+  border: none;
 }
 
-// .active {
-//   color: $primary-color;
-// }
-// thanh dọc nằm giữa 2 item vd: login and register
+.selected {
+  color: $primary-color;
+}
+.btn {
+  color: $white-color;
+  background: $black-color;
+  &:hover {
+    color: $white-color;
+    background: $primary-color;
+  }
+}
 .hidden {
   display: none !important;
   transform: scaleY(0);
@@ -64,9 +118,25 @@ input {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba($primary-color, 0.5);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  // transition-duration: 0.2s ease;
+  .modal__close {
+    i:hover {
+      cursor: pointer;
+      color: $four-color;
+    }
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: right;
+    color: $white-color;
+    margin-right: 2rem;
+    margin-top: 0.5rem;
+  }
 }
 .strong {
   position: relative;

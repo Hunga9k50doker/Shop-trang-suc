@@ -1,0 +1,26 @@
+.contact {
+  &__title {
+    text-align: center;
+  }
+  &__list__item {
+    @include flex(flex-start, flex-start);
+    .contact__icon {
+      font-size: 2rem;
+      color: $primary-color;
+      margin-right: 1rem;
+    }
+    .item__content {
+      .item__title {
+        color: $black-color;
+      }
+      .item__subtitle {
+        color: $text-color;
+        margin-left: 0;
+      }
+    }
+  }
+  .map {
+    width: 100%;
+    height: 100%;
+  }
+}

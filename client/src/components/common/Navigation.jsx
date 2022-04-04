@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
 import logo from "../../assets/img/logo/DC_Logo_New_opt.png";
-import Modal from "../common/Modal";
+import Modal from "./Modal";
+import { FormSearch } from "./Forms";
 const arrNav = [
   {
     nav_title: "Trang chủ",
@@ -110,8 +111,8 @@ const arrNav = [
           },
           { title: "Cho chàng", path: "/qua-tang/cho-chang/" },
           { title: "Cho cha", path: "/qua-tang/cho-cha/" },
-          { title: "Cho mẹ", path: "qua-tang/cho-me/" },
-          { title: "Cho bé", path: "qua-tang/cho-be/" },
+          { title: "Cho mẹ", path: "/qua-tang/cho-me/" },
+          { title: "Cho bé", path: "/qua-tang/cho-be/" },
         ],
       },
     ],
@@ -136,49 +137,89 @@ const arrNav = [
 
 export default function Navigation() {
   const [active, setActive] = useState(false);
+  const navRef = useRef(null);
+  useEffect(
+    () =>
+      window.addEventListener("scroll", () => {
+        const currentOffsetY = window.pageYOffset;
+        navRef.current.style.top = currentOffsetY > 30 ? "0" : "2.9rem";
+      }),
+    []
+  );
   return (
-    <div className={`nav `}>
-      <div className="nav__logo">
-        <img src={logo} alt="" />
-      </div>
-      <ul className="nav__list">
-        {arrNav.map((e, id) => (
-          <li key={id} className="nav__item">
-            <NavLink className="nav__item__Navlink" to={e.path}>
-              {e.nav_title}
-            </NavLink>
-            <div
-              className={` sub__nav ${
-                e.nav_title === "Trang chủ"
-                  ? "hidden"
-                  : `${e.nav_title === "Liên hệ" ? "hidden" : ""}`
-              }`}
+    <div className="container-fluid">
+      <div ref={navRef} className={`nav `}>
+        <div className="nav__logo">
+          <NavLink to="/">
+            <img src={logo} alt="" />
+          </NavLink>
+        </div>
+        <ul className="nav__list">
+          {arrNav.map((e, id) => (
+            <li key={id} className="nav__item">
+              <NavLink to={e.path}>{e.nav_title}</NavLink>
+              <div
+                className={` sub__nav ${
+                  e.nav_title === "Trang chủ"
+                    ? "hidden"
+                    : `${e.nav_title === "Liên hệ" ? "hidden" : ""}`
+                }`}
+              >
+                {e.sub_nav.map((element, index) => (
+                  <ul key={index} className="sub__nav__list">
+                    <h3 className="sub__nav__title">{element.sub_nav_title}</h3>
+                    <li className="sub__nav__item">
+                      {element.sub_nav_desc.map((ele, ix) => (
+                        <NavLink
+                          className={({ isActive }) =>
+                            isActive ? "selected " : "  "
+                          }
+                          key={ix}
+                          to={ele.path}
+                        >
+                          {ele.title}
+                        </NavLink>
+                      ))}
+                    </li>
+                  </ul>
+                ))}
+              </div>
+            </li>
+          ))}
+          <li className="nav__item">
+            <NavLink
+              // className={({ isActive }) => (isActive ? " selected " : "  ")}
+              // className="nav__item__Navlink"
+              to={"/admin"}
             >
-              {e.sub_nav.map((element, index) => (
-                <ul key={index} className="sub__nav__list">
-                  <h3 className="sub__nav__title">{element.sub_nav_title}</h3>
-                  <li className="sub__nav__item">
-                    {element.sub_nav_desc.map((ele, ix) => (
-                      <NavLink key={ix} to={ele.path}>
-                        {ele.title}
-                      </NavLink>
-                    ))}
-                  </li>
-                </ul>
-              ))}
-            </div>
+              Admin
+            </NavLink>
           </li>
-        ))}
-      </ul>
-      <div className="nav__right">
-        <div className={`nav__right__item ${active ? "active" : ""}`}>
-          <i className={`bx bx-search-alt-2 `}></i>
-          <Modal />
+        </ul>
+        <div className="nav__right">
+          <div className={`nav__right__item `}>
+            <i
+              onClick={() => setActive(!active)}
+              className={`bx bx-search-alt-2 `}
+            ></i>
+          </div>
+          <Link
+            to="/danh-sach-san-pham-yeu-thich/"
+            className="nav__right__item"
+          >
+            <i className="bx bx-heart"></i>
+          </Link>
+          <Link to="/gio-hang-cua-ban/" className="nav__right__item">
+            <i className="bx bx-cart-alt"></i>
+          </Link>
         </div>
-        <div className="nav__right__item">
-          <i className="bx bx-cart-alt"></i>
-          {/* <i className={`bx bx-search-alt-2 ${active ? "active" : ""}`}></i> */}
-        </div>
+        {active ? (
+          <Modal active={active} setActive={setActive}>
+            <FormSearch />
+          </Modal>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

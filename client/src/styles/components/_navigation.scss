@@ -1,4 +1,11 @@
 .nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 2.9rem;
+  min-height: 6rem;
+  z-index: 66;
+  transition-duration: 0.2s;
   @include flex(center, space-around);
   background: $white-color;
   padding: 1.2rem 4rem;
@@ -24,13 +31,18 @@
     }
   }
   &__list {
-    flex: 1;
     @include flex(center, center);
   }
   &__item {
     position: relative;
     height: 100%;
     padding: 1rem 1.2rem;
+    .nav__item__Navlink {
+      color: $black-color;
+    }
+    .nav__item__Navlink.selected {
+      color: $primary-color;
+    }
     &:hover {
       cursor: pointer;
       &::after {
@@ -71,6 +83,7 @@
       @include flex(flex-start, center);
       position: absolute;
       top: 100%;
+      z-index: 50;
       left: 50%;
       min-width: 300px;
       width: -webkit-fit-content;

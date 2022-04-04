@@ -3,7 +3,7 @@
   bottom: 0;
   background: $white-color;
   padding-top: 2rem;
-  color: $four-color;
+  color: $text-color;
   border-top: 2px solid $third-color;
   p {
     font-size: 1rem;
@@ -18,10 +18,12 @@
   &__item {
     &:last-child {
       margin-bottom: 2rem;
+      @include flex(center, flex-start);
+      // font-size: 0.8rem;
     }
   }
   &__title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -30,10 +32,17 @@
     color: $text-color;
     margin: 1rem 0;
   }
-  .copy__right {
+  &__copy {
+    @include flex(center, space-around);
     background: $primary-color;
     text-align: center;
     color: $white-color;
-    padding: 8px 0;
+    font-size: 16px;
+    a {
+      margin-left: 1rem;
+      &:hover {
+        color: $third-color;
+      }
+    }
   }
 }
