@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import { CardItem } from "./CardItem";
 import arrPro from "../../assets/fake-data/Product";
+import { AuthContext } from "../../provider/context/AuthContext";
 
 const FormContact = (props) => {
   return (
@@ -55,7 +56,7 @@ const FormSearch = () => {
       <div className="form__render">
         {arrPro.slice(0, 4).map((e, id) => (
           <Link to="#" key={id}>
-            <CardItem img={e.img} title={e.title} price={e.price} />
+            <CardItem item={e} />
           </Link>
         ))}
       </div>
@@ -64,6 +65,21 @@ const FormSearch = () => {
 };
 
 const FormLogin = () => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
+  const { login } = useContext(AuthContext);
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(user);
+  };
   return (
     <div className="form ">
       <form
@@ -79,6 +95,8 @@ const FormLogin = () => {
               placeholder="Tên đăng nhập"
               maxLength="20"
               minLength="6"
+              onChange={handleChange}
+              name="username"
             />
             <i className="bx bx-user"></i>
           </li>
@@ -89,6 +107,8 @@ const FormLogin = () => {
               placeholder="Mật khẩu"
               maxLength="20"
               minLength="6"
+              onChange={handleChange}
+              name="password"
             />
             <i className="bx bx-lock-alt"></i>
           </li>
@@ -101,7 +121,7 @@ const FormLogin = () => {
               <strong className="label__register ms-1">Đăng ký</strong>
             </p>
           </li>
-          <li className="form__item m-2">
+          <li className="form__item m-2" onClick={handleSubmit}>
             <Button content="Đăng nhập" classNameBtn="btn__submit" />
           </li>
         </ul>
@@ -111,6 +131,25 @@ const FormLogin = () => {
 };
 
 const FormRegister = () => {
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    repassword: "",
+    name: "",
+    telephone: "",
+  });
+  const { register } = useContext(AuthContext);
+  const handleChange = (e) => {
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleRegister = (e) => {
+    e.preventDefault();
+    register(user);
+  };
+
   return (
     <div className="form">
       <form
@@ -126,6 +165,8 @@ const FormRegister = () => {
               placeholder="Tên của bạn"
               maxLength="20"
               minLength="2"
+              name="name"
+              onChange={handleChange}
             />
             <i className="bx bxs-user-detail"></i>
           </li>
@@ -136,6 +177,8 @@ const FormRegister = () => {
               placeholder="Số điện thoại"
               minLength="9"
               maxLength="11"
+              name="telephone"
+              onChange={handleChange}
             />
             <i className="bx bx-phone"></i>
           </li>
@@ -147,6 +190,8 @@ const FormRegister = () => {
               placeholder="Tên đăng nhập"
               maxLength="20"
               minLength="6"
+              name="username"
+              onChange={handleChange}
             />
             <i className="bx bx-user"></i>
           </li>
@@ -157,6 +202,8 @@ const FormRegister = () => {
               placeholder="Mật khẩu"
               maxLength="20"
               minLength="6"
+              name="password"
+              onChange={handleChange}
             />
             <i className="bx bx-lock-open-alt"></i>
           </li>
@@ -165,6 +212,8 @@ const FormRegister = () => {
               type="password"
               className="form__confirm__password"
               placeholder="Xác nhận mật khẩu"
+              name="repassword"
+              onChange={handleChange}
             />
             <i className="bx bx-lock-alt"></i>
           </li>
@@ -174,7 +223,7 @@ const FormRegister = () => {
               <strong className="label__login ms-1">Đăng nhập</strong>
             </p>
           </li>
-          <li className="form__item m-2">
+          <li className="form__item m-2" onClick={handleRegister}>
             <Button content="Đăng ký" classNameBtn="btn__submit" />
           </li>
         </ul>

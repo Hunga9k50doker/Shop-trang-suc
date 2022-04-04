@@ -33,4 +33,13 @@ const sortLowToHigh = (a, b, arr) => {
 const sortHighToLow = (a, b, arr) => {
   arr.sort(() => (a.price < b.price ? 1 : a.price > b.price ? -1 : 0));
 };
-export { to_slug, sortLowToHigh, sortHighToLow };
+
+// get random
+const get_random = (arr, count) => {
+  const max = arr.length - count;
+  const min = 0;
+  const start = Math.floor(Math.random() * (max - min) + min);
+  return arr.slice(start, start + count);
+};
+
+export { to_slug, sortLowToHigh, sortHighToLow, get_random };

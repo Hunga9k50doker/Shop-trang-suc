@@ -2,7 +2,10 @@
   width: 100%;
   overflow: hidden;
   &__title {
+    cursor: pointer;
     @include flex(center, space-between);
+  
+
     &:hover {
       p {
         color: $primary-color;
@@ -34,9 +37,7 @@
   i {
     transform: rotate(180deg);
   }
-  .accordion__title {
-    // background: $;
-  }
+
   .accordion__content {
     max-height: 10rem;
   }

@@ -1,9 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../provider/context/AuthContext";
+
 import { FormLogin, FormRegister } from "./Forms";
 import Modal from "./Modal";
 export default function Header() {
+  //   const response = await axios.post("http://localhost:5000/api/users/login", {
+  //   username: "hello5423",
+  //   password: "12233",
+  // });
+  // console.log(response.data);
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+  const {
+    authState: { user, loading, isAuthenticated },
+  } = useContext(AuthContext);
+  console.log(isAuthenticated);
   useEffect(
     () => {
       const res = document.querySelector(".label__register");
@@ -24,7 +35,7 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLogin, isRegister]
   );
-  let role = 0;
+  if (loading) return "Loading...";
   return (
     <div className="header">
       <ul className="header__left">
@@ -38,7 +49,7 @@ export default function Header() {
         </li>
       </ul>
       <ul className="header__right">
-        {role === 0 ? (
+        {!isAuthenticated ? (
           <>
             <li className="login strong" onClick={() => setIsLogin(!isLogin)}>
               <i className="bx bx-log-in"></i>

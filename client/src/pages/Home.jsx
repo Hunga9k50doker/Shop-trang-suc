@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
@@ -7,8 +7,6 @@ import { CardItem } from "../components/common/CardItem";
 import { FormContact } from "../components/common/Forms";
 import { to_slug } from "../utils/utils";
 import Button from "../components/common/Button";
-import Pagination from "../components/common/Pagination";
-import useQuery from "../hooks/useQuery";
 //  ip data
 import {
   banner_01,
@@ -21,47 +19,9 @@ import {
 } from "../assets/img";
 import arrPro from "../assets/fake-data/Product";
 export default function Home() {
-  // const [products, setProducts] = useState(arrPro);
-  // const [limit, setLimit] = useState(12);
-  // const [page, setPage] = useState(1);
-
-  // const { search } = useLocation();
-
-  // const {  loading, error } = useQuery(
-  //   `/san-pham?limit=${limit}&page=${page}`
-  // );
-
-  // useEffect(() => {
-  //   if (arrPro.length) setProducts(products);
-  // }, [products]);
-
-  // const totalPages = useMemo(() => {
-  //   if (!arrPro.length) return 0;
-  //   return Math.ceil(arrPro.length / limit);
-  // }, [arrPro.length]);
-
-  // useEffect(() => {
-  //   const page = new URLSearchParams(search).get("page") || 1;
-  //   setPage(Number(page));
-  // }, [search]);
-  const [like, setLike] = useState(false);
-  useEffect(() => {
-    const hearts = document.querySelectorAll(".card__icon__like");
-    console.log(hearts);
-    hearts.forEach((element) => {
-      element.addEventListener("click", (e) => setLike(!like));
-    });
-  }, [like]);
-  const handleEvent = {
-    handleLike: (e) => {
-      e.preventDefault();
-      // e.target.setLike(!like);
-      e.target.addEventListener("click", () => {
-        console.log((like) => like + 1);
-        setLike(!like);
-      });
-    },
-  };
+  // const handleAddWishlist = (item) => {
+  //   // console.log(item);
+  // };
   return (
     <Helmet title="Trang chủ">
       <div className="home">
@@ -102,18 +62,13 @@ export default function Home() {
                   >
                     <Link to={`/chi-tiet/${to_slug(e.title)}`}>
                       <CardItem
-                        like={like}
-                        img={e.img}
-                        title={e.title}
-                        price={e.price}
+                        // handleAddWishlist={handleAddWishlist}
+                        item={e}
                       />
                     </Link>
                   </div>
                 )
             )}
-            {/* {loading && <h2>Loading...</h2>}
-          {error && <h2>{error}</h2>}
-          <Pagination totalPages={totalPages} page={page} /> */}
           </div>
         </div>
         <FormContact

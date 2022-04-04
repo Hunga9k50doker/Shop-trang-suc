@@ -17,15 +17,17 @@ const arrPro = [
   {
     img: product_img_01,
     title: "Bông tai vàng 18K đính đá Citrine",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12000000,
     colors: ["Vàng", "Trắng", "Hồng Vàng", "Vàng Trắng "],
     materials: ["Vàng", "Hợp kim cao cấp", "Platinum"],
     material_golds: ["24k"],
-    sexs: ["unisex"],
+    sexs: ["Unisex"],
   },
   {
     img: product_img_02,
     title: "Dây chuyền vàng 18K ",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 120011000,
     colors: ["Vàng", "Trắng", "Hồng", "Vàng Trắng "],
     materials: ["Vàng", "Bạc"],
@@ -35,6 +37,7 @@ const arrPro = [
   {
     img: product_img_03,
     title: "Nhẫn kim tiền vàng Y 18k",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12320000,
     colors: ["Vàng", "Hồng Trắng", "Vàng Trắng "],
     materials: ["Vàng", "Platinum"],
@@ -43,7 +46,8 @@ const arrPro = [
   },
   {
     img: product_img_04,
-    title: "Nhẫn vàng trắng 20k đính đá",
+    title: "Nhẫn vàng trắng 24k đính đá",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12350000,
     colors: ["Vàng", "Vàng Trắng "],
     materials: ["Vàng", "Bạc", "Platinum"],
@@ -53,6 +57,7 @@ const arrPro = [
   {
     img: product_img_05,
     title: "Bông tai Bạc DNA 0000Y000133",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12000000,
     colors: ["Vàng", "Trắng", "Hồng"],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp"],
@@ -62,6 +67,7 @@ const arrPro = [
   {
     img: product_img_06,
     title: "Nhẫn vàng trắng Y 18K  ",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 120011000,
     colors: ["Vàng", "Trắng", "Hồng"],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp"],
@@ -71,6 +77,7 @@ const arrPro = [
   {
     img: product_img_07,
     title: "Nhẫn kim tiền vàng trắng 18k Citrine",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12320000,
     colors: ["Vàng", "Trắng", "Hồng", "Hồng + Vàng"],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp", "Platinum"],
@@ -80,6 +87,7 @@ const arrPro = [
   {
     img: product_img_08,
     title: "Nhẫn vàng trắng 20k đính đá",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12350000,
     colors: ["Vàng", "Trắng", "Hồng + Trắng", "Vàng + Trắng "],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp", "Platinum"],
@@ -89,6 +97,7 @@ const arrPro = [
   {
     img: product_img_09,
     title: "Bông tai vàng 20k đính đá Citrine",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12000000,
     colors: ["Hồng", "Trắng", "Hồng + Trắng", "Vàng + Trắng "],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp", "Platinum"],
@@ -98,6 +107,7 @@ const arrPro = [
   {
     img: product_img_10,
     title: "Nhẫn vàng trắng 18K ",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 120011000,
     colors: ["Hồng", "Trắng", "Hồng + Trắng", "Vàng + Trắng "],
     materials: ["Vàng", "Bạc", "Hợp kim cao cấp", "Platinum"],
@@ -107,6 +117,7 @@ const arrPro = [
   {
     img: product_img_11,
     title: "Bông tai kim tiền vàng Y 18k",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12320000,
     colors: ["Vàng", "Trắng", "Vàng + Trắng "],
     materials: ["Vàng", "Bạc", "Platinum"],
@@ -115,7 +126,8 @@ const arrPro = [
   },
   {
     img: product_img_12,
-    title: "Bông tai vàng trắng 20k đính đá",
+    title: "Bông tai vàng trắng 24k đính đá",
+    desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12350000,
     colors: ["Vàng", "Trắng", "Hồng + Trắng", "Vàng + Trắng "],
     materials: ["Vàng", "Bạc", "Platinum"],
@@ -123,66 +135,6 @@ const arrPro = [
     sexs: ["Nam"],
   },
   // 12 products
-  // {
-  //   img: product_img_01,
-  //   title: "Bông tai vàng 18K đính đá Citrine",
-  //   price: 12000000,
-  // },
-  // {
-  //   img: product_img_02,
-  //   title: "Dây chuyền vàng 18K ",
-  //   price: 120011000,
-  // },
-  // {
-  //   img: product_img_03,
-  //   title: "Nhẫn kim tiền vàng Y 18k",
-  //   price: 12320000,
-  // },
-  // {
-  //   img: product_img_04,
-  //   title: "Nhẫn vàng trắng 20k đính đá",
-  //   price: 12350000,
-  // },
-  // {
-  //   img: product_img_05,
-  //   title: "Bông tai Bạc DNA 0000Y000133",
-  //   price: 12000000,
-  // },
-  // {
-  //   img: product_img_06,
-  //   title: "Nhẫn vàng trắng Y 18K  ",
-  //   price: 120011000,
-  // },
-  // {
-  //   img: product_img_07,
-  //   title: "Nhẫn kim tiền vàng trắng 18k Citrine",
-  //   price: 12320000,
-  // },
-  // {
-  //   img: product_img_08,
-  //   title: "Nhẫn vàng trắng 20k đính đá",
-  //   price: 12350000,
-  // },
-  // {
-  //   img: product_img_09,
-  //   title: "Bông tai vàng 20k đính đá Citrine",
-  //   price: 12000000,
-  // },
-  // {
-  //   img: product_img_10,
-  //   title: "Nhẫn vàng trắng 18K ",
-  //   price: 120011000,
-  // },
-  // {
-  //   img: product_img_11,
-  //   title: "Bông tai kim tiền vàng Y 18k",
-  //   price: 12320000,
-  // },
-  // {
-  //   img: product_img_12,
-  //   title: "Bông tai vàng trắng 20k đính đá",
-  //   price: 12350000,
-  // },
 ];
 
 export default arrPro;

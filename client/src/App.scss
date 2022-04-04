@@ -8,6 +8,7 @@
 
 .wishlist,
 .mycart {
+  
   .banner__title {
     font-size: 1.6rem;
     text-align: center;
@@ -38,4 +39,37 @@
     padding: 5px 10px;
     margin-right: 10px;
   }
+}
+
+.product__add__cart {
+  @include flex(center, flex-start);
+  .count__number {
+    border: 1px solid #333;
+    max-width: 160px;
+    overflow: hidden;
+    @include flex(center, center);
+    padding: 0;
+    &__up,
+    &__down {
+      cursor: pointer;
+      border: 1px solid #ccc;
+      margin: 0;
+      padding: 4px 8px;
+      &:hover {
+        color: $primary-color;
+      }
+    }
+    input {
+      text-align: center;
+      width: 80%;
+      height: 100%;
+      padding: 0 5px;
+    }
+   
+    .btn {
+      width: 50px;
+      border-radius: 2rem;
+    }
+  }
+ 
 }

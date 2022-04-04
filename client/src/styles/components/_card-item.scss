@@ -1,8 +1,8 @@
 .card__item {
   position: relative;
-  margin: 1rem 0;
+  margin: 0.4rem 0;
   background: $third-color;
-  width: 300px;
+  min-width: 300px;
   height: 300px;
   cursor: pointer;
   @include flex(center, center);
@@ -16,7 +16,7 @@
     }
   }
   .card__icon__like {
-    // color: $black-color;
+    color: transparent;
     width: 32px;
     height: 32px;
     position: absolute;
@@ -29,6 +29,9 @@
     &:hover {
       color: $primary-color !important;
     }
+  }
+  .bxs-heart {
+    color: $primary-color !important;
   }
   &__header {
     position: relative;

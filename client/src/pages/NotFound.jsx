@@ -20,23 +20,23 @@ export default function NotFound() {
     }
     .btn {
       &:hover {
-        color: #45cfbe;
+        color: #fff;
       }
     }
   `;
   return (
-    <Helmet title='Trang không tồn tại'>
-    <Style>
-      <div className="not__found">
-        <h5>Trang này hiện không tồn tại</h5>
-        <Link to="/">
-          <Button
-            content="Trở về trang chủ."
-            icon="bx bx-arrow-back bx-flip-vertical bx-flashing"
-          ></Button>
-        </Link>
-      </div>
-    </Style>
+    <Helmet title="Trang không tồn tại">
+      <Style>
+        <div className="not__found mt-5">
+          <h5>Trang này hiện không tồn tại</h5>
+          <Link to="/">
+            <Button
+              content="Trở về trang chủ."
+              icon="bx bx-arrow-back bx-flip-vertical bx-flashing"
+            ></Button>
+          </Link>
+        </div>
+      </Style>
     </Helmet>
   );
 }

@@ -1,8 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import logo from "../../assets/img/logo/DC_Logo_New_opt.png";
 import Modal from "./Modal";
 import { FormSearch } from "./Forms";
+import { AuthContext } from "../../provider/context/AuthContext";
 const arrNav = [
   {
     nav_title: "Trang chủ",
@@ -146,6 +147,9 @@ export default function Navigation() {
       }),
     []
   );
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   return (
     <div className="container-fluid">
       <div ref={navRef} className={`nav `}>
@@ -186,15 +190,17 @@ export default function Navigation() {
               </div>
             </li>
           ))}
-          <li className="nav__item">
-            <NavLink
-              // className={({ isActive }) => (isActive ? " selected " : "  ")}
-              // className="nav__item__Navlink"
-              to={"/admin"}
-            >
-              Admin
-            </NavLink>
-          </li>
+          {user && user.role === "admin" && (
+            <li className="nav__item">
+              <NavLink
+                // className={({ isActive }) => (isActive ? " selected " : "  ")}
+                // className="nav__item__Navlink"
+                to={"/admin"}
+              >
+                Admin
+              </NavLink>
+            </li>
+          )}
         </ul>
         <div className="nav__right">
           <div className={`nav__right__item `}>

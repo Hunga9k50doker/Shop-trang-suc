@@ -46,25 +46,31 @@ const arrAccodion = [
     subtitle: [
       {
         title: "Kim cương",
+        path: "/trang-suc/kim-cuong/",
       },
       {
         title: "Ecz-cz",
+        path: "/trang-suc/ecz-cz/",
       },
-      { title: "Không đính đá" },
+      { title: "Không đính đá", path: "/trang-suc/khong-dinh-da/" },
     ],
   },
   {
     title: "Đồng hồ",
-    subtitle: [{ title: "Gucci" }, { title: "Citizen" }, { title: "Casio" }],
+    subtitle: [
+      { title: "Gucci", path: "/dong-ho/gucci/" },
+      { title: "Citizen", path: "/dong-ho/citizen/" },
+      { title: "Casio", path: "/dong-ho/casio" },
+    ],
   },
   {
     title: "Quà tặng",
     subtitle: [
-      { title: "Cho chàng" },
-      { title: "Cho nàng" },
-      { title: "Cho cha" },
-      { title: "Cho mẹ" },
-      { title: "Cho bé" },
+      { title: "Cho chàng", path: "/qua-tang/cho-chang/" },
+      { title: "Cho nàng", path: "/qua-tang/cho-chang/" },
+      { title: "Cho cha", path: "/qua-tang/cho-chang/" },
+      { title: "Cho mẹ", path: "/qua-tang/cho-chang/" },
+      { title: "Cho bé", path: "/qua-tang/cho-chang/" },
     ],
   },
 ];
@@ -324,13 +330,13 @@ const SideBarFilter = () => {
   useMemo(() => {
     updateProducts();
   }, [updateProducts]);
-  
+
   return (
     <div className="container">
       <div className="row">
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
-            {console.log(productList)}
+            {/* {console.log(productList)} */}
             {/* {console.log(filter)} */}
 
             <div className="row row__header">
@@ -339,10 +345,9 @@ const SideBarFilter = () => {
                   <li key={i} className="filter__item filter__item__product">
                     <Accordion title={acc.title}>
                       {acc.subtitle.map((sub, index) => (
-                        <p key={index} className="content__item">
-                          {" "}
-                          {sub.title}{" "}
-                        </p>
+                        <Link to={sub.path} key={index}>
+                          <p className="content__item"> {sub.title} </p>
+                        </Link>
                       ))}
                     </Accordion>
                   </li>
@@ -430,7 +435,7 @@ const SideBarFilter = () => {
               </select>
             </div>
           </div>
-          <InfinityList data={productList} />
+          <InfinityList data={productList} amount={6} />
           {/* {productList.map((e, id) => (
               <div key={id} className="col col-xl-4 col-md-6 col-sm-12">
                 <Link to={`/chi-tiet/${to_slug(e.title)}`}>
