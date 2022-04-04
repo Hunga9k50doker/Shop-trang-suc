@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
+
 import { FormLogin, FormRegister } from "./Forms";
 import Modal from "./Modal";
-export default function Header() {
+export default  function Header() {
+  //   const response = await axios.post("http://localhost:5000/api/users/login", {
+  //   username: "hello5423",
+  //   password: "12233",
+  // });
+  // console.log(response.data);
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
   useEffect(

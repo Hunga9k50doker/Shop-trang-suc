@@ -435,7 +435,7 @@ const SideBarFilter = () => {
               </select>
             </div>
           </div>
-          <InfinityList data={productList} />
+          <InfinityList data={productList} amount={6} />
           {/* {productList.map((e, id) => (
               <div key={id} className="col col-xl-4 col-md-6 col-sm-12">
                 <Link to={`/chi-tiet/${to_slug(e.title)}`}>

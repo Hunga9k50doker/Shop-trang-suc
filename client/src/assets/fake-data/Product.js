@@ -46,7 +46,7 @@ const arrPro = [
   },
   {
     img: product_img_04,
-    title: "Nhẫn vàng trắng 20k đính đá",
+    title: "Nhẫn vàng trắng 24k đính đá",
     desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12350000,
     colors: ["Vàng", "Vàng Trắng "],
@@ -126,7 +126,7 @@ const arrPro = [
   },
   {
     img: product_img_12,
-    title: "Bông tai vàng trắng 20k đính đá",
+    title: "Bông tai vàng trắng 24k đính đá",
     desc: "Eos sadipscing ut accusam ipsum invidunt lorem ut stet sed et, accusam tempor diam stet sadipscing aliquyam voluptua dolor amet, gubergren takimata aliquyam takimata elitr invidunt gubergren dolor aliquyam sed. Et erat ea justo erat no aliquyam eirmod, sit et.",
     price: 12350000,
     colors: ["Vàng", "Trắng", "Hồng + Trắng", "Vàng + Trắng "],

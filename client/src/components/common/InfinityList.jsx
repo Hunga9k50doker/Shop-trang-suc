@@ -6,7 +6,7 @@ import { to_slug } from "../../utils/utils";
 import { CardItem } from "./CardItem";
 
 const InfinityList = (props) => {
-  const perLoad = 9; // items each load
+  const perLoad = props.amount; // items each load
 
   const listRef = useRef(null);
 
@@ -56,7 +56,7 @@ const InfinityList = (props) => {
       {data.map((e, id) => (
         <div key={id} className="col col-xl-4 col-md-6 col-sm-12 pe-0">
           <Link style={{ width: "100%" }} to={`/chi-tiet/${to_slug(e.title)}`}>
-            <CardItem img={e.img} title={e.title} price={e.price} />
+            <CardItem item={e} />
           </Link>
         </div>
       ))}

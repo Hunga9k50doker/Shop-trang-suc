@@ -19,10 +19,11 @@ import SettingAdmin from "./pages/admin/Setting";
 import Product from "./pages/Product";
 import Wishlist from "./pages/Wishlist";
 import MyCart from "./pages/MyCart";
-
 import NotFound from "./pages/NotFound";
+import axios from "axios";
+export default  function App() {
+  
 
-export default function App() {
   return (
     <div>
       <BrowserRouter>

@@ -5,6 +5,7 @@ import CountNumber from "../components/common/CountNumber";
 import Button from "../components/common/Button";
 import Helmet from "../components/common/Helmet";
 import { CardItem } from "../components/common/CardItem";
+import Accordion from "../components/common/Accordion";
 import arrPro from "../assets/fake-data/Product";
 export default function Product() {
   const [active, setActive] = useState(false);
@@ -38,7 +39,7 @@ export default function Product() {
                     <div className="product__detail">
                       <h4 className="product__title">{e.title}</h4>
                       <h6 className="product__desc mt-2 mb-2">{e.desc}</h6>
-                      <p className="product__price">Giá: {e.price} vnd</p>
+                      <p className="product__price">Giá: {e.price} vnđ</p>
                       <div className="product__add__cart">
                         <CountNumber />
                         <Button
@@ -69,20 +70,20 @@ export default function Product() {
                       </div>
                       <ul className="product__other_desc ps-0">
                         <li className="ps-0">
-                          <i class="bx bxs-check-shield"></i>
+                          <i className="bx bxs-check-shield"></i>
                           <p className="m-0 ms-2">
                             Giá sản phẩm thay đổi tuỳ trọng lượng vàng và đá Đổi
                           </p>
                         </li>
                         <li className="ps-0">
-                          <i class="bx bxs-check-shield"></i>
+                          <i className="bx bxs-check-shield"></i>
                           <p className="m-0 ms-2">
-                            Sản phẩm trong 48h tại hệ thống cửa hàng PNJ Miễn
-                            phí
+                            Sản phẩm trong 48h tại hệ thống cửa hàng Dimond City
+                            Miễn phí
                           </p>
                         </li>
                         <li className="ps-0">
-                          <i class="bx bxs-check-shield"></i>
+                          <i className="bx bxs-check-shield"></i>
                           <p className="m-0 ms-2">
                             Giao nhanh Toàn Quốc 1-7 ngày
                           </p>
@@ -93,6 +94,40 @@ export default function Product() {
                 </div>
               )
           )}
+          <div className="row">
+            <h4 className="product__other__title mt-5">Thông tin chi tiết</h4>
+            <div className="row mb-5 accordion__list">
+              <div className="col col-12">
+                {" "}
+                <Accordion classNameAccordion="p-1" title="Mô tả sản phẩm">
+                  <p>
+                    Justo dolore et elitr takimata diam ipsum rebum gubergren
+                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
+                    sed.
+                  </p>
+                </Accordion>
+              </div>
+              <div className="col col-12">
+                <Accordion classNameAccordion="p-1" title="Chính sách hoàn trả">
+                  <p>
+                    Justo dolore et elitr takimata diam ipsum rebum gubergren
+                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
+                    sed.
+                  </p>
+                </Accordion>
+              </div>
+              <div className="col col-12">
+                {" "}
+                <Accordion classNameAccordion="p-1" title="Câu hỏi thường gặp">
+                  <p>
+                    Justo dolore et elitr takimata diam ipsum rebum gubergren
+                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
+                    sed.
+                  </p>
+                </Accordion>
+              </div>
+            </div>
+          </div>
           <div className="row">
             <div className="product__other">
               <div className="row ">
@@ -108,7 +143,7 @@ export default function Product() {
                       style={{ width: "100%" }}
                       to={`/chi-tiet/${to_slug(e.title)}`}
                     >
-                      <CardItem img={e.img} title={e.title} price={e.price} />
+                      <CardItem item={e} />
                     </Link>
                   </div>
                 ))}

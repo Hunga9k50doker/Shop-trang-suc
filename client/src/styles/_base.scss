@@ -27,8 +27,14 @@ table {
     border: 1px solid #ccc;
     padding: 8px 16px;
     text-align: center;
+    img {
+      width: 50px;
+      height: 50px;
+    }
   }
-
+  // .last__row {
+  //   @include flex(center, space-around);
+  // }
   thead {
     color: $white-color;
     background: $primary-color;

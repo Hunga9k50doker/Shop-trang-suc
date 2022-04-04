@@ -3,25 +3,40 @@ import {
   CircularProgressbarWithChildren,
   buildStyles,
 } from "react-circular-progressbar";
-const CardItem = (props) => {
+const CardItem = ({ item, handleAddWishlist }) => {
+  const { img, title, desc, price, colors, materials, material_golds, sexs } =
+    item;
   const heartIconRef = useRef(null);
+  const cardRef = useRef(null);
+
   const [like, setLike] = useState(false);
+
+  const handleEvents = {
+    addWishlist: (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      heartIconRef.current.addEventListener("click", () => {
+        // console.log(typeof handleAddWishlist(item));
+      });
+    },
+  };
   useEffect(() => {
     heartIconRef.current.addEventListener("click", () => setLike(!like));
   }, [like]);
+
   return (
-    <div className="card__item">
+    <div className="card__item" ref={cardRef}>
       <i
         ref={heartIconRef}
-        onClick={(e) => e.preventDefault()}
+        onClick={handleEvents.addWishlist}
         className={`card__icon__like bx ${like ? "bxs-heart" : "bx-heart"}`}
       ></i>
       <div className="card__item__header">
-        <img src={props.img} alt="" />
+        <img src={img} alt="" />
       </div>
       <div className="card__item__body">
-        <p className="card__item__title">{props.title}</p>
-        <p className="card__item__price">{props.price} vnđ</p>
+        <p className="card__item__title">{title}</p>
+        <p className="card__item__price">{price} vnđ</p>
       </div>
     </div>
   );

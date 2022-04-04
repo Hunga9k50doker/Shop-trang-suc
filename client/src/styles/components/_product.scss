@@ -47,4 +47,14 @@
       color: $text-color;
     }
   }
+  .accordion__list {
+    .accordion {
+      max-width: 50%;
+      margin: auto;
+      &__title {
+        border: 1px solid #ccc;
+      }
+     
+    }
+  }
 }

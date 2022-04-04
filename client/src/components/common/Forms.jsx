@@ -55,7 +55,7 @@ const FormSearch = () => {
       <div className="form__render">
         {arrPro.slice(0, 4).map((e, id) => (
           <Link to="#" key={id}>
-            <CardItem img={e.img} title={e.title} price={e.price} />
+            <CardItem item={e} />
           </Link>
         ))}
       </div>
