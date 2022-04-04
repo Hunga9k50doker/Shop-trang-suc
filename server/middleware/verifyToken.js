@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const verifyToken = async (req, res, next) => {
-  const authToken = req.header("Authorization");
+  const authToken = await req.header("Authorization");
   const token = authToken && authToken.split(" ")[1];
   if (!token) {
     return res.json({ success: false, message: "Token not found" });

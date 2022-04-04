@@ -1,7 +1,6 @@
 import UserModel from "../models/User.model.js";
 import argon2 from "argon2";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
 const generateToken = (user) => {
   const token = jwt.sign(
@@ -67,7 +66,7 @@ export const login = async (req, res) => {
 //register function
 
 export const register = async (req, res) => {
-  const { username, password, repassword } = req.body;
+  const { username, password, repassword, name, telephone } = req.body;
   if (password !== repassword) {
     return res
       .status(400)
@@ -86,6 +85,8 @@ export const register = async (req, res) => {
     const newUser = new UserModel({
       username,
       password: encryptedPassword,
+      name,
+      telephone,
     });
 
     await newUser.save();

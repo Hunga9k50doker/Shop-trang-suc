@@ -106,3 +106,50 @@ export const updateCartDetail = async (req, res) => {
     console.log(error.message);
   }
 };
+
+export const addMultipleProductToCart = async (req, res) => {
+  const { _id } = req;
+  const { idProducts } = req.body;
+  try {
+    const cart = await CartModel.findOne({ user: _id });
+    idProducts.map((idProduct) => {
+      const cartDetail = cart.cartDetails.find(
+        (cartDetail) => cartDetail.product.toString() === idProduct
+      );
+      if (cartDetail) {
+        cartDetail.quantity += 1;
+      } else {
+        cart.cartDetails.push({
+          product: idProduct,
+          quantity: 1,
+        });
+      }
+    });
+
+    await cart.save();
+    return res.status(200).json({ success: true, data: cart });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const removeMultipleProductFromCart = async (req, res) => {
+  const { _id } = req;
+  const { idProducts } = req.body;
+  try {
+    const cart = await CartModel.findOne({ user: _id });
+    idProducts.map((idProduct) => {
+      const cartDetail = cart.cartDetails.find(
+        (cartDetail) => cartDetail.product.toString() === idProduct
+      );
+      if (cartDetail) {
+        cart.cartDetails.pull(cartDetail);
+      }
+    });
+
+    await cart.save();
+    return res.status(200).json({ success: true, data: cart });
+  } catch (error) {
+    console.log(error.message);
+  }
+};

@@ -12,9 +12,11 @@ import verifyToken from "../middleware/verifyToken.js";
 const router = express.Router();
 
 router.get("/", verifyToken, verifyAdmin, getAllFavorite);
-router.get("/user", verifyToken, getFavouriteUser);
-router.post("/user", verifyToken, createFavourite);
-router.put("/user", verifyToken, addProductToFavourite);
-router.delete("/user", verifyToken, deleteProductFromFavourite);
+router
+  .route("/user")
+  .get(verifyToken, getFavouriteUser)
+  .post(verifyToken, createFavourite)
+  .put(verifyToken, addProductToFavourite)
+  .delete(verifyToken, deleteProductFromFavourite);
 
 export default router;

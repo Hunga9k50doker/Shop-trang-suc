@@ -18,15 +18,18 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  // đồng hồ, trang sức, phụ kiện.
+  type: {
+    type: String,
+    required: true,
+  },
   category: {
-    jewelryType: {
-      type: String,
-      required: true,
-    },
+    //Vàng bạc kim cương
     material: {
       type: String,
       required: true,
     },
+    //22k, 24k
     materialGold: {
       type: String,
       required: true,
@@ -39,6 +42,20 @@ const ProductSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    brand: {
+      type: String,
+      required: true,
+    },
+    isCouple: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  },
+  // Cho nàng, cha mẹ, ...
+  gift: {
+    type: Array,
+    required: true,
   },
 });
 

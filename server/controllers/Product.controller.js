@@ -22,7 +22,7 @@ export const getProduct = async (req, res) => {
 //filter products by category
 
 export const createProduct = async (req, res) => {
-  const { name, description, imgsUrl, price, category } = req.body;
+  const { name, description, imgsUrl, price, type, category, gift } = req.body;
   try {
     const product = await ProductModel.create({
       name,
@@ -30,6 +30,8 @@ export const createProduct = async (req, res) => {
       imgsUrl,
       price,
       category,
+      gift,
+      type,
     });
     await product.save();
     return res.status(200).json({ success: true, data: product });
@@ -40,7 +42,7 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, imgsUrl, price, category } = req.body;
+  const { name, description, imgsUrl, price, gift, category, type } = req.body;
   try {
     const product = await ProductModel.findById(id);
     if (!product) {
@@ -53,6 +55,8 @@ export const updateProduct = async (req, res) => {
     product.imgsUrl = imgsUrl;
     product.price = price;
     product.category = category;
+    product.type = type;
+    product.gift = gift;
     await product.save();
     return res.status(200).json({ success: true, data: product });
   } catch (error) {

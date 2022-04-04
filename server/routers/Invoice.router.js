@@ -11,8 +11,10 @@ import verifyToken from "../middleware/verifyToken.js";
 const router = express.Router();
 
 router.get("/", verifyToken, verifyAdmin, getAllInvoice);
-router.get("/user", verifyToken, getInvoiceUser);
-router.post("/user", verifyToken, createInvoice);
-router.put("/user", verifyToken, changeStatus);
+router
+  .route("/user")
+  .get(verifyToken, getInvoiceUser)
+  .post(verifyToken, createInvoice)
+  .put(verifyToken, changeStatus);
 
 export default router;

@@ -11,10 +11,14 @@ import verifyToken from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/", getAllProducts);
-router.get("/:id", getProduct);
-router.post("/", verifyToken, verifyAdmin, createProduct);
-router.put("/:id", verifyToken, verifyAdmin, updateProduct);
-router.delete("/:id", verifyToken, verifyAdmin, deleteProduct);
+router
+  .route("/")
+  .get(getAllProducts)
+  .post(verifyToken, verifyAdmin, createProduct);
+router
+  .route("/:id")
+  .get(getProduct)
+  .put(verifyToken, verifyAdmin, updateProduct)
+  .delete(verifyToken, verifyAdmin, deleteProduct);
 
 export default router;
