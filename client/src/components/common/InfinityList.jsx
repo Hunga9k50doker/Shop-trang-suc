@@ -1,11 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import Skeleton from "react-loading-skeleton";
+import { ProductContext } from "../../provider/context/ProductContext";
 import { to_slug } from "../../utils/utils";
 import { CardItem } from "./CardItem";
 
 const InfinityList = (props) => {
+  const {
+    productState: { products, loading },
+  } = useContext(ProductContext);
+  // console.log(products);
   const perLoad = props.amount; // items each load
 
   const listRef = useRef(null);
@@ -53,13 +59,26 @@ const InfinityList = (props) => {
 
   return (
     <div className="row" ref={listRef}>
-      {data.map((e, id) => (
-        <div key={id} className="col col-xl-4 col-md-6 col-sm-12 pe-0">
-          <Link style={{ width: "100%" }} to={`/chi-tiet/${to_slug(e.title)}`}>
-            <CardItem item={e} />
-          </Link>
-        </div>
-      ))}
+      {loading === false &&
+        data.map((e, id) => (
+          <div
+            key={id}
+            className={`col pe-0 col-sm-12 ${
+              props.classNameCol ? props.classNameCol : "col-xl-4 col-md-6 "
+            }`}
+          >
+            <Link
+              style={{ width: "100%" }}
+              to={`/chi-tiet/${to_slug(e.title)}`}
+            >
+              {loading === true ? (
+                <Skeleton height="300px"></Skeleton>
+              ) : (
+                <CardItem item={e} />
+              )}
+            </Link>
+          </div>
+        ))}
     </div>
   );
 };

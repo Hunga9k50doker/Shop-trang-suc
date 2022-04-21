@@ -8,6 +8,9 @@ import theme_01 from "./img/other/bst-timeless-diamond.jpg";
 import theme_02 from "./img/other/Polygon 1.svg";
 import theme_03 from "./img/other/Polygon 2.svg";
 import theme_04 from "./img/other/theme_diamond.svg";
+import theme_fb from "./img/other/fb.png";
+import theme_gg from "./img/other/gg.png";
+import theme_gh from "./img/other/gh.png";
 
 // product
 import product_img_01 from "./img/products/gbctxmy000165-bong-tai-vang-18k-dinh-da-citrine-pnj-01.png";
@@ -33,6 +36,9 @@ export {
   theme_02,
   theme_03,
   theme_04,
+  theme_fb,
+  theme_gg,
+  theme_gh,
   product_img_01,
   product_img_02,
   product_img_03,

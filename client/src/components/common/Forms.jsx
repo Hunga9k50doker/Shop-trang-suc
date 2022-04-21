@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+// import Modal from "./Modal";
+import { to_slug } from "../../utils/utils";
 import { CardItem } from "./CardItem";
 import arrPro from "../../assets/fake-data/Product";
 import { AuthContext } from "../../provider/context/AuthContext";
-
+import { theme_fb, theme_gg, theme_gh } from "../../assets/img";
 const FormContact = (props) => {
   return (
     <form
@@ -30,12 +32,11 @@ const FormContact = (props) => {
   );
 };
 
-const FormSearch = () => {
-  const [items, setItems] = useState();
+const FormSearch = ({ active, setActive }) => {
   const refInputSearch = useRef();
-  useEffect(() => {
-    setItems();
-  }, []);
+  const [searchItem, setSearchItem] = useState("");
+  let item = 8;
+  let count = 0;
   return (
     <form action="#" onClick={(e) => e.stopPropagation()} className="form">
       <div className="form__body">
@@ -45,31 +46,48 @@ const FormSearch = () => {
       text"
           placeholder="Tìm sản phẩm..."
           className="form__input"
-          onChange={() => setItems()}
+          onChange={(e) => setSearchItem(e.target.value)}
         />
-        <Button
-          classNameBtn="btn__search"
-          icon="bx bx-search-alt bx-tada"
-          content="Tìm kiếm"
-        ></Button>
       </div>
       <div className="form__render">
-        {arrPro.slice(0, 4).map((e, id) => (
-          <Link to="#" key={id}>
-            <CardItem item={e} />
-          </Link>
-        ))}
+        {arrPro
+          .filter((val) => {
+            if (searchItem === "") {
+              return val;
+            } else if (
+              val.title.toLowerCase().includes(searchItem.toLowerCase())
+            ) {
+              count++;
+              item = count;
+              return val;
+            }
+          })
+          .slice(0, item)
+          .map((e, id) => (
+            <Link
+              key={id}
+              to={`/chi-tiet/${to_slug(e.title)}`}
+              onClick={() => {
+                setActive(!active);
+              }}
+            >
+              <CardItem item={e} />
+            </Link>
+          ))}
       </div>
     </form>
   );
 };
-
+// ============login========================
 const FormLogin = () => {
+  // const {
+  //   authState: { isAuthenticated },
+  // } = useContext(AuthContext);
   const [user, setUser] = useState({
     username: "",
     password: "",
   });
-  const { login } = useContext(AuthContext);
+  const { login, LoginWithFirebase } = useContext(AuthContext);
   const handleChange = (e) => {
     setUser({
       ...user,
@@ -80,6 +98,7 @@ const FormLogin = () => {
     e.preventDefault();
     login(user);
   };
+
   return (
     <div className="form ">
       <form
@@ -123,6 +142,44 @@ const FormLogin = () => {
           </li>
           <li className="form__item m-2" onClick={handleSubmit}>
             <Button content="Đăng nhập" classNameBtn="btn__submit" />
+          </li>
+          <li className="form__item form__item__login__auth m-2">
+            {theme_fb ? (
+              <img
+                src={theme_fb}
+                alt=""
+                onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
+              />
+            ) : (
+              <i
+                className="bx bxl-facebook-circle"
+                onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
+              ></i>
+            )}
+            {theme_gg ? (
+              <img
+                src={theme_gg}
+                alt=""
+                onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
+              />
+            ) : (
+              <i
+                className="bx bxl-google"
+                onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
+              ></i>
+            )}
+            {theme_gh ? (
+              <img
+                src={theme_gh}
+                alt=""
+                onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
+              />
+            ) : (
+              <i
+                class="bx bxl-github"
+                onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
+              ></i>
+            )}
           </li>
         </ul>
       </form>
@@ -234,15 +291,9 @@ const FormRegister = () => {
 
 const FormDetail = (props) => {
   return (
-    <div className="form">
-      <div className="form__detail">
-        <h3 className="form__detail__header">
-          <p className="form__title">
-            Thông tin chi tiết đơn hàng: {props.title}{" "}
-          </p>
-        </h3>
-        <div className="form__detail__body">{props.children}</div>
-      </div>
+    <div className="form form__detail">
+      <p className="form__title">Thông tin chi tiết đơn hàng: {props.title} </p>
+      <div className="">{props.children}</div>
     </div>
   );
 };
@@ -284,11 +335,67 @@ const FormSubmit = () => {
             ></textarea>
           </div>
         </div>
+        <div className="row">
+          <div className="col col-xl-12 col-md-12 col-sm-12">
+            <Button style={{ float: "right" }} content="Gửi ý kiến" />
+          </div>
+        </div>
       </div>
     </form>
   );
 };
 
+const FormConfirm = (props) => {
+  return (
+    <div className="form__confirm">
+      <h3 className="form__title">
+        {props.title ? props.title : "Bạn muốn xác nhận hành động này?"}
+      </h3>
+      <Button content="Xác nhận" />
+      <Button content="Hủy" />
+    </div>
+  );
+};
+const FormEdit = (props) => {
+  // const [isActive, setIsActive] = useState(false);
+  return (
+    <form className="form form__edit">
+      <h3 className="form__title">{props.title}</h3>
+      <ul className="form__list">{props.children}</ul>
+      <div className="row">
+        <div
+          className="col"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Button content="Cập nhật" />
+        </div>
+      </div>
+      {/* {isActive ? (
+        <Modal active={isActive} setActive={setIsActive}>
+          <FormConfirm></FormConfirm>
+        </Modal>
+      ) : (
+        ""
+      )} */}
+    </form>
+  );
+};
+const FormAdd = (props) => {
+  return (
+    <form className="form form__add">
+      <h3 className="form__title">{props.title}</h3>
+      <ul className="form__list">{props.children}</ul>
+      <div className="row">
+        <div
+          className="col"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Button content="Thêm sản phẩm" />
+        </div>
+      </div>
+    </form>
+  );
+};
 export {
   FormContact,
   FormSearch,
@@ -296,4 +403,7 @@ export {
   FormRegister,
   FormDetail,
   FormSubmit,
+  FormConfirm,
+  FormEdit,
+  FormAdd,
 };

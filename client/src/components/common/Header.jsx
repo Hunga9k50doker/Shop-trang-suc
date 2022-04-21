@@ -1,20 +1,21 @@
 import { useState, useEffect, useContext } from "react";
+import Skeleton from "react-loading-skeleton";
+// import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/context/AuthContext";
 
-import { FormLogin, FormRegister } from "./Forms";
+import { FormLogin, FormRegister, FormEdit } from "./Forms";
 import Modal from "./Modal";
 export default function Header() {
-  //   const response = await axios.post("http://localhost:5000/api/users/login", {
-  //   username: "hello5423",
-  //   password: "12233",
-  // });
-  // console.log(response.data);
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
+  const [isActiveForm, setIsActiveForm] = useState(false);
+  const { logout } = useContext(AuthContext);
   const {
-    authState: { user, loading, isAuthenticated },
+    authState: { user, loading, isAuthenticated, userAuth },
   } = useContext(AuthContext);
-  console.log(isAuthenticated);
+  // console.log(isAuthenticated);
+  // console.log(isLoginAuth);
+  // console.log(userAuth);
   useEffect(
     () => {
       const res = document.querySelector(".label__register");
@@ -35,7 +36,7 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLogin, isRegister]
   );
-  if (loading) return "Loading...";
+  if (loading) return <Skeleton height="50px" />;
   return (
     <div className="header">
       <ul className="header__left">
@@ -51,6 +52,7 @@ export default function Header() {
       <ul className="header__right">
         {!isAuthenticated ? (
           <>
+            {console.log()}
             <li className="login strong" onClick={() => setIsLogin(!isLogin)}>
               <i className="bx bx-log-in"></i>
               <p>Đăng nhập</p>
@@ -77,7 +79,50 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p>Tài khoản của tôi</p>
+            <p>Hello, {user.name ? user.name : userAuth.displayName}</p>
+            <ul className="my__account__list">
+              <li
+                className="my__account__item"
+                onClick={() => setIsActiveForm(true)}
+              >
+                <i className="bx bx-cog me-2"></i>
+                Cài đặt
+              </li>
+              <li className="my__account__item" onClick={logout}>
+                <i className="bx bx-log-out-circle me-2"></i>
+                Đăng xuất
+              </li>
+            </ul>
+            {isActiveForm ? (
+              <Modal
+                style={{
+                  backgroundImage:
+                    " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                }}
+                active={isActiveForm}
+                setActive={setIsActiveForm}
+              >
+                <FormEdit title="Cập nhật thông tin người dùng">
+                  <li className="form__item">
+                    <input type="text" placeholder="Tên người dùng" />
+                  </li>
+                  <li className="form__item">
+                    <input type="password" placeholder="Mật khẩu" />
+                  </li>
+                  <li className="form__item">
+                    <input type="text" placeholder="Họ và tên" />
+                  </li>
+                  <li className="form__item">
+                    <input type="text" placeholder="Địa chỉ" />
+                  </li>
+                  <li className="form__item">
+                    <input type="number" placeholder="Số điện thoại" />
+                  </li>
+                </FormEdit>
+              </Modal>
+            ) : (
+              ""
+            )}
           </li>
         )}
       </ul>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import Helmet from "../../components/common/Helmet";
@@ -124,9 +124,33 @@ const dataTable_02 = [
   },
 ];
 ChartJS.register(ArcElement, Title, Tooltip, Legend);
-
+const Selection = () => {
+  const selectedRef = useRef(null);
+  const handleChange = () => {
+    if (selectedRef.current) {
+      if (selectedRef.current.value == 1) {
+        selectedRef.current.style.color = "red";
+      } else if (selectedRef.current.value == 2) {
+        selectedRef.current.style.color = "green";
+      }
+    }
+  };
+  return (
+    <select
+      style={{ fontWeight: "bold" }}
+      onChange={handleChange}
+      ref={selectedRef}
+    >
+      <option value="0">Xác nhận</option>
+      <option value="1">Đang giao</option>
+      <option value="2">Đã giao</option>
+    </select>
+  );
+};
 const OrderAdmin = () => {
-  const [viewDetail, setViewDetail] = useState(false);
+  const [viewDetail, setViewDetail] = useState(null);
+  const [searchItem, setSearchItem] = useState("");
+
   const dataOrder = {
     labels: ["Trên 20k", "Trên 15k", "Trên 10k", "Trên 5k"],
     datasets: [
@@ -151,142 +175,188 @@ const OrderAdmin = () => {
     },
   };
 
-  // useEffect(() => {
-  //   setViewDetail();
-  // }, [viewDetail]);
   return (
-    <Helmet title='Quản lý đơn hàng'>
-
-    <div className="order__admin">
-      <div className="container mt-4">
-        <div className="row">
-          <div className="col col-xl-6 col-sm-12 col-md-12 ps-0">
-            <Table
-              title="Đơn đặt hàng từ các tỉnh"
-              subtitle="Đơn đặt hàng dự trên vị trí quốc gia bạn"
-            >
+    <Helmet title="Quản lý đơn hàng">
+      <div className="order__admin">
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col col-xl-6 col-sm-12 col-md-12 ps-0">
+              <Table
+                title="Đơn đặt hàng từ các tỉnh"
+                subtitle="Đơn đặt hàng dự trên vị trí quốc gia bạn"
+              >
+                <table>
+                  <thead>
+                    <tr>
+                      <td>Tỉnh</td>
+                      <td>Số lượng khách hàng</td>
+                      <td>Phần trăm</td>
+                      <td>Số lượng thoát</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dataTable_01.map((e, id) => (
+                      <tr key={id}>
+                        <td>{e.province}</td>
+                        <td>{e.users}</td>
+                        <td>{e.percent}</td>
+                        <td>{e.exits}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </Table>
+            </div>
+            <div className="col col-xl-6 col-sm-12 col-md-12">
+              <Table
+                title="Đơn đặt hàng đang hoạt động"
+                subtitle="Thông tin đơn hàng thời gian thực và dữ liệu xếp hạng"
+              >
+                <div className="table__body">
+                  <div className="row">
+                    <div className="col-6">
+                      <ul className="table__body__data">
+                        <li>
+                          <span></span>
+                          23,213K
+                        </li>
+                        <li>
+                          <span></span>
+                          15,13K
+                        </li>
+                        <li>
+                          <span></span>
+                          10,23K
+                        </li>
+                        <li>
+                          <span></span>
+                          5,3K
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col col-6 ">
+                      <Doughnut
+                        data={dataOrder}
+                        height={400}
+                        width={600}
+                        options={config}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </Table>
+            </div>
+          </div>
+          <div className="row mt-4">
+            <Table title="Danh sách đặt hàng">
+              <input
+                type="text"
+                placeholder="Tìm kiếm sdt..."
+                onChange={(e) => setSearchItem(e.target.value)}
+              />
               <table>
                 <thead>
                   <tr>
-                    <td>Tỉnh</td>
-                    <td>Số lượng khách hàng</td>
-                    <td>Phần trăm</td>
-                    <td>Số lượng thoát</td>
+                    <td>ID</td>
+                    <td>Tên tài khoản</td>
+                    <td>Số điện thoại</td>
+                    <td>ID đặt hàng</td>
+                    <td>Tổng tiền</td>
+                    <td>Thời gian</td>
+                    <td>Chi tiết</td>
+                    <td>Trạng thái</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {dataTable_01.map((e, id) => (
-                    <tr key={id}>
-                      <td>{e.province}</td>
-                      <td>{e.users}</td>
-                      <td>{e.percent}</td>
-                      <td>{e.exits}</td>
-                    </tr>
-                  ))}
+                  {dataTable_02
+                    .filter((val) => {
+                      if (searchItem === "") {
+                        return val;
+                      } else if (
+                        val.sdt
+                          .toLowerCase()
+                          .includes(searchItem.toLowerCase()) ||
+                        val.id_order
+                          .toLowerCase()
+                          .includes(searchItem.toLowerCase())
+                      ) {
+                        return val;
+                      }
+                    })
+                    .map((e, id) => (
+                      <tr key={id}>
+                        <td>{id}</td>
+                        <td>{e.usename}</td>
+                        <td>{e.sdt}</td>
+                        <td>{e.id_order}</td>
+                        <td>{e.price}</td>
+                        <td>{e.date}</td>
+                        <td className="view__details">
+                          <Button
+                            content="Xem chi tiết"
+                            onClick={() => setViewDetail(id)}
+                          ></Button>
+                        </td>
+                        {viewDetail === id ? (
+                          <Modal
+                            setViewDetail={setViewDetail}
+                            style={{
+                              backgroundImage:
+                                " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                            }}
+                          >
+                            <FormDetail title={e.id_order}>
+                              <div className="form__detail__header">
+                                <p>Tên khách hàng: {e.usename}</p>
+                                <p> Số điện thoại: {e.sdt}</p>
+                                <p>Thời gian đặt hàng: {e.date}</p>
+                                <p>
+                                  Tổng tiền: <strong>{e.price} vnđ</strong>
+                                </p>
+                              </div>
+                              <div className="form__detail__body">
+                                <h5 className="form__detail__body__title mt-5">
+                                  Thông tin chi tiết
+                                </h5>
+                                <table>
+                                  <thead>
+                                    <tr>
+                                      <td></td>
+                                      <td>Tên sản phẩm</td>
+                                      <td>Số lượng</td>
+                                      <td>Giá tiền</td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td></td>
+                                      <td>Nhẫn vàng 18k</td>
+                                      <td>3</td>
+                                      <td>23000</td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="4">Tổng tiền: {e.price}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </FormDetail>
+                          </Modal>
+                        ) : (
+                          ""
+                        )}
+                        <td>
+                          <Selection />
+                          {/* <Button content="Xác nhận" /> */}
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </Table>
           </div>
-          <div className="col col-xl-6 col-sm-12 col-md-12">
-            <Table
-              title="Đơn đặt hàng đang hoạt động"
-              subtitle="Thông tin đơn hàng thời gian thực và dữ liệu xếp hạng"
-            >
-              <div className="table__body">
-                <div className="row">
-                  <div className="col-6">
-                    <ul className="table__body__data">
-                      <li>
-                        <span></span>
-                        23,213K
-                      </li>
-                      <li>
-                        <span></span>
-                        15,13K
-                      </li>
-                      <li>
-                        <span></span>
-                        10,23K
-                      </li>
-                      <li>
-                        <span></span>
-                        5,3K
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col col-6 ">
-                    <Doughnut
-                      data={dataOrder}
-                      height={400}
-                      width={600}
-                      options={config}
-                    />
-                  </div>
-                </div>
-              </div>
-            </Table>
-          </div>
-        </div>
-        <div className="row mt-4">
-          <Table title="Danh sách đặt hàng">
-            <input
-              type="text"
-              name="search_order"
-              id="search_order"
-              placeholder="Tìm kiếm sdt..."
-            />
-            <table>
-              <thead>
-                <tr>
-                  <td>ID</td>
-                  <td>Tên tài khoản</td>
-                  <td>Số điện thoại</td>
-                  <td>ID đặt hàng</td>
-                  <td>Tổng tiền</td>
-                  <td>Thời gian</td>
-                  <td>Chi tiết</td>
-                  <td>Trạng thái</td>
-                </tr>
-              </thead>
-              <tbody>
-                {dataTable_02.map((e, id) => (
-                  <tr key={id}>
-                    <td>{id}</td>
-                    <td>{e.usename}</td>
-                    <td>{e.sdt}</td>
-                    <td>{e.id_order}</td>
-                    <td>{e.price}</td>
-                    <td>{e.date}</td>
-                    <td
-                      className="view__details"
-                      onClick={(current) =>
-                        current
-                          ? setViewDetail(!viewDetail)
-                          : console.log(current)
-                      }
-                    >
-                      Xem chi tiết
-                      {viewDetail ? (
-                        <Modal>
-                          <FormDetail title={e.id_order}>
-                            <p>adsad</p>
-                          </FormDetail>
-                        </Modal>
-                      ) : (
-                        ""
-                      )}
-                    </td>
-                    <td>
-                      <Button content="Xác nhận" />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </Table>
         </div>
       </div>
-    </div>
     </Helmet>
   );
 };

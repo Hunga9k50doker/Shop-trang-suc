@@ -43,7 +43,7 @@ export default function Product() {
                       <div className="product__add__cart">
                         <CountNumber />
                         <Button
-                          classNameBtn="add mt-2"
+                          classNameBtn="add ms-5"
                           content={"Thêm vào giỏ hàng"}
                         />
                       </div>

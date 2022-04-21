@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
-import { CardItem } from "../components/common/CardItem";
 import { FormContact } from "../components/common/Forms";
-import { to_slug } from "../utils/utils";
 import Button from "../components/common/Button";
+import InfinityList from "../components/common/InfinityList";
 //  ip data
 import {
   banner_01,
@@ -19,9 +18,6 @@ import {
 } from "../assets/img";
 import arrPro from "../assets/fake-data/Product";
 export default function Home() {
-  // const handleAddWishlist = (item) => {
-  //   // console.log(item);
-  // };
   return (
     <Helmet title="Trang chủ">
       <div className="home">
@@ -53,22 +49,11 @@ export default function Home() {
           </div>
 
           <div className="row m-4">
-            {arrPro.map(
-              (e, id) =>
-                arrPro.length > 0 && (
-                  <div
-                    key={id}
-                    className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12"
-                  >
-                    <Link to={`/chi-tiet/${to_slug(e.title)}`}>
-                      <CardItem
-                        // handleAddWishlist={handleAddWishlist}
-                        item={e}
-                      />
-                    </Link>
-                  </div>
-                )
-            )}
+            <InfinityList
+              amount={12}
+              data={arrPro}
+              classNameCol="col-xl-3 col-md-6"
+            />
           </div>
         </div>
         <FormContact

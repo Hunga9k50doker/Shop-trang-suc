@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -11,6 +11,7 @@ import {
   Legend,
 } from "chart.js";
 import Helmet from "../../components/common/Helmet";
+import { AuthContext } from "../../provider/context/AuthContext";
 import { SideBarRightAdmin } from "../../components/common/SideBars";
 import { CardStyleOne } from "../../components/common/CardItem";
 import userAvatar from "../../assets/img/other/useraccountdefault.png";
@@ -123,44 +124,47 @@ const RevenueByMonthsChart = () => {
   );
 };
 const HomeAdmin = () => {
+  const {
+    authState: { user, loading, isAuthenticated, userAuth },
+  } = useContext(AuthContext);
   return (
-    <Helmet title='Trang chủ quản lý'>
+    <Helmet title="Trang chủ quản lý">
+      <div className="home__admin">
+        <div className="container p-0">
+          <div className="row ">
+            <div className=" col col-xxl-8 col-xl-8 col-md-6 col-sm-12">
+              <div className="account ms-4 p-2 mt-2 mb-4">
+                <img src={userAvatar} alt="" />
 
-    <div className="home__admin">
-      <div className="container p-0">
-        <div className="row ">
-          <div className=" col col-xxl-8 col-xl-8 col-md-6 col-sm-12">
-            <div className="account ms-4 p-2 mt-2 mb-4">
-              <img src={userAvatar} alt="" />
-              <p className="account__title">NH2310</p>
-            </div>
-            <div className="row">
-              {data.map((e, id) => (
-                <div
-                  key={id}
-                  className="col mb-4 col-xxl-6 col-md-12 col-sm-12"
-                >
-                  <CardStyleOne
-                    title={e.title}
-                    subtitle={e.subtitle}
-                    percent={e.percent}
-                    value={e.value}
-                  />
+                <p className="account__title">{user.name}</p>
+              </div>
+              <div className="row">
+                {data.map((e, id) => (
+                  <div
+                    key={id}
+                    className="col mb-4 col-xxl-6 col-md-12 col-sm-12"
+                  >
+                    <CardStyleOne
+                      title={e.title}
+                      subtitle={e.subtitle}
+                      percent={e.percent}
+                      value={e.value}
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="row">
+                <div className="revenue__month p-2 mb-4 ">
+                  <RevenueByMonthsChart />
                 </div>
-              ))}
-            </div>
-            <div className="row">
-              <div className="revenue__month p-2 mb-4 ">
-                <RevenueByMonthsChart />
               </div>
             </div>
-          </div>
-          <div className=" col col-xxl-4 col-xl-4 col-md-12 col-sm-12">
-            <SideBarRightAdmin />
+            <div className=" col col-xxl-4 col-xl-4 col-md-12 col-sm-12">
+              <SideBarRightAdmin />
+            </div>
           </div>
         </div>
       </div>
-    </div>
     </Helmet>
   );
 };

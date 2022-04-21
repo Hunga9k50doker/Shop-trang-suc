@@ -43,16 +43,12 @@ export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ username });
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
+      return res.json({ success: false, message: "User not found" });
     }
     const isMatch = await argon2.verify(user.password, password);
 
     if (!isMatch) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Password is incorrect" });
+      return res.json({ success: false, message: "Password is incorrect" });
     }
 
     const token = generateToken(user);
@@ -130,16 +126,13 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   if (req._id !== id && req.role !== "admin") {
-    return res
-      .status(401)
-      .json({ success: false, message: "You are not authorized" });
+    return res.json({ success: false, message: "You are not authorized" });
   }
   const { name, telephone, address } = req.body;
   try {
     const user = await UserModel.findById(id);
     if (!user) {
       return res
-        .status(404)
         .json({ success: false, message: "User not found" });
     }
     user.name = name;
@@ -147,8 +140,8 @@ export const updateUser = async (req, res) => {
     user.address = address;
     await user.save();
     const { username, password, ...rest } = user.toObject();
-    return res.status(200).json({ success: true, data: rest });
+    return res.json({ success: true, data: rest });
   } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
+    return res.json({ success: false, message: error.message });
   }
 };

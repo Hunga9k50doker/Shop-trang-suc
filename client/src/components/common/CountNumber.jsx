@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const CountNumber = () => {
   const [count, setCount] = useState(1);
   return (
-    <div className="count__number mt-2 me-5">
+    <div className="count__number">
       <p
         className="count__number__down "
         onClick={() =>

@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import { banner_sub_02 } from "../assets/img";
-import { CardItem } from "../components/common/CardItem";
 import { SideBarFilter } from "../components/common/SideBars";
-import { to_slug } from "../utils/utils";
-import arrPro from "../assets/fake-data/Product";
 const arr = [
   {
     title: "Cho nàng",
@@ -20,31 +17,33 @@ const arr = [
 export default function Gifts() {
   let [path, setPath] = useState("");
   path = window.location.pathname;
-  console.log(path);
   useEffect(() => setPath(), [path]);
   return (
-    <Helmet title='Quà tặng'>
-    <div className="gifts">
-      {arr.map(
-        (e, id) =>
-          e.path === path && (
-            <Banner key={id} img={banner_sub_02} title={`Quà tặng ${e.title}`}>
-              <div className="sub__link">
-                <Link to="/">Trang chủ</Link>
-                <i className="bx bx-chevron-right"></i>
-                <p>
-                  Quà tặng
+    <Helmet title="Quà tặng">
+      <div className="gifts">
+        {arr.map(
+          (e, id) =>
+            e.path === path && (
+              <Banner
+                key={id}
+                img={banner_sub_02}
+                title={`Quà tặng ${e.title}`}
+              >
+                <div className="sub__link">
+                  <Link to="/">Trang chủ</Link>
                   <i className="bx bx-chevron-right"></i>
-                  {e.title}
-                </p>
-              </div>
-            </Banner>
-          )
-      )}
-    
-            <SideBarFilter />
-         
-    </div>
+                  <p>
+                    Quà tặng
+                    <i className="bx bx-chevron-right"></i>
+                    {e.title}
+                  </p>
+                </div>
+              </Banner>
+            )
+        )}
+
+        <SideBarFilter />
+      </div>
     </Helmet>
   );
 }

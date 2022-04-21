@@ -1,4 +1,11 @@
 .order__admin {
+  .modal {
+    background-color: $four-color;
+    &__close {
+      color: $primary-color;
+    
+    }
+  }
   .table__body {
     &__data {
       font-weight: 500;

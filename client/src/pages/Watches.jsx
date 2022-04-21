@@ -3,11 +3,8 @@ import { Link } from "react-router-dom";
 import { Banner } from "../components/common/Banner";
 import Helmet from "../components/common/Helmet";
 import { banner_sub_02 } from "../assets/img";
-import { CardItem } from "../components/common/CardItem";
 import { SideBarFilter } from "../components/common/SideBars";
-import { to_slug } from "../utils/utils";
 
-import arrPro from "../assets/fake-data/Product";
 const arr = [
   {
     title: "Gucci",

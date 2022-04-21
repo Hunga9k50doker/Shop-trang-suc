@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
@@ -8,6 +8,8 @@ import CheckBox from "./CheckBox";
 import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
 import InfinityList from "./InfinityList";
 import arrPro from "../../assets/fake-data/Product";
+import { logo } from "../../assets/img";
+import { AuthContext } from "../../provider/context/AuthContext";
 const arrItemAdmin = [
   {
     title: "Trang Chủ",
@@ -125,12 +127,26 @@ const dataFilter = {
   ],
 };
 const SideBarLeftAdmin = () => {
+  const { logout } = useContext(AuthContext);
+
   return (
     <div className="sidebar">
       <div className="sidebar__left__admin">
-        {/* <Link to="/">
-        </Link> */}
-        <i className="header__icon bx bxs-category-alt mt-5 mb-5"></i>
+        <Link
+          to="/"
+          className="mt-5 mb-4"
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+          }}
+        >
+          {logo ? (
+            <img src={logo} alt="" style={{ transform: "scale(0.5)" }} />
+          ) : (
+            <i className="header__icon bx bxs-category-alt mt-5 mb-4"></i>
+          )}
+        </Link>
         <ul className="sidebar__list pe-0">
           {arrItemAdmin.map((e, id) => (
             <li key={id} className="sidebar__item slidebar__left__item pe-0">
@@ -148,7 +164,12 @@ const SideBarLeftAdmin = () => {
             </li>
           ))}
         </ul>
-        <Link to={"/"} title="Đăng xuất" className="sidebar__item__logout p-4">
+        <Link
+          onClick={logout}
+          to={"/"}
+          title="Đăng xuất"
+          className="sidebar__item__logout p-4"
+        >
           <i className="bx bx-log-out-circle m-2"></i>
           Đăng xuất
         </Link>

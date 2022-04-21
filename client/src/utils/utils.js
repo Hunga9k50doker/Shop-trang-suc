@@ -1,3 +1,4 @@
+import {useState} from 'react'
 function to_slug(str) {
   // Chuyển hết sang chữ thường
   str = str.toLowerCase();
@@ -42,4 +43,8 @@ const get_random = (arr, count) => {
   return arr.slice(start, start + count);
 };
 
+//  search 
+const hanldeSearch = () => {
+  
+}
 export { to_slug, sortLowToHigh, sortHighToLow, get_random };

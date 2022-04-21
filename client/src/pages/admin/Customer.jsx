@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../../components/common/Table";
 import Helmet from "../../components/common/Helmet";
 
@@ -71,16 +71,17 @@ const dataTable_02 = [
   },
 ];
 const CustomerAdmin = () => {
+  const [searchItem, setSearchItem] = useState("");
+
   return (
-    <Helmet title='Quản lý người dùng' >
+    <Helmet title="Quản lý người dùng">
       <div className="container">
         <div className="row mt-4">
           <div className="col">
             <Table title="Danh sách người dùng">
               <input
                 type="text"
-                name="search_order"
-                id="search_order"
+                onChange={(e) => setSearchItem(e.target.value)}
                 placeholder="Tìm kiếm..."
               />
               <table className="p-4">
@@ -95,18 +96,33 @@ const CustomerAdmin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataTable_02.map((e, id) => (
-                    <tr key={id}>
-                      <td>{id}</td>
-                      <td>{e.name_customer}</td>
-                      <td>{e.email}</td>
-                      <td>{e.sdt}</td>
-                      <td>{e.date}</td>
-                      <td>
-                        <i className="bx bx-trash"></i>
-                      </td>
-                    </tr>
-                  ))}
+                  {dataTable_02
+                    .filter((val) => {
+                      if (searchItem === "") {
+                        return val;
+                      } else if (
+                        val.sdt
+                          .toLowerCase()
+                          .includes(searchItem.toLowerCase()) ||
+                        val.name_customer
+                          .toLowerCase()
+                          .includes(searchItem.toLowerCase())
+                      ) {
+                        return val;
+                      }
+                    })
+                    .map((e, id) => (
+                      <tr key={id}>
+                        <td>{id}</td>
+                        <td>{e.name_customer}</td>
+                        <td>{e.email}</td>
+                        <td>{e.sdt}</td>
+                        <td>{e.date}</td>
+                        <td>
+                          <i className="bx bx-trash"></i>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </Table>

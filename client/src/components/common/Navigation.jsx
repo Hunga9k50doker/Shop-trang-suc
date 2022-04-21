@@ -152,7 +152,7 @@ export default function Navigation() {
   } = useContext(AuthContext);
   return (
     <div className="container-fluid">
-      <div ref={navRef} className={`nav `}>
+      <div ref={navRef} className="nav">
         <div className="nav__logo">
           <NavLink to="/">
             <img src={logo} alt="" />
@@ -193,8 +193,7 @@ export default function Navigation() {
           {user && user.role === "admin" && (
             <li className="nav__item">
               <NavLink
-                // className={({ isActive }) => (isActive ? " selected " : "  ")}
-                // className="nav__item__Navlink"
+                
                 to={"/admin"}
               >
                 Admin
@@ -221,7 +220,7 @@ export default function Navigation() {
         </div>
         {active ? (
           <Modal active={active} setActive={setActive}>
-            <FormSearch />
+            <FormSearch active={active} setActive={setActive} />
           </Modal>
         ) : (
           ""

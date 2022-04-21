@@ -1,5 +1,6 @@
-import React from "react";
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { AuthContext } from "./provider/context/AuthContext";
 import MainLayout from "./components/layout/MainLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 
@@ -20,8 +21,10 @@ import Product from "./pages/Product";
 import Wishlist from "./pages/Wishlist";
 import MyCart from "./pages/MyCart";
 import NotFound from "./pages/NotFound";
-import axios from "axios";
 export default function App() {
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   return (
     <div>
       <BrowserRouter>
@@ -85,33 +88,35 @@ export default function App() {
             <Route exact path="*" element={<NotFound />}></Route>
           </Route>
           {/* ====================admin========================== */}
-          <Route exact path="/admin" element={<AdminLayout />}>
-            <Route exact path="/admin" element={<HomeAdmin />}></Route>
-            <Route
-              exact
-              path="/admin/don-dat-hang/"
-              element={<OrderAdmin />}
-            ></Route>
-            <Route
-              exact
-              path="/admin/san-pham/"
-              element={<ProductAdmin />}
-            ></Route>
-            <Route
-              path="/admin/khach-hang/"
-              element={<CustomerAdmin />}
-            ></Route>
-            <Route
-              exact
-              path="/admin/trang-thai/"
-              element={<StatusAdmin />}
-            ></Route>
-            <Route
-              exact
-              path="/admin/cai-dat/"
-              element={<SettingAdmin />}
-            ></Route>
-          </Route>
+          {user && user.role === "admin" && (
+            <Route exact path="/admin" element={<AdminLayout />}>
+              <Route exact path="/admin" element={<HomeAdmin />}></Route>
+              <Route
+                exact
+                path="/admin/don-dat-hang/"
+                element={<OrderAdmin />}
+              ></Route>
+              <Route
+                exact
+                path="/admin/san-pham/"
+                element={<ProductAdmin />}
+              ></Route>
+              <Route
+                path="/admin/khach-hang/"
+                element={<CustomerAdmin />}
+              ></Route>
+              <Route
+                exact
+                path="/admin/trang-thai/"
+                element={<StatusAdmin />}
+              ></Route>
+              <Route
+                exact
+                path="/admin/cai-dat/"
+                element={<SettingAdmin />}
+              ></Route>
+            </Route>
+          )}
         </Routes>
       </BrowserRouter>
     </div>

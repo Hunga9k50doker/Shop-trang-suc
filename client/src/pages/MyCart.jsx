@@ -4,6 +4,7 @@ import { to_slug, get_random } from "../utils/utils";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
+import CountNumber from "../components/common/CountNumber";
 import { banner_sub_02, product_img_01 } from "../assets/img";
 import arrPro from "../assets/fake-data/Product";
 export default function MyCart({ products, setProducts, handleChange }) {
@@ -44,20 +45,14 @@ export default function MyCart({ products, setProducts, handleChange }) {
                   </td>
                   <td>{e.title}</td>
                   <td>
-                    <input
-                      ref={inputRef}
-                      defaultValue={1}
-                      type="number"
-                      min={1}
-                      max={1000}
-                    />
+                    <CountNumber />
                   </td>
                   <td className="td__price"></td>
                   <td>Còn hàng</td>
                 </tr>
               ))}
               <tr>
-                <td colspan="7">
+                <td colSpan="7">
                   <p>Tổng tiền : 123123123 vnd</p>
                 </td>
               </tr>

@@ -27,4 +27,61 @@
       }
     }
   }
+  .my__account {
+    position: relative;
+    cursor: pointer;
+    .my__account__list {
+      position: absolute;
+      background: $white-color;
+      @include box_shadow(0.12);
+      // border-radius: 8px;
+      top: 100%;
+      left: 0;
+      right: 0;
+      min-height: 100px;
+      height: -webkit-fit-content;
+      height: -moz-fit-content;
+      height: fit-content;
+      transform: scaleY(0);
+      transform-origin: top center;
+      transition: all 0.3s ease;
+      z-index: 99;
+      flex-direction: column;
+      // padding: 4px;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%, 0);
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid $white-color;
+      }
+    }
+    &:hover {
+      color: $second-color;
+      p {
+        color: $second-color;
+      }
+      .my__account__list {
+        transform-origin: top center;
+        transform: scaleY(1);
+        .my__account__item {
+          width: 100%;
+          color: $text-color;
+          font-size: 1rem;
+          &:not(:first-child) {
+            border-top: 1px solid $text-color;
+          }
+          &:hover {
+            color: $second-color;
+          }
+        }
+      }
+    }
+  }
 }

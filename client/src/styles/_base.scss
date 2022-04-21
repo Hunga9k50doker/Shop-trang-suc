@@ -72,6 +72,7 @@ a {
   color: unset;
   text-decoration: none;
   display: inline-block;
+  max-width: 100%;
 
   &:hover {
     color: $primary-color;
@@ -138,7 +139,8 @@ input[type="number"]::-webkit-outer-spin-button {
   z-index: 999;
   display: flex;
   flex-direction: column;
-  // transition-duration: 0.2s ease;
+  -webkit-animation: animation 0.5s ease;
+  animation: animation 0.5s ease;
   .modal__close {
     i:hover {
       cursor: pointer;
@@ -179,5 +181,24 @@ input[type="number"]::-webkit-outer-spin-button {
     height: 2px;
     background: $primary-color;
     z-index: 10;
+  }
+}
+
+// ========animation===============
+@-webkit-keyframes animation {
+  from {
+    transform: scale (0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes animation {
+  from {
+    transform: scale (0);
+    transition: all 0.3s ease;
+  }
+  to {
+    transform: scale(1);
   }
 }
