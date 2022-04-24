@@ -8,7 +8,7 @@
   transition-duration: 0.2s;
   @include flex(center, space-around);
   background: $white-color;
-  padding: 1.2rem 4rem;
+  padding: 1.2rem 2rem;
   font-size: 1.2rem;
   border-bottom: 2px solid $third-color;
   &__logo {

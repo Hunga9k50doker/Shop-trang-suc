@@ -97,7 +97,7 @@ export default function Header() {
               <Modal
                 style={{
                   backgroundImage:
-                    " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                    "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                 }}
                 active={isActiveForm}
                 setActive={setIsActiveForm}

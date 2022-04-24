@@ -151,7 +151,7 @@ export default function Navigation() {
     authState: { user },
   } = useContext(AuthContext);
   return (
-    <div className="container-fluid">
+    <div className="">
       <div ref={navRef} className="nav">
         <div className="nav__logo">
           <NavLink to="/">
@@ -192,12 +192,7 @@ export default function Navigation() {
           ))}
           {user && user.role === "admin" && (
             <li className="nav__item">
-              <NavLink
-                
-                to={"/admin"}
-              >
-                Admin
-              </NavLink>
+              <NavLink to={"/admin"}>Admin</NavLink>
             </li>
           )}
         </ul>

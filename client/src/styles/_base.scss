@@ -142,9 +142,10 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-animation: animation 0.5s ease;
   animation: animation 0.5s ease;
   .modal__close {
+    color: $black-color !important;
     i:hover {
       cursor: pointer;
-      color: $four-color;
+      color: $four-color !important;
     }
     font-size: 2.4rem;
     font-weight: 600;

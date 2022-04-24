@@ -26,7 +26,7 @@ export default function App() {
     authState: { user },
   } = useContext(AuthContext);
   return (
-    <div>
+    <div classname="App">
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<MainLayout />}>

@@ -89,18 +89,54 @@ const ProductAdmin = () => {
   const [isActiveForm, setIsActiveForm] = useState(false);
   const [isActiveFormAdd, setIsActiveFormAdd] = useState(false);
   const [activeGold, setActiveGold] = useState(false);
+  const [cateJewel, setCateJewel] = useState(true);
+  const [cateWatch, setCateWatch] = useState(false);
+  const [cateAccessory, setCateAccessory] = useState(false);
+  const [ativeGift, setAtiveGift] = useState(false);
+
   const [filterSelect, setFilterSelect] = useState(initFilter);
   const [searchItem, setSearchItem] = useState("");
 
   const [avatar, setAvatar] = useState();
   const goldRef = useRef(null);
+  const typeRef = useRef(null);
+  useEffect(() => {
+    // console.log(goldRef.current.value);
+    if (typeRef.current) {
+      if (typeRef.current.value === "Jewel") {
+        setCateJewel(true);
+        setCateWatch(false);
+        setCateAccessory(false);
+      }
+    }
+  }, []);
   const handleEvents = {
+    // gold, sliver, platinum, alloy
     changMaterial: () => {
       if (goldRef.current) {
         if (goldRef.current.value === "Gold") {
           setActiveGold(true);
         } else {
           setActiveGold(false);
+        }
+        // console.log(goldRef.current.value);
+      }
+    },
+    // jewels, watch, glasses, accessories
+    changType: () => {
+      if (typeRef.current) {
+        if (typeRef.current.value === "Jewel") {
+          setCateJewel(true);
+          setCateWatch(false);
+          setCateAccessory(false);
+        } else if (typeRef.current.value === "Watch") {
+          setCateJewel(false);
+          setCateWatch(true);
+          setCateAccessory(false);
+        } else {
+          setCateJewel(false);
+          setCateWatch(false);
+          setCateAccessory(true);
         }
         // console.log(goldRef.current.value);
       }
@@ -132,7 +168,7 @@ const ProductAdmin = () => {
                   <Modal
                     style={{
                       backgroundImage:
-                        " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                        "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                     }}
                     active={isActiveFormAdd}
                     setActive={setIsActiveFormAdd}
@@ -161,13 +197,60 @@ const ProductAdmin = () => {
                       </li>
                       <li className="form__item">
                         <p>Loại sản phẩm:</p>
-                        <select name="edit__type_product" id="type_product">
-                          <option value="Ring">Nhẫn</option>
+                        <select
+                          ref={typeRef}
+                          name="edit__type_product"
+                          id="type_product"
+                          onChange={handleEvents.changType}
+                        >
+                          <option value="Jewel">Trang sức</option>
                           <option value="Watch">Đồng hồ</option>
-                          <option value="Glasses">Mắt kính</option>
                           <option value="Accessory">Phụ kiện</option>
                         </select>
                       </li>
+                      {cateJewel === true && (
+                        <>
+                          <li className="form__item">
+                            <p>Loại trang sức:</p>
+                            <select id="type_jewel">
+                              <option value="Nhẫn">Nhẫn</option>
+                              <option value="Lắc">Lắc</option>
+                              <option value="Bông tai">Bông tai</option>
+                              <option value="Vòng tay">Vòng tay</option>
+                              <option value="Dây cổ">Dây cổ</option>
+                            </select>
+                          </li>
+                          <li className="form__item">
+                            <p>Dòng trang sức:</p>
+                            <select>
+                              <option value="Kim cương">Kim cương</option>
+                              <option value="Không đính đá">
+                                Không đính đá
+                              </option>
+                              <option value="Ecz-cz">Ecz-cz</option>
+                            </select>
+                          </li>
+                        </>
+                      )}
+                      {cateWatch === true && (
+                        <li className="form__item">
+                          <p>Thương hiệu:</p>
+                          <select id="type_watch">
+                            <option value="Casio">Casio</option>
+                            <option value="Gucci">Gucci</option>
+                            <option value="Citizen">Citizen</option>
+                          </select>
+                        </li>
+                      )}
+                      {cateAccessory === true && (
+                        <li className="form__item">
+                          <p>Loại phụ kiện:</p>
+                          <select id="type_accessory">
+                            <option value="Mắt kính">Mắt kính</option>
+                            <option value="Thắt Lưng">Thắt Lưng</option>
+                          </select>
+                        </li>
+                      )}
                       <li className="form__item">
                         <p>Chất liệu:</p>
                         <select
@@ -201,7 +284,7 @@ const ProductAdmin = () => {
                         </select>
                       </li>
                       <li className="form__item">
-                        <p>Loại quà tặng</p>
+                        <p>Loại quà tặng: </p>
                         <label htmlFor="father">Cho cha</label>
                         <input
                           className="form__type__gift"
@@ -232,9 +315,15 @@ const ProductAdmin = () => {
                           name="baby"
                           type="checkbox"
                         ></input>
+                        <label htmlFor="noGift">Không phải là quà tặng</label>
+                        <input
+                          className="form__type__gift"
+                          name="noGift"
+                          type="checkbox"
+                        ></input>
                       </li>
                       <li className="form__item">
-                        <p>Màu sắc</p>
+                        <p>Màu sắc:</p>
                         <label htmlFor="yellow">Vàng</label>
                         <input
                           className="form__type__color"
@@ -282,8 +371,9 @@ const ProductAdmin = () => {
                       <li className="form__item">
                         <input
                           type="number"
-                          placeholder="Giá"
-                          defaultValue="1000 vnđ"
+                          placeholder="Giá (VND)"
+                          maxLength="20"
+                          min="1000"
                         />
                       </li>
 
@@ -341,7 +431,7 @@ const ProductAdmin = () => {
                               <Modal
                                 style={{
                                   backgroundImage:
-                                    " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                                    "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                                 }}
                                 active={isActiveForm}
                                 setActive={setIsActiveForm}

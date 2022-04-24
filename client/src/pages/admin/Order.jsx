@@ -128,10 +128,12 @@ const Selection = () => {
   const selectedRef = useRef(null);
   const handleChange = () => {
     if (selectedRef.current) {
-      if (selectedRef.current.value == 1) {
+      if (Number(selectedRef.current.value) === 1) {
         selectedRef.current.style.color = "red";
-      } else if (selectedRef.current.value == 2) {
+      } else if (Number(selectedRef.current.value) === 2) {
         selectedRef.current.style.color = "green";
+      } else {
+        selectedRef.current.style.color = "black";
       }
     }
   };
@@ -251,7 +253,7 @@ const OrderAdmin = () => {
             <Table title="Danh sách đặt hàng">
               <input
                 type="text"
-                placeholder="Tìm kiếm sdt..."
+                placeholder="Tìm kiếm sdt,Id đặt hàng"
                 onChange={(e) => setSearchItem(e.target.value)}
               />
               <table>
@@ -302,7 +304,7 @@ const OrderAdmin = () => {
                             setViewDetail={setViewDetail}
                             style={{
                               backgroundImage:
-                                " linear-gradient(to top, #cc208e 0%, #6713d2 100%)",
+                                "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                             }}
                           >
                             <FormDetail title={e.id_order}>
