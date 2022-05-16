@@ -24,33 +24,41 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
   category: {
+    jewel_type: {
+      type: String,
+    },
+    jewel_line: {
+      type: String,
+    },
     //Vàng bạc kim cương
     material: {
-      type: String,
+      type: Array,
       required: true,
     },
     //22k, 24k
     materialGold: {
-      type: String,
-      required: true,
-    },
-    gender: {
-      type: String,
-      required: true,
-    },
-    color: {
-      type: String,
-      required: true,
+      type: Array,
     },
     brand: {
       type: String,
-      required: true,
     },
-    isCouple: {
-      type: Boolean,
-      required: true,
-      default: false,
+    accessory_type: {
+      type: String,
     },
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  color: {
+    type: Array,
+    required: true,
+  },
+  //
+  isCouple: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
   // Cho nàng, cha mẹ, ...
   gift: {

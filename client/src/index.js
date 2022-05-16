@@ -6,11 +6,18 @@ import "boxicons/css/boxicons.min.css";
 import "./styles/index.scss";
 import { AuthContextProvider } from "./provider/context/AuthContext";
 import { ProductContextProvider } from "./provider/context/ProductContext";
+import FavouriteContextProvider from "./provider/context/FavouriteContext";
+import CartContextProvider from "./provider/context/CartContext";
+
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
       <ProductContextProvider>
-        <App />
+        <FavouriteContextProvider>
+          <CartContextProvider>
+            <App />
+          </CartContextProvider>
+        </FavouriteContextProvider>
       </ProductContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,

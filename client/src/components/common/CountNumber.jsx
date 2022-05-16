@@ -1,14 +1,13 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-const CountNumber = () => {
-  const [count, setCount] = useState(1);
+const CountNumber = ({ quantity, setQuantity }) => {
   return (
     <div className="count__number">
       <p
         className="count__number__down "
         onClick={() =>
-          setCount(() => {
-            return count - 1 === 0 ? 1 : count - 1;
+          setQuantity(() => {
+            return quantity - 1 === 0 ? 1 : quantity - 1;
           })
         }
       >
@@ -19,15 +18,19 @@ const CountNumber = () => {
         type="number"
         // min={1}
         max={999}
-        value={count}
-        onChange={(e) => setCount(Math.floor(e.target.value))}
+        value={quantity}
+        onChange={(e) => setQuantity(Math.floor(e.target.value))}
         onMouseMove={(e) =>
-          setCount(() =>
+          setQuantity(() =>
             Math.floor(e.target.value) < 1 ? 1 : Math.floor(e.target.value)
           )
         }
       />
-      <p className="count__number__up " onClick={() => setCount(count + 1)}>
+      <p
+        className="count__number__up "
+        onClick={() => setQuantity(quantity + 1)}
+        // onClick={() => handleChange(item, -1)}
+      >
         <i className="bx bx-plus"></i>
       </p>
     </div>

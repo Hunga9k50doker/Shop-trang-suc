@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
 
@@ -104,8 +104,8 @@ const dataTable_02 = [
   },
 ];
 const StatusAdmin = () => {
-    const [searchItem, setSearchItem] = useState(""); 
- 
+  const [searchItem, setSearchItem] = useState("");
+
   useEffect(() => {
     const status = document.querySelectorAll(".status");
     for (let i of status) {
@@ -122,8 +122,11 @@ const StatusAdmin = () => {
           <div className="row ">
             <div className="col">
               <Table title="Danh sách trạng thái đặt hàng">
-                <input type="text" placeholder="Tìm kiếm sản phẩm..."
-                onChange ={(e) => setSearchItem(e.target.value)} />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm sản phẩm..."
+                  onChange={(e) => setSearchItem(e.target.value)}
+                />
                 <table
                   border="1"
                   cellSpacing="0"

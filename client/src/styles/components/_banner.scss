@@ -4,8 +4,17 @@
   height: -moz-fit-content;
   height: fit-content;
   top: 5rem;
+  overflow: hidden;
   @include smallpc {
-    top: 10rem;
+    // top: 10rem;
+    top: 8rem;
+    .banner__title {
+      font-size: 1rem;
+    }
+  }
+  @include tablet {
+    // top: 10rem;
+    top: 6rem;
     .banner__title {
       margin: 10px;
       font-size: 1rem;
@@ -26,7 +35,7 @@
       margin: 1.6rem;
       font-size: 2.4rem;
       text-transform: uppercase;
-      @include smallpc {
+      @include tablet {
         margin: 10px;
         font-size: 1rem;
       }
@@ -43,6 +52,9 @@
     .sub__img {
       img {
         max-width: 350px;
+        @include tablet {
+          width: 200px;
+        }
       }
     }
   }
@@ -57,6 +69,16 @@
       width: 100%;
       text-align: center;
       margin: 2rem 0 0 0;
+
+      @include smallpc {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+      }
+
+      @include tablet {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+      }
     }
   }
   .btn__view__more {
@@ -66,11 +88,17 @@
     border-radius: 20px;
     font-size: 0.8rem;
     padding: 10px 20px;
+    @include tablet {
+      padding: 5px 10px;
+    }
   }
   .sub__link {
     @include flex(center, center);
     p {
       @include flex(center, center);
+      @include tablet {
+        font-size: 1rem;
+      }
       i {
         margin: 0 4px;
       }

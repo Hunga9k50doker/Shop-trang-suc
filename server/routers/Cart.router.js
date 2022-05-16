@@ -1,12 +1,11 @@
 import express from "express";
 import {
-  addMultipleProductToCart,
-  createCart,
+  addProductToCart,
   getAllCarts,
   getUserCart,
   removeAllProductFromCart,
-  removeMultipleProductFromCart,
   updateCartDetail,
+  removeProductFromCart,
 } from "../controllers/Cart.controller.js";
 import verifyAdmin from "../middleware/verifyAdmin.js";
 import verifyToken from "../middleware/verifyToken.js";
@@ -19,11 +18,9 @@ router.get("/", verifyToken, verifyAdmin, getAllCarts);
 router
   .route("/user")
   .get(verifyToken, getUserCart)
-  .post(verifyToken, createCart)
-  .delete(verifyToken, removeAllProductFromCart);
+  .post(verifyToken, addProductToCart)
+  .delete(verifyToken, removeProductFromCart);
 router.put("/user/quantity", verifyToken, updateCartDetail);
-router.put("/user/products", verifyToken, addMultipleProductToCart);
 router.delete("/user/sold", verifyToken, removeAllProductFromCart);
-router.delete("/user/products", verifyToken, removeMultipleProductFromCart);
 
 export default router;

@@ -1,5 +1,6 @@
 .product {
   margin-top: 10rem;
+
   &__list {
     @include flex(center, space-around);
   }
@@ -37,6 +38,10 @@
       color: $primary-color;
     }
   }
+  &__other__title {
+    font-size: 16px;
+    font-weight: 500;
+  }
   &__other_desc {
     i {
       color: $primary-color;
@@ -45,6 +50,9 @@
       font-style: italic;
       font-size: 14px;
       color: $text-color;
+      @include tablet {
+        font-size: 12px;
+      }
     }
   }
   .accordion__list {
@@ -54,7 +62,6 @@
       &__title {
         border: 1px solid #ccc;
       }
-     
     }
   }
 }

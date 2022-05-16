@@ -28,7 +28,7 @@ export const getFavouriteUser = async (req, res) => {
         },
       },
     ]);
-    return res.status(200).json({ success: true, data: favourite });
+    return res.status(200).json({ success: true, data: favourite[0] });
   } catch (error) {
     console.log(error.message);
   }
@@ -55,12 +55,12 @@ export const addProductToFavourite = async (req, res) => {
   try {
     const favourite = await FavouriteModel.findOne({ user: _id });
     const checked = favourite.favouriteDetails.find(
-      (productId) => productId === productId
+      (product) => product.product.toString() === productId
     );
     if (checked) {
       return res.status(200).json({ success: true, data: favourite });
     }
-    favourite.favouriteDetails.push(productId);
+    favourite.favouriteDetails.push({ product: productId });
     await favourite.save();
     return res.status(200).json({ success: true, data: favourite });
   } catch (error) {
@@ -74,7 +74,7 @@ export const deleteProductFromFavourite = async (req, res) => {
   try {
     const favourite = await FavouriteModel.findOne({ user: _id });
     const favouriteDetail = favourite.favouriteDetails.find(
-      (productId) => productId === productId
+      (product) => product.product.toString() === productId
     );
     if (favouriteDetail) {
       favourite.favouriteDetails.pull(favouriteDetail);

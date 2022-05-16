@@ -31,8 +31,26 @@ const arr = [
 export default function Jewels() {
   let [path, setPath] = useState("");
   path = window.location.pathname;
+  let typeData;
+  const handleFilter = () => {
+    if (path === "/trang-suc/nhan/") {
+      typeData = "Nhẫn";
+    } else if (path === "/trang-suc/nhan-cap/") {
+      typeData = "Nhẫn Cặp";
+    } else if (path === "/trang-suc/lac/") {
+      typeData = "Lắc";
+    } else if (path === "/trang-suc/bong-tai/") {
+      typeData = "Bông tai";
+    } else if (path === "/trang-suc/vong-tay/") {
+      typeData = "Vòng tay";
+    } else if (path === "/trang-suc/day-co/") {
+      typeData = "Dây cổ";
+    }
+  };
   useEffect(() => setPath(), [path]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => handleFilter(), [path]);
   return (
     <Helmet title="Trang sức">
       <div className="jewels">
@@ -56,7 +74,7 @@ export default function Jewels() {
               </Banner>
             )
         )}
-        <SideBarFilter />
+        <SideBarFilter path={path} typeData={typeData} />
       </div>
     </Helmet>
   );

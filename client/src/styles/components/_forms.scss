@@ -180,6 +180,9 @@
   .form__list {
     @include flex(center, center);
     flex-direction: column;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
     .form__item {
       width: 100%;
       @include flex(center, center);

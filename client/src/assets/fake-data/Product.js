@@ -24,6 +24,7 @@ const arrPro = [
     material_golds: ["24k"],
     sexs: ["Unisex"],
   },
+
   {
     img: product_img_02,
     title: "Dây chuyền vàng 18K ",
@@ -34,6 +35,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_03,
     title: "Nhẫn kim tiền vàng Y 18k",
@@ -44,6 +46,7 @@ const arrPro = [
     material_golds: ["22k", "18k"],
     sexs: ["Nữ"],
   },
+
   {
     img: product_img_04,
     title: "Nhẫn vàng trắng 24k đính đá",
@@ -54,6 +57,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_05,
     title: "Bông tai Bạc DNA 0000Y000133",
@@ -64,6 +68,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_06,
     title: "Nhẫn vàng trắng Y 18K  ",
@@ -74,6 +79,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_07,
     title: "Nhẫn kim tiền vàng trắng 18k Citrine",
@@ -84,6 +90,7 @@ const arrPro = [
     material_golds: ["22k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_08,
     title: "Nhẫn vàng trắng 20k đính đá",
@@ -94,6 +101,7 @@ const arrPro = [
     material_golds: ["24k"],
     sexs: ["Nữ"],
   },
+
   {
     img: product_img_09,
     title: "Bông tai vàng 20k đính đá Citrine",
@@ -104,6 +112,7 @@ const arrPro = [
     material_golds: ["24k"],
     sexs: ["Nữ"],
   },
+
   {
     img: product_img_10,
     title: "Nhẫn vàng trắng 18K ",
@@ -114,6 +123,7 @@ const arrPro = [
     material_golds: ["24k"],
     sexs: ["Nữ"],
   },
+
   {
     img: product_img_11,
     title: "Bông tai kim tiền vàng Y 18k",
@@ -124,6 +134,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+
   {
     img: product_img_12,
     title: "Bông tai vàng trắng 24k đính đá",
@@ -134,6 +145,7 @@ const arrPro = [
     material_golds: ["24k", "18k"],
     sexs: ["Nam"],
   },
+  
   // 12 products
 ];
 

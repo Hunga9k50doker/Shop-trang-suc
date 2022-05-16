@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="row">
-          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12">
+          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12 col-12">
             <div className="footer__logo">
               <img src={logo} alt="" />
             </div>
@@ -16,7 +16,7 @@ export default function Footer() {
               Tp.Hồ Chí Minh
             </p>
           </div>
-          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12">
+          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12 col-12">
             <ul className="footer__list">
               <h3 className="footer__title">Về Diamound</h3>
               <li className="footer__item">
@@ -41,7 +41,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12">
+          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12 col-12">
             <ul className="footer__list">
               <h3 className="footer__title">Dịch vụ khách hàng</h3>
               <li className="footer__item">
@@ -66,7 +66,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>{" "}
-          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12">
+          <div className="col col-xxl-3 col-xl-3 col-md-6 col-sm-12 col-12">
             <ul className="footer__list">
               <h3 className="footer__title">Kết nối với chúng tôi</h3>
               <li className="footer__item">

@@ -1,63 +1,149 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { to_slug, get_random } from "../utils/utils";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Link, useParams } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+import { CartContext } from "../provider/context/CartContext";
+import { to_slug, numberWithCommas } from "../utils/utils";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
 import CountNumber from "../components/common/CountNumber";
 import { banner_sub_02, product_img_01 } from "../assets/img";
-import arrPro from "../assets/fake-data/Product";
-export default function MyCart({ products, setProducts, handleChange }) {
-  const [price, setPrice] = useState(0);
-  const [total, setTotal] = useState(0);
 
-  const inputRef = useRef(null);
+export default function MyCart({ cart, setCart }) {
+  const [price, setPrice] = useState(0);
+  const {
+    cartState: { loading, products },
+    deleteOneProductFromCart,
+    changeQuantity,
+  } = useContext(CartContext);
+  console.log(products);
+
+  const handleRemove = (id) => {
+    deleteOneProductFromCart(id);
+  };
+
+  const handlePrice = () => {
+    let ans = 0;
+    products.map((item) => (ans += item.quantity * item.product[0].price));
+    setPrice(ans);
+  };
+
+  const handleChangeQuantity = (id, quantity, product) => {
+    changeQuantity({ id, quantity }, product);
+  };
+
+  useEffect(() => {
+    handlePrice();
+  });
+  if (loading) {
+    return <Skeleton height="200px" width={"100%"} />;
+  }
+
   return (
     <Helmet title="Giỏ hàng">
       <div className="mycart">
         <Banner img={banner_sub_02} title="Giỏ Hàng" />
         <div className="container">
-          <table className="mycart__table mb-5" style={{ marginTop: "8rem" }}>
-            <thead>
-              <tr>
-                <th>
-                  <input type="checkbox" />
-                </th>
-                <th> </th>
-                <th></th>
-                <th>Tên sản phẩm</th>
-                <th>Số lượng</th>
-                <th>Giá</th>
-                <th>Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody>
-              {arrPro.map((e, id) => (
-                <tr key={id}>
-                  <td className="td__checkbox">
-                    <input type="checkbox" />
-                  </td>
-                  <td className="td__trash">
-                    <i className="bx bx-trash"></i>
-                  </td>
-                  <td>
-                    <img src={e.img} alt="" />
-                  </td>
-                  <td>{e.title}</td>
-                  <td>
-                    <CountNumber />
-                  </td>
-                  <td className="td__price"></td>
-                  <td>Còn hàng</td>
-                </tr>
-              ))}
-              <tr>
-                <td colSpan="7">
-                  <p>Tổng tiền : 123123123 vnd</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {products.length > 0 ? (
+            <>
+              <div className="cart__info__txt" style={{ marginTop: "8rem" }}>
+                <p style={{ width: "100%", textAlign: "center" }}>
+                  Bạn đang có {products.length} sản phẩm trong giỏ hàng
+                </p>
+              </div>
+              <table className="mycart__table mb-5">
+                <thead>
+                  <tr>
+                    <th>
+                      <input type="checkbox" />
+                    </th>
+                    <th> </th>
+                    <th></th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Giá</th>
+                    <th>Trạng thái</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((e, id) => (
+                    <tr key={id}>
+                      <td className="td__checkbox">
+                        <input type="checkbox" />
+                      </td>
+                      <td className="td__trash">
+                        <i
+                          className="bx bx-trash"
+                          onClick={() => handleRemove(e.product[0]._id)}
+                        ></i>
+                      </td>
+                      <td>{/* <img src={e.imgsUrl[0]} alt="" /> */}</td>
+                      <td>{e.product[0].name}</td>
+                      <td>
+                        <div style={{ display: "flex" }}>
+                          <Button
+                            onClick={() =>
+                              handleChangeQuantity(
+                                e._id,
+                                e.quantity - 1 >= 1 ? e.quantity - 1 : 1,
+                                e.product
+                              )
+                            }
+                          >
+                            -
+                          </Button>
+                          <input
+                            type="number"
+                            style={{
+                              padding: "0",
+                              textAlign: "center",
+                              width: "40px",
+                            }}
+                            value={e.quantity}
+                          />
+                          <Button
+                            onClick={() =>
+                              handleChangeQuantity(
+                                e._id,
+                                e.quantity + 1,
+                                e.product
+                              )
+                            }
+                          >
+                            +
+                          </Button>
+                        </div>
+                      </td>
+                      <td className="td__price">
+                        {numberWithCommas(Number(e.product[0].price))}
+                      </td>
+                      <td>Còn hàng</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <td colSpan="7">
+                      <h4>{`Tổng tiền : ${numberWithCommas(
+                        Number(price)
+                      )} VND`}</h4>
+                      <Button content="Thanh toán" classNameBtn="m-2" />
+                      <Link to="/trang-suc/nhan/">
+                        <Button content="Tiếp tục mua hàng" />
+                      </Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div
+              style={{ marginTop: "8rem", width: "100%", textAlign: "center" }}
+            >
+              <h3>Bạn chưa có sản phẩm nào trong giỏ hàng</h3>
+              <Link to="/trang-suc/nhan/">
+                <Button content="Mua ngay" />
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </Helmet>

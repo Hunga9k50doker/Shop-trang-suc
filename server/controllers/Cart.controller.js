@@ -13,46 +13,39 @@ export const getAllCarts = async (req, res) => {
 export const getUserCart = async (req, res) => {
   const { _id } = req;
   try {
-    const userCart = await CartModel.aggregate([
-      {
-        $match: {
-          user: mongoose.Types.ObjectId(_id),
-        },
-      },
+    const cart = await CartModel.aggregate([
       {
         $lookup: {
           from: "products",
-          localField: "cartDetails.product",
+          localField: "productId",
           foreignField: "_id",
-          as: "cartDetails.product",
+          as: "product",
         },
       },
     ]);
-    const quantity = await CartModel.find(
-      { user: _id },
-      { "cartDetails.quantity": 1 }
-    );
-    return res.status(200).json({
-      success: true,
-      data: userCart,
-      quantityProduct: quantity[0].cartDetails,
-    });
+    return res.status(200).json({ success: true, data: cart });
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const createCart = async (req, res) => {
+export const addProductToCart = async (req, res) => {
   const { _id } = req;
-  const { total, cartDetails } = req.body;
+  const { productId, quantity } = req.body;
   try {
-    const cart = await CartModel.create({
+    const cart = await CartModel.find({ user: _id, productId });
+    if (cart === {}) {
+      return res
+        .status(200)
+        .json({ success: false, message: "Đã có sản phẩm trong giỏ" });
+    }
+    const newCart = new CartModel({
       user: _id,
-      total,
-      cartDetails,
+      productId,
+      quantity,
     });
-    await cart.save();
-    return res.status(200).json({ success: true, data: cart });
+    await newCart.save();
+    return res.status(200).json({ success: true, data: newCart });
   } catch (error) {
     console.log(error.message);
   }
@@ -62,15 +55,18 @@ export const createCart = async (req, res) => {
 export const removeProductFromCart = async (req, res) => {
   const { _id } = req;
   const { productId } = req.body;
+  console.log(_id, productId);
   try {
-    const cart = await CartModel.findOne({ user: _id });
-    const cartDetail = cart.cartDetails.find(
-      (cartDetail) => cartDetail.product.toString() === productId
-    );
-    if (cartDetail) {
-      cart.cartDetails.pull(cartDetail);
+    const cart = await CartModel.findOne({
+      user: _id,
+      productId: mongoose.Types.ObjectId(productId),
+    });
+    if (!cart) {
+      return res
+        .status(200)
+        .json({ success: false, message: "Product not found" });
     }
-    await cart.save();
+    await cart.remove();
     return res.status(200).json({ success: true, data: cart });
   } catch (error) {
     console.log(error.message);
@@ -80,11 +76,11 @@ export const removeProductFromCart = async (req, res) => {
 export const removeAllProductFromCart = async (req, res) => {
   const { _id } = req;
   try {
-    const cart = await CartModel.findOne({ user: _id });
-    cart.cartDetails = [];
-    cart.total = 0;
-    await cart.save();
-    return res.status(200).json({ success: true, data: cart });
+    const cart = await CartModel.find({ user: _id });
+    if (!cart) {
+      return res.status(200).json({ success: false, message: "Cart is empty" });
+    }
+    await cart.remove();
   } catch (error) {
     console.log(error.message);
   }
@@ -93,62 +89,17 @@ export const removeAllProductFromCart = async (req, res) => {
 //Thay đổi số lượng sản phẩm trong giỏ hàng
 export const updateCartDetail = async (req, res) => {
   const { _id } = req;
-  const { productId, quantity } = req.body;
+  const { cartId, quantity } = req.body;
   try {
-    const cart = await CartModel.findOne({ user: _id });
-    const cartDetail = cart.cartDetails.find(
-      (cartDetail) => cartDetail.product.toString() === productId
-    );
-    cartDetail.quantity = quantity;
+    const cart = await CartModel.findById(cartId);
+    if (!cart) {
+      return res
+        .status(200)
+        .json({ success: false, message: "Cart not found" });
+    }
+    cart.quantity = quantity;
     await cart.save();
-    return res.status(200).json({ success: true, data: cart });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-export const addMultipleProductToCart = async (req, res) => {
-  const { _id } = req;
-  const { idProducts } = req.body;
-  try {
-    const cart = await CartModel.findOne({ user: _id });
-    idProducts.map((idProduct) => {
-      const cartDetail = cart.cartDetails.find(
-        (cartDetail) => cartDetail.product.toString() === idProduct
-      );
-      if (cartDetail) {
-        cartDetail.quantity += 1;
-      } else {
-        cart.cartDetails.push({
-          product: idProduct,
-          quantity: 1,
-        });
-      }
-    });
-
-    await cart.save();
-    return res.status(200).json({ success: true, data: cart });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-export const removeMultipleProductFromCart = async (req, res) => {
-  const { _id } = req;
-  const { idProducts } = req.body;
-  try {
-    const cart = await CartModel.findOne({ user: _id });
-    idProducts.map((idProduct) => {
-      const cartDetail = cart.cartDetails.find(
-        (cartDetail) => cartDetail.product.toString() === idProduct
-      );
-      if (cartDetail) {
-        cart.cartDetails.pull(cartDetail);
-      }
-    });
-
-    await cart.save();
-    return res.status(200).json({ success: true, data: cart });
+    return res.json({ success: true, data: cart });
   } catch (error) {
     console.log(error.message);
   }

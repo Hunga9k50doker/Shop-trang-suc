@@ -4,7 +4,11 @@
   width: 100%;
   font-size: 1.2rem;
   padding: 0 1.2rem;
+  width: 100vw !important;
   @include flex(center, space-between);
+  @include tablet {
+    font-size: 1rem;
+  }
   ul {
     height: 100%;
     @include flex(center, center);
@@ -14,6 +18,9 @@
 
       p {
         color: $white-color;
+        @include tablet {
+          font-size: 0.8rem;
+        }
       }
     }
   }

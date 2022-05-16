@@ -337,7 +337,7 @@ const OrderAdmin = () => {
                                       <td>23000</td>
                                     </tr>
                                     <tr>
-                                      <td colspan="4">Tổng tiền: {e.price}</td>
+                                      <td colSpan="4">Tổng tiền: {e.price}</td>
                                     </tr>
                                   </tbody>
                                 </table>

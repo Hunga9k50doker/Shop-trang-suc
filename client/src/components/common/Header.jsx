@@ -10,12 +10,24 @@ export default function Header() {
   const [isRegister, setIsRegister] = useState(false);
   const [isActiveForm, setIsActiveForm] = useState(false);
   const { logout } = useContext(AuthContext);
+
   const {
     authState: { user, loading, isAuthenticated, userAuth },
   } = useContext(AuthContext);
-  // console.log(isAuthenticated);
-  // console.log(isLoginAuth);
-  // console.log(userAuth);
+  // console.log(user);
+  const [data, setData] = useState({
+    
+    name: "",
+    address: "",
+    telephone: "",
+    username: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    const newData = { ...data };
+    newData[e.target.className] = e.target.value;
+    setData(newData);
+  };
   useEffect(
     () => {
       const res = document.querySelector(".label__register");
@@ -104,19 +116,49 @@ export default function Header() {
               >
                 <FormEdit title="Cập nhật thông tin người dùng">
                   <li className="form__item">
-                    <input type="text" placeholder="Tên người dùng" />
+                    <input
+                      type="text"
+                      placeholder="Tên đăng nhập"
+                      defaultValue={data.username}
+                      onChange={(e) => handleChange(e)}
+                      className="username"
+                    />
                   </li>
                   <li className="form__item">
-                    <input type="password" placeholder="Mật khẩu" />
+                    <input
+                      type="password"
+                      placeholder="Mật khẩu"
+                      defaultValue={data.password}
+                      onChange={(e) => handleChange(e)}
+                      className="password"
+                    />
                   </li>
                   <li className="form__item">
-                    <input type="text" placeholder="Họ và tên" />
+                    <input
+                      type="text"
+                      placeholder="Họ và tên"
+                      defaultValue={data.name}
+                      onChange={(e) => handleChange(e)}
+                      className="name"
+                    />
                   </li>
                   <li className="form__item">
-                    <input type="text" placeholder="Địa chỉ" />
+                    <input
+                      type="text"
+                      placeholder="Địa chỉ"
+                      defaultValue={data.address}
+                      onChange={(e) => handleChange(e)}
+                      className="address"
+                    />
                   </li>
                   <li className="form__item">
-                    <input type="number" placeholder="Số điện thoại" />
+                    <input
+                      type="number"
+                      placeholder="Số điện thoại"
+                      defaultValue={data.telephone}
+                      onChange={(e) => handleChange(e)}
+                      className="telephone"
+                    />
                   </li>
                 </FormEdit>
               </Modal>

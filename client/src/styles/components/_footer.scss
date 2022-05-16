@@ -5,15 +5,27 @@
   padding-top: 2rem;
   color: $text-color;
   border-top: 2px solid $third-color;
+  width: 100vw !important;
+
+  @include tablet {
+    font-size: 0.9rem;
+  }
+
   p {
     font-size: 1rem;
     color: $text-color;
+    @include tablet {
+      font-size: 0.9rem;
+    }
   }
   a {
     margin: 8px 4px;
   }
   &__logo {
     max-width: 240px;
+    @include tablet {
+      width: 200px;
+    }
   }
   &__item {
     &:last-child {
@@ -38,6 +50,9 @@
     text-align: center;
     color: $white-color;
     font-size: 16px;
+    @include tablet {
+      font-size: 0.8rem;
+    }
     a {
       margin-left: 1rem;
       &:hover {

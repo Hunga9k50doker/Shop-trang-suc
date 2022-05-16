@@ -22,7 +22,18 @@ export const getProduct = async (req, res) => {
 //filter products by category
 
 export const createProduct = async (req, res) => {
-  const { name, description, imgsUrl, price, type, category, gift } = req.body;
+  const {
+    name,
+    description,
+    imgsUrl,
+    price,
+    type,
+    category,
+    gift,
+    color,
+    gender,
+    isCouple,
+  } = req.body;
   try {
     const product = await ProductModel.create({
       name,
@@ -32,6 +43,9 @@ export const createProduct = async (req, res) => {
       category,
       gift,
       type,
+      color,
+      gender,
+      isCouple,
     });
     await product.save();
     return res.status(200).json({ success: true, data: product });
@@ -42,7 +56,18 @@ export const createProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { name, description, imgsUrl, price, gift, category, type } = req.body;
+  const {
+    name,
+    description,
+    imgsUrl,
+    price,
+    type,
+    category,
+    gift,
+    color,
+    gender,
+    isCouple,
+  } = req.body;
   try {
     const product = await ProductModel.findById(id);
     if (!product) {
@@ -57,6 +82,9 @@ export const updateProduct = async (req, res) => {
     product.category = category;
     product.type = type;
     product.gift = gift;
+    product.isCouple = isCouple;
+    product.color = color;
+    product.gender = gender
     await product.save();
     return res.status(200).json({ success: true, data: product });
   } catch (error) {

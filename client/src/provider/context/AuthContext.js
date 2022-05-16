@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useReducer } from "react";
+import { createContext,  useReducer, useLayoutEffect } from "react";
 import {
   getAuth,
   signInWithPopup,
@@ -7,7 +7,7 @@ import {
   FacebookAuthProvider,
   GithubAuthProvider,
 } from "firebase/auth";
-import { toast, ToastContainer, Bounce, Zoom } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { Firebase } from "../../Firebase/firebase";
 import { setAuthToken } from "../../utils/setAuthToken";
 import { authReducer } from "../reducer/AuthReducer";
@@ -16,6 +16,8 @@ import { API_URL, LOAD_USER, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+  let notify = (e) => toast(e);
+
   let [authState, dispatch] = useReducer(authReducer, {
     userAuth: null,
     isLoginAuth: false,
@@ -38,7 +40,6 @@ export const AuthContextProvider = ({ children }) => {
         payload: response.data.data,
       });
     } catch (error) {
-      
       dispatch({
         type: LOAD_USER,
         payload: null,
@@ -52,31 +53,9 @@ export const AuthContextProvider = ({ children }) => {
       // .then((res) => console.log(res));
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
+        notify("Đăng nhập thành công") && <ToastContainer autoClose={2000} />;
       } else {
-        alert(response.data.message);
-        // toast.warn("🦄 Wow so easy!", {
-        //   position: "top-right",
-        //   autoClose: 5000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        // });
-
-        // <ToastContainer
-        //   position="top-right"
-        //   autoClose={5000}
-        //   hideProgressBar={false}
-        //   newestOnTop={false}
-        //   closeOnClick
-        //   rtl={false}
-        //   pauseOnFocusLoss
-        //   draggable
-        //   pauseOnHover
-        // />;
-
-        // <ToastContainer />;
+        notify("Đăng nhập thất bại") && <ToastContainer autoClose={2000} />;
       }
       await loadUser();
     } catch (error) {
@@ -166,6 +145,11 @@ export const AuthContextProvider = ({ children }) => {
       const response = await axios.post(`${API_URL}/users/register`, user);
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
+        notify("Đăng ký thành công") && <ToastContainer autoClose={2000} />;
+      } else {
+        console.log(response.data);
+        alert(response.data.message);
+        notify("Đăng ký thất bại!") && <ToastContainer autoClose={2000} />;
       }
       await loadUser();
     } catch (error) {
@@ -182,7 +166,7 @@ export const AuthContextProvider = ({ children }) => {
     await loadUser();
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     loadUser();
   }, []);
 

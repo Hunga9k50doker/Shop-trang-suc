@@ -1,13 +1,13 @@
 .App {
   width: 100vw !important;
-  overflow: hidden !important;
+  overflow-x: hidden !important;
 }
-.component {
-  min-height: 100vh;
-}
+
 .main {
   color: $text-color;
   min-height: 100vh;
+  width: 100vw !important;
+  overflow-x: hidden;
 }
 
 .wishlist,

@@ -1,23 +1,37 @@
-import React from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import { FormContact } from "../components/common/Forms";
 import Button from "../components/common/Button";
 import InfinityList from "../components/common/InfinityList";
+import { ProductContext } from "../provider/context/ProductContext";
+
 //  ip data
 import {
   banner_01,
-  // banner_02,
   banner_sub_01,
   theme_01,
   theme_02,
   theme_03,
   theme_04,
 } from "../assets/img";
-import arrPro from "../assets/fake-data/Product";
 export default function Home() {
+  const {
+    productState: { products },
+  } = useContext(ProductContext);
+  const [data, setData] = useState(products);
+  console.log(data);
+  useEffect(() => {
+    setData(products);
+  }, [products]);
+
+  const item = {
+    data: data,
+    amount: 9,
+    classNameCol: "col-xl-3 col-lg-4 col-md-6",
+  };
+
   return (
     <Helmet title="Trang chủ">
       <div className="home">
@@ -49,11 +63,7 @@ export default function Home() {
           </div>
 
           <div className="row m-4">
-            <InfinityList
-              amount={12}
-              data={arrPro}
-              classNameCol="col-xl-3 col-md-6"
-            />
+            {data.length > 0 && <InfinityList props={item} />}
           </div>
         </div>
         <FormContact

@@ -1,19 +1,44 @@
 .nav {
   position: fixed;
   left: 0;
-  right: 0;
+  // right: 0;
+  width: 100vw !important;
   top: 2.9rem;
   min-height: 6rem;
   z-index: 66;
   transition-duration: 0.2s;
   @include flex(center, space-around);
   background: $white-color;
-  padding: 1.2rem 2rem;
+  padding: 1.2rem 0;
   font-size: 1.2rem;
   border-bottom: 2px solid $third-color;
+  .menu__mobile {
+    position: relative;
+    flex: 1;
+    text-align: center;
+    i {
+      font-size: 2rem;
+    }
+  }
+  .nav__mobile__list {
+    @include box_shadow(0.3);
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    right: 0;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    background: $white-color;
+    min-width: 300px;
+  }
   &__logo {
     width: 300px;
     margin-left: 2rem;
+    @include tablet {
+      width: 200px;
+      flex: 1;
+    }
   }
   &__right {
     margin-right: 2rem;
@@ -29,14 +54,54 @@
         transform: scale(1.1);
       }
     }
+    @include tablet {
+      flex: 1;
+    }
+    &__item {
+      position: relative;
+      .nav__count__product {
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        background-color: $primary-color;
+        text-align: center;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        color: $white-color;
+        font-size: 0.8rem;
+        @include box_shadow(0.2);
+      }
+    }
   }
   &__list {
     @include flex(center, center);
+    @include tablet {
+      display: none;
+    }
   }
+
   &__item {
     position: relative;
     height: 100%;
     padding: 1rem 1.2rem;
+    @include tablet {
+      padding: 0rem 1.2rem;
+      .accordion__title {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+
+    .nav__link__admin {
+      @include tablet {
+        width: 100%;
+        text-align: left;
+        // padding: 1rem;
+        font-size: 1rem;
+        font-weight: 500;
+        padding-left: 0.5rem;
+      }
+    }
     .nav__item__Navlink {
       color: $black-color;
     }

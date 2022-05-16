@@ -3,15 +3,15 @@ import Header from "../common/Header";
 import Navigation from "../common/Navigation";
 import Footer from "../common/Footer";
 
-export default function MainLayout() {
+export default function MainLayout({ size, sizeFavorite }) {
   return (
-    <div className="component">
+    <>
       <Header />
-      <Navigation />
+      <Navigation sizeFavorite={sizeFavorite} size={size} />
       <div className="main">
         <Outlet />
       </div>
       <Footer />
-    </div>
+    </>
   );
 }

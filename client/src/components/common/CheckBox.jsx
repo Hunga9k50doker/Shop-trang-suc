@@ -10,7 +10,7 @@ export default function CheckBox(props) {
   return (
     <label className="custom-checkbox">
       <input
-        type="checkbox"
+        type={props.typeInput}
         ref={inputRef}
         onChange={onChange}
         checked={props.checked}

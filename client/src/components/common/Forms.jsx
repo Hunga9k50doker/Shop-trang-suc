@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+
 // import Modal from "./Modal";
 import { to_slug } from "../../utils/utils";
 import { CardItem } from "./CardItem";
 import arrPro from "../../assets/fake-data/Product";
 import { AuthContext } from "../../provider/context/AuthContext";
+import { ProductContext } from "../../provider/context/ProductContext";
+
 import { theme_fb, theme_gg, theme_gh } from "../../assets/img";
+
+const checkValid = () => {};
+
 const FormContact = (props) => {
   return (
     <form
@@ -33,6 +39,10 @@ const FormContact = (props) => {
 };
 
 const FormSearch = ({ active, setActive }) => {
+  const {
+    productState: { products },
+  } = useContext(ProductContext);
+  const [data, setData] = useState(products);
   const refInputSearch = useRef();
   const [searchItem, setSearchItem] = useState("");
   let item = 8;
@@ -50,12 +60,12 @@ const FormSearch = ({ active, setActive }) => {
         />
       </div>
       <div className="form__render">
-        {arrPro
+        {data
           .filter((val) => {
             if (searchItem === "") {
               return val;
             } else if (
-              val.title.toLowerCase().includes(searchItem.toLowerCase())
+              val.name.toLowerCase().includes(searchItem.toLowerCase())
             ) {
               count++;
               item = count;
@@ -66,7 +76,7 @@ const FormSearch = ({ active, setActive }) => {
           .map((e, id) => (
             <Link
               key={id}
-              to={`/chi-tiet/${to_slug(e.title)}`}
+              to={`/chi-tiet/${to_slug(e.name)}`}
               onClick={() => {
                 setActive(!active);
               }}
@@ -382,7 +392,12 @@ const FormEdit = (props) => {
 };
 const FormAdd = (props) => {
   return (
-    <form className="form form__add">
+    <form
+      onSubmit={(e) => props.onSubmit(e)}
+      action=""
+      method="post"
+      className="form form__add"
+    >
       <h3 className="form__title">{props.title}</h3>
       <ul className="form__list">{props.children}</ul>
       <div className="row">
@@ -390,7 +405,7 @@ const FormAdd = (props) => {
           className="col"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <Button content="Thêm sản phẩm" />
+          <Button content="Thêm sản phẩm" onClick={props.handleClick} />
         </div>
       </div>
     </form>

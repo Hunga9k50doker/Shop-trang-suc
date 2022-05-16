@@ -1,7 +1,12 @@
 import axios from "axios";
 import { createContext, useEffect, useReducer } from "react";
 import { productReducer } from "../reducer/ProductReducer";
-import { API_URL, LOAD_PRODUCTS } from "./constant";
+import {
+  API_URL,
+  LOAD_PRODUCTS,
+  ADD_PRODUCTS,
+  DELETE_PRODUCTS,
+} from "./constant";
 
 export const ProductContext = createContext();
 
@@ -27,12 +32,50 @@ export const ProductContextProvider = ({ children }) => {
     }
   };
 
+  const addProducts = async (product) => {
+    // console.log(product);
+    try {
+      const response = await axios.post(`${API_URL}/products`, product);
+
+      dispatch({
+        type: ADD_PRODUCTS,
+        payload: response.data.data,
+      });
+      await loadProducts();
+    } catch (error) {
+      dispatch({
+        type: ADD_PRODUCTS,
+        payload: null,
+      });
+      console.log(error.message);
+    }
+  };
+  const deleteProducts = async (id) => {
+    // console.log(product);
+    try {
+      const response = await axios.delete(`${API_URL}/products/${id}`);
+      dispatch({
+        type: DELETE_PRODUCTS,
+        payload: response.data.data,
+      });
+      await loadProducts();
+    } catch (error) {
+      dispatch({
+        type: DELETE_PRODUCTS,
+        payload: null,
+      });
+      console.log(error.message);
+    }
+  };
+
   useEffect(() => {
     loadProducts();
   }, []);
 
   const productsData = {
     productState,
+    addProducts,
+    deleteProducts,
   };
 
   return (

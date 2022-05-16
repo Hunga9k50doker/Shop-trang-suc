@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useCallback, useMemo, useContext } from "react";
+import { useState, useCallback, useMemo, useContext, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
@@ -7,9 +7,11 @@ import Button from "./Button";
 import CheckBox from "./CheckBox";
 import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
 import InfinityList from "./InfinityList";
-import arrPro from "../../assets/fake-data/Product";
+import products from "../../assets/fake-data/Product";
 import { logo } from "../../assets/img";
 import { AuthContext } from "../../provider/context/AuthContext";
+import { ProductContext } from "../../provider/context/ProductContext";
+
 const arrItemAdmin = [
   {
     title: "Trang Chủ",
@@ -101,7 +103,7 @@ const DataOverall = [
   },
 ];
 const dataFilter = {
-  colors: [
+  color: [
     { color: "Vàng", display: "Vàng" },
     { color: "Trắng", display: "Trắng" },
     { color: "Hồng", display: "Hồng" },
@@ -109,21 +111,21 @@ const dataFilter = {
     { color: "Hồng Trắng", display: "Hồng + Trắng" },
     { color: "Hồng Vàng", display: "Hồng + Vàng" },
   ],
-  materials: [
+  material: [
     { material: "Vàng", display: "Vàng" },
     { material: "Bạc", display: "Bạc" },
     { material: "Hợp kim cao cấp", display: "Hợp kim cao cấp" },
     { material: "Platinum", display: "Platinum" },
   ],
-  material_golds: [
-    { material_gold: "24k", display: "24K" },
-    { material_gold: "22k", display: "22K" },
-    { material_gold: "18k", display: "18K" },
+  materialGold: [
+    { materialGold: "24k", display: "24K" },
+    { materialGold: "22k", display: "22K" },
+    { materialGold: "18k", display: "18K" },
   ],
-  sexs: [
-    { sex: "Nam", display: "Nam" },
-    { sex: "Nữ", display: "Nữ" },
-    { sex: "Unisex", display: "Unisex" },
+  gender: [
+    { gender: "Nam", display: "Nam" },
+    { gender: "Nữ", display: "Nữ" },
+    { gender: "Unisex", display: "Unisex" },
   ],
 };
 const SideBarLeftAdmin = () => {
@@ -242,15 +244,23 @@ const SideBarRightAdmin = () => {
     </div>
   );
 };
-const SideBarFilter = () => {
+
+const SideBarFilter = ({ typeData, path }) => {
+  const {
+    productState: { products },
+  } = useContext(ProductContext);
+  const [data, setData] = useState(products);
+  useEffect(() => {
+    setData(products);
+  }, [products]);
   const initFilter = {
     // category: [],
     color: [],
     material: [],
-    material_gold: [],
-    sex: [],
+    materialGold: [],
+    gender: "",
   };
-  const [productList, setProductList] = useState(arrPro);
+  const [productList, setProductList] = useState(products);
   const [filter, setFilter] = useState(initFilter);
   const filterSelect = (type, checked, item) => {
     if (checked) {
@@ -264,14 +274,14 @@ const SideBarFilter = () => {
             material: [...filter.material, item.material],
           });
           break;
-        case "MATERIAL_GOLD":
+        case "MATERIALGOLD":
           setFilter({
             ...filter,
-            material_gold: [...filter.material_gold, item.material_gold],
+            materialGold: [...filter.materialGold, item.materialGold],
           });
           break;
-        case "SEX":
-          setFilter({ ...filter, sex: [...filter.sex, item.sex] });
+        case "GENDER":
+          setFilter({ ...filter, gender: [...filter.gender, item.gender] });
           break;
         default:
       }
@@ -287,71 +297,96 @@ const SideBarFilter = () => {
           );
           setFilter({ ...filter, material: newMaterial });
           break;
-        case "MATERIAL_GOLD":
-          const newMaterial_Gold = filter.material_gold.filter(
-            (e) => e !== item.material_gold
+        case "MATERIALGOLD":
+          const newMaterialGold = filter.materialGold.filter(
+            (e) => e !== item.materialGold
           );
-          setFilter({ ...filter, material_gold: newMaterial_Gold });
+          setFilter({ ...filter, materialGold: newMaterialGold });
           break;
-        case "SEX":
-          const newSex = filter.sex.filter((e) => e !== item.sex);
-          setFilter({ ...filter, sex: newSex });
+        case "GENDER":
+          const newGender = filter.gender.filter((e) => e !== item.gender);
+          setFilter({ ...filter, gender: newGender });
+          break;
+        case "SORT_LOWTOHIGH":
+          sortLowToHigh(productList);
+          setProductList(productList);
+
+          // setFilter({ ...filter, color: newColor });
+          break;
+        case "SORT_HIGHTOLOW":
+          break;
+        case "SORT_DEFAULT":
           break;
         default:
       }
     }
   };
   const filterSort = (value) => {
-    switch (value) {
-      case 0:
-        break;
-      case 1:
-        sortLowToHigh(productList);
-        break;
-      case 2:
-        sortHighToLow(productList);
-        break;
-      default:
+    // console.log(value);
+    if (value === 1) {
+      const a = sortLowToHigh(productList);
+      setProductList(productList);
+      console.log(a);
+    } else if (value === 2) {
+      sortLowToHigh(productList);
+      setProductList(productList);
+      console.log(productList);
+    } else {
+      console.log(0);
     }
   };
   const clearFilter = () => setFilter(initFilter);
   const updateProducts = useCallback(() => {
-    let temp = arrPro;
+    let temp = products;
     if (filter.color.length > 0) {
       temp = temp.filter((e) => {
-        const check = e.colors.find((color) => filter.color.includes(color));
+        // console.log(e.color);
+        const check = e.color.find((color) => filter.color.includes(color));
         return check !== undefined;
       });
     }
     if (filter.material.length > 0) {
       temp = temp.filter((e) => {
-        const check = e.materials.find((material) =>
-          filter.material.includes(material)
-        );
-        return check !== undefined;
+        if (e.category.material) {
+          const check = e.category.material.find((material) =>
+            filter.material.includes(material)
+          );
+          return check !== undefined;
+        }
+        return true;
       });
     }
-    if (filter.material_gold.length > 0) {
+    if (filter.materialGold.length > 0) {
+      console.log(temp);
       temp = temp.filter((e) => {
-        const check = e.material_golds.find((materialGold) =>
-          filter.material_gold.includes(materialGold)
-        );
-        return check !== undefined;
+        if (e.category.materialGold.length > 0) {
+          const check = e.category.materialGold.find((materialGold) =>
+            filter.materialGold.includes(materialGold)
+          );
+          return check !== undefined;
+        }
+        return true;
       });
     }
-    if (filter.sex.length > 0) {
+    if (filter.gender.length > 0) {
       temp = temp.filter((e) => {
-        const check = e.sexs.find((sex) => filter.sex.includes(sex));
+        const arrGender = Array.of(e.gender);
+        const check = arrGender.find((gender) =>
+          filter.gender.includes(gender)
+        );
         return check !== undefined;
       });
     }
 
     setProductList(temp);
-  }, [filter, arrPro]);
+  }, [filter, products]);
   useMemo(() => {
     updateProducts();
   }, [updateProducts]);
-
+  const item = {
+    data: productList,
+    amount: 12,
+  };
   return (
     <div className="container">
       <div className="row">
@@ -377,9 +412,10 @@ const SideBarFilter = () => {
             </div>
             <div className="row ">
               <Filter title="Lọc theo chất liệu">
-                {dataFilter.materials.map((e, index) => (
+                {dataFilter.material.map((e, index) => (
                   <li key={index} className="filter__item">
                     <CheckBox
+                      typeInput={"checkbox"}
                       label={e.display}
                       onChange={(input) =>
                         filterSelect("MATERIAL", input.checked, e)
@@ -392,14 +428,15 @@ const SideBarFilter = () => {
             </div>
             <div className="row ">
               <Filter title="Lọc theo chất liệu vàng">
-                {dataFilter.material_golds.map((e, index) => (
+                {dataFilter.materialGold.map((e, index) => (
                   <li key={index} className="filter__item">
                     <CheckBox
+                      typeInput={"checkbox"}
                       label={e.display}
                       onChange={(input) =>
-                        filterSelect("MATERIAL_GOLD", input.checked, e)
+                        filterSelect("MATERIALGOLD", input.checked, e)
                       }
-                      checked={filter.material_gold.includes(e.material_gold)}
+                      checked={filter.materialGold.includes(e.materialGold)}
                     />
                   </li>
                 ))}
@@ -407,14 +444,15 @@ const SideBarFilter = () => {
             </div>
             <div className="row ">
               <Filter title="Lọc theo giới tính">
-                {dataFilter.sexs.map((e, index) => (
+                {dataFilter.gender.map((e, index) => (
                   <li key={index} className="filter__item">
                     <CheckBox
+                      typeInput={"checkbox"}
                       label={e.display}
                       onChange={(input) =>
-                        filterSelect("SEX", input.checked, e)
+                        filterSelect("GENDER", input.checked, e)
                       }
-                      checked={filter.sex.includes(e.sex)}
+                      checked={filter.gender.includes(e.gender)}
                     />
                   </li>
                 ))}
@@ -422,9 +460,10 @@ const SideBarFilter = () => {
             </div>
             <div className="row ">
               <Filter title="Lọc theo màu chất liệu">
-                {dataFilter.colors.map((e, index) => (
+                {dataFilter.color.map((e, index) => (
                   <li key={index} className="filter__item">
                     <CheckBox
+                      typeInput={"checkbox"}
                       label={e.display}
                       onChange={(input) =>
                         filterSelect("COLOR", input.checked, e)
@@ -450,20 +489,13 @@ const SideBarFilter = () => {
           <div className="row">
             <div className="sort">
               <select onChange={(e) => filterSort(e.target.value)}>
-                <option value="0">Mới cập nhật (mặc định)</option>
-                <option value="1">Giá từ thấp tới cao</option>
-                <option value="2">Giá từ cao tới thấp</option>
+                <option value={0}>Mới cập nhật (mặc định)</option>
+                <option value={1}>Giá từ thấp tới cao</option>
+                <option value={2}>Giá từ cao tới thấp</option>
               </select>
             </div>
           </div>
-          <InfinityList data={productList} amount={6} />
-          {/* {productList.map((e, id) => (
-              <div key={id} className="col col-xl-4 col-md-6 col-sm-12">
-                <Link to={`/chi-tiet/${to_slug(e.title)}`}>
-                  <CardItem img={e.img} title={e.title} price={e.price} />
-                </Link>
-              </div>
-            ))} */}
+          <InfinityList path={path} typeData={typeData} props={item} />
         </div>
       </div>
     </div>

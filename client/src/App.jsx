@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AuthContext } from "./provider/context/AuthContext";
 import MainLayout from "./components/layout/MainLayout";
 import AdminLayout from "./components/layout/AdminLayout";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Jewels from "./pages/Jewels";
@@ -25,11 +26,47 @@ export default function App() {
   const {
     authState: { user },
   } = useContext(AuthContext);
+
+  const [favoriteItems, setFavoriteItems] = useState([]);
+  const [cart, setCart] = useState([]);
+  const items = JSON.parse(localStorage.getItem("cart"));
+
+  const handleClick = (item) => {
+    if (cart.indexOf(item) !== -1) return -1;
+    setCart([...cart, item]);
+    console.log(cart);
+  };
+
+  const handleChange = (item, d) => {
+    const ind = cart.indexOf(item);
+    const arr = cart;
+    arr[ind].amount += d;
+
+    if (arr[ind].amount === 0) arr[ind].amount = 1;
+    setCart([...arr]);
+  };
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+  useEffect(() => {
+    if (items) {
+      setCart(items);
+    }
+  }, []);
   return (
-    <div classname="App">
+    <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<MainLayout />}>
+          <Route
+            exact
+            path="/"
+            element={
+              <MainLayout
+                sizeFavorite={favoriteItems.length}
+                size={cart.length}
+              />
+            }
+          >
             <Route exact={true} path="/" element={<Home />}></Route>
             {/* trang suc */}
             <Route exact path="trang-suc/nhan" element={<Jewels />}></Route>
@@ -76,14 +113,34 @@ export default function App() {
             {/* lien he */}
             <Route exact path="lien-he/" element={<Contact />}></Route>
             {/* product detail */}
-            <Route exact path="chi-tiet/:slug" element={<Product />}></Route>
-            {/* cart */}
-            <Route exact path="gio-hang-cua-ban/" element={<MyCart />}></Route>
-            {/* wishlist */}
             <Route
-              path="danh-sach-san-pham-yeu-thich/"
-              element={<Wishlist />}
+              exact
+              path="chi-tiet/:slug"
+              element={<Product handleClick={handleClick} />}
             ></Route>
+            {/* cart */}
+            {
+              <Route
+                exact
+                path="gio-hang-cua-ban/"
+                element={
+                  <MyCart
+                    cart={cart}
+                    setCart={setCart}
+                    handleChange={handleChange}
+                  />
+                }
+              ></Route>
+            }
+            {/* wishlist */}
+            {
+              <Route path="/" element={<ProtectedRoute />}>
+                <Route
+                  path="danh-sach-san-pham-yeu-thich/"
+                  element={<Wishlist />}
+                ></Route>
+              </Route>
+            }
             {/* not found */}{" "}
             <Route exact path="*" element={<NotFound />}></Route>
           </Route>
