@@ -34,8 +34,9 @@ export const createProduct = async (req, res) => {
     gender,
     isCouple,
   } = req.body;
+  console.log(req.body);
   try {
-    const product = await ProductModel.create({
+    const product = new ProductModel({
       name,
       description,
       imgsUrl,
@@ -84,7 +85,7 @@ export const updateProduct = async (req, res) => {
     product.gift = gift;
     product.isCouple = isCouple;
     product.color = color;
-    product.gender = gender
+    product.gender = gender;
     await product.save();
     return res.status(200).json({ success: true, data: product });
   } catch (error) {

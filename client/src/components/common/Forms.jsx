@@ -369,24 +369,9 @@ const FormConfirm = (props) => {
 const FormEdit = (props) => {
   // const [isActive, setIsActive] = useState(false);
   return (
-    <form className="form form__edit">
+    <form className="form form__edit" method="post">
       <h3 className="form__title">{props.title}</h3>
       <ul className="form__list">{props.children}</ul>
-      <div className="row">
-        <div
-          className="col"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
-          <Button content="Cập nhật" />
-        </div>
-      </div>
-      {/* {isActive ? (
-        <Modal active={isActive} setActive={setIsActive}>
-          <FormConfirm></FormConfirm>
-        </Modal>
-      ) : (
-        ""
-      )} */}
     </form>
   );
 };

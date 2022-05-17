@@ -45,13 +45,14 @@ export const getInvoiceUser = async (req, res) => {
 
 export const createInvoice = async (req, res) => {
   const { _id } = req;
-  const { phoneNumber, address, total, invoiceDetails } = req.body;
+  const { phoneNumber, address, total, invoiceDetails, name } = req.body;
   const invoice = new InvoiceModel({
     user: _id,
     phoneNumber,
     address,
     total,
     invoiceDetails,
+    name,
   });
   try {
     await invoice.save();

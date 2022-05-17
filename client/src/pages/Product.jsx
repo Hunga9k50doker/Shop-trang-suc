@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { to_slug, get_random } from "../utils/utils";
+import { to_slug, get_random, numberWithCommas } from "../utils/utils";
 import CountNumber from "../components/common/CountNumber";
 import Button from "../components/common/Button";
 import Helmet from "../components/common/Helmet";
@@ -12,9 +12,7 @@ import { ProductContext } from "../provider/context/ProductContext";
 import { FavouriteContext } from "../provider/context/FavouriteContext";
 import { CartContext } from "../provider/context/CartContext";
 
-export default function Product({ handleClick }) {
-  // const notify = () => toast("Thêm thành công, hãy kiểm tra giỏ hàng của bạn!");
-  // console.log(notify);
+export default function Product() {
   const notify = (e) => toast(e);
 
   let item = null;
@@ -35,9 +33,7 @@ export default function Product({ handleClick }) {
         : "";
     }
   }, []);
-  if (products.length > 0) {
-    item = products.find((p) => to_slug(p.name) === slug);
-  }
+
   // console.log(item);
   const addToFavourite = (product) => {
     addProductToFavourite({ product, id: product._id });
@@ -60,11 +56,11 @@ export default function Product({ handleClick }) {
                       <div className="product__img">
                         <div className="product__slide__img">
                           {e.imgsUrl.map((img, id) => (
-                            <img key={id} src={img} alt="" />
+                            <img key={id} src={`../../images/${img}`} alt="" />
                           ))}
                         </div>
                         <div className="product__item__img">
-                          <img src={e.imgsUrl[0]} alt="" />
+                          <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
                         </div>
                       </div>
                     </div>
@@ -74,7 +70,9 @@ export default function Product({ handleClick }) {
                         <h6 className="product__desc mt-2 mb-2">
                           {e.description}
                         </h6>
-                        <p className="product__price">Giá: {e.price} vnđ</p>
+                        <p className="product__price">
+                          Giá: {numberWithCommas(e.price)} vnđ
+                        </p>
                         <div className="product__add__cart">
                           <CountNumber
                             quantity={quantity}
@@ -87,7 +85,6 @@ export default function Product({ handleClick }) {
                             classNameBtn="add ms-5"
                             content={"Thêm vào giỏ hàng"}
                           />
-                          <ToastContainer autoClose={1000} />
                         </div>
                         <div
                           style={{ cursor: "pointer" }}
@@ -128,7 +125,6 @@ export default function Product({ handleClick }) {
                               >
                                 Thêm vào danh sách yêu thích
                               </p>
-                              <ToastContainer autoClose={1000} />
                             </>
                           )}
                         </div>

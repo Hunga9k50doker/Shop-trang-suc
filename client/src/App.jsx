@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { AuthContext } from "./provider/context/AuthContext";
 import MainLayout from "./components/layout/MainLayout";
 import AdminLayout from "./components/layout/AdminLayout";
@@ -21,6 +22,7 @@ import SettingAdmin from "./pages/admin/Setting";
 import Product from "./pages/Product";
 import Wishlist from "./pages/Wishlist";
 import MyCart from "./pages/MyCart";
+import Payment from "./pages/Payment";
 import NotFound from "./pages/NotFound";
 export default function App() {
   const {
@@ -141,6 +143,12 @@ export default function App() {
                 ></Route>
               </Route>
             }
+            {/* payment */}
+            {
+              <Route path="/" element={<ProtectedRoute />}>
+                <Route path="thanh-toan/" element={<Payment />}></Route>
+              </Route>
+            }
             {/* not found */}{" "}
             <Route exact path="*" element={<NotFound />}></Route>
           </Route>
@@ -176,6 +184,7 @@ export default function App() {
           )}
         </Routes>
       </BrowserRouter>
+      <ToastContainer autoClose={1000} />
     </div>
   );
 }

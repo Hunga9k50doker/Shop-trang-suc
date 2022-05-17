@@ -51,9 +51,10 @@ const CardItem = ({ item }) => {
         }
         className={`card__icon__like bx ${isFav ? "bxs-heart" : "bx-heart"}`}
       ></i>
-      <ToastContainer autoClose={1000} />
       <div className="card__item__header">
-        {imgsUrl.length > 0 && <img src={imgsUrl} alt="" />}
+        {imgsUrl.length > 0 && (
+          <img src={`../../images/${imgsUrl[0]}`} alt="Ảnh" />
+        )}
       </div>
       <div className="card__item__body">
         <p className="card__item__title">{name}</p>

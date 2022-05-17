@@ -8,6 +8,7 @@ import {
   ADD_CART,
   CHANGE_QUANTITY,
 } from "./constant";
+import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
@@ -45,6 +46,9 @@ const CartContextProvider = ({ children }) => {
           type: ADD_CART,
           payload: { data: response.data.data, product },
         });
+        toast.success("Thêm thành công!");
+      } else {
+        toast.error("Đã có sản phẩm trong giỏ hàng");
       }
     } catch (error) {
       console.log(error.message);

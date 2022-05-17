@@ -25,15 +25,12 @@ export const WishlistItem = ({ e, isChecked, handleChange }) => {
           className="wishlist__checked__item"
           type="checkbox"
           name={e.name}
-          //   checked={isChecked}
-          //   name={user.name}
           checked={e?.isChecked || false}
           onChange={handleChange}
         />
       </td>
       <td className="td__trash">
         <i className="bx bx-trash" onClick={handleDeleteFromFavourite}></i>
-        <ToastContainer autoClose={1000} />
       </td>
       <td>
         <img src={e.imgsUrl[0]} alt="" />

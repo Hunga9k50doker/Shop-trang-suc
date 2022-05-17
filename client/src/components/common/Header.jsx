@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/context/AuthContext";
-
 import { FormLogin, FormRegister, FormEdit } from "./Forms";
 import Modal from "./Modal";
+import Button from "./Button";
 export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -13,16 +13,22 @@ export default function Header() {
 
   const {
     authState: { user, loading, isAuthenticated, userAuth },
+    updateUser,
   } = useContext(AuthContext);
-  // console.log(user);
   const [data, setData] = useState({
-    
     name: "",
     address: "",
     telephone: "",
-    username: "",
-    password: "",
   });
+  useEffect(() => {
+    if (loading === false)
+      setData({
+        ...data,
+        name: user.name,
+        address: user.address,
+        telephone: user.telephone,
+      });
+  }, [loading]);
   const handleChange = (e) => {
     const newData = { ...data };
     newData[e.target.className] = e.target.value;
@@ -49,6 +55,9 @@ export default function Header() {
     [isLogin, isRegister]
   );
   if (loading) return <Skeleton height="50px" />;
+  const update = () => {
+    updateUser(user._id, data);
+  };
   return (
     <div className="header">
       <ul className="header__left">
@@ -118,24 +127,6 @@ export default function Header() {
                   <li className="form__item">
                     <input
                       type="text"
-                      placeholder="Tên đăng nhập"
-                      defaultValue={data.username}
-                      onChange={(e) => handleChange(e)}
-                      className="username"
-                    />
-                  </li>
-                  <li className="form__item">
-                    <input
-                      type="password"
-                      placeholder="Mật khẩu"
-                      defaultValue={data.password}
-                      onChange={(e) => handleChange(e)}
-                      className="password"
-                    />
-                  </li>
-                  <li className="form__item">
-                    <input
-                      type="text"
                       placeholder="Họ và tên"
                       defaultValue={data.name}
                       onChange={(e) => handleChange(e)}
@@ -158,6 +149,17 @@ export default function Header() {
                       defaultValue={data.telephone}
                       onChange={(e) => handleChange(e)}
                       className="telephone"
+                    />
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      content="Cập nhật"
+                      onClick={() => {
+                        toast.success("Cập nhật thành công!");
+                        setTimeout(() => {
+                          setIsActiveForm(false);
+                        }, 300);
+                      }}
                     />
                   </li>
                 </FormEdit>

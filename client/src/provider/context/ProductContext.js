@@ -5,7 +5,9 @@ import {
   API_URL,
   LOAD_PRODUCTS,
   ADD_PRODUCTS,
+  UPDATE_PRODUCTS,
   DELETE_PRODUCTS,
+  FETCH_ONE_PRODUCT,
 } from "./constant";
 
 export const ProductContext = createContext();
@@ -14,6 +16,8 @@ export const ProductContextProvider = ({ children }) => {
   let [productState, dispatch] = useReducer(productReducer, {
     products: [],
     loading: true,
+    product: null,
+    loadingOneProduct: true,
   });
 
   const loadProducts = async () => {
@@ -32,6 +36,36 @@ export const ProductContextProvider = ({ children }) => {
     }
   };
 
+  const loadProduct_Id = async (id) => {
+    try {
+      dispatch({
+        type: FETCH_ONE_PRODUCT,
+        payload: {
+          product: null,
+          loading: true,
+        },
+      });
+      const response = await axios.get(`${API_URL}/products/${id}`);
+      if (response.data.success) {
+        dispatch({
+          type: FETCH_ONE_PRODUCT,
+          payload: {
+            product: response.data.data,
+            loading: false,
+          },
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: FETCH_ONE_PRODUCT,
+        payload: {
+          product: null,
+          loading: false,
+        },
+      });
+    }
+  };
+
   const addProducts = async (product) => {
     // console.log(product);
     try {
@@ -45,6 +79,29 @@ export const ProductContextProvider = ({ children }) => {
     } catch (error) {
       dispatch({
         type: ADD_PRODUCTS,
+        payload: null,
+      });
+      console.log(error.message);
+    }
+  };
+  const updateProducts = async (id, productData) => {
+    // console.log(product);
+    try {
+      const response = await axios.put(
+        `${API_URL}/products/${id}`,
+        productData
+      );
+
+      if (response.data.success) {
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          payload: response.data.data,
+        });
+      }
+      await loadProducts();
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PRODUCTS,
         payload: null,
       });
       console.log(error.message);
@@ -74,7 +131,9 @@ export const ProductContextProvider = ({ children }) => {
 
   const productsData = {
     productState,
+    loadProduct_Id,
     addProducts,
+    updateProducts,
     deleteProducts,
   };
 

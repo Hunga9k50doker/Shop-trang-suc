@@ -28,7 +28,7 @@ export default function Home() {
 
   const item = {
     data: data,
-    amount: 9,
+    amount: 20,
     classNameCol: "col-xl-3 col-lg-4 col-md-6",
   };
 

@@ -7,8 +7,18 @@ import ProductRouter from "./routers/Product.router.js";
 import CartRouter from "./routers/Cart.router.js";
 import FavouriteRouter from "./routers/Favourite.router.js";
 import InvoiceRouter from "./routers/Invoice.router.js";
+import multer from "multer";
 
 const app = express();
+
+var storage = multer.diskStorage({
+  destination: "../client/public/images",
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 app.use(express.json());
 app.use(cors());
@@ -18,6 +28,10 @@ app.use("/api/products", ProductRouter);
 app.use("/api/carts", CartRouter);
 app.use("/api/favourite", FavouriteRouter);
 app.use("/api/invoice", InvoiceRouter);
+app.post("/api/uploadfile", upload.single("myFile"), (req, res, next) => {
+  console.log(req.file.originalname + " file successfully uploaded !!");
+  res.sendStatus(200);
+});
 //Not found page
 app.all("*", (req, res) => {
   res.status(404).json({ success: false, message: "Not found" });

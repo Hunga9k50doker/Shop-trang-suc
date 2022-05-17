@@ -16,7 +16,6 @@ export default function MyCart({ cart, setCart }) {
     deleteOneProductFromCart,
     changeQuantity,
   } = useContext(CartContext);
-  console.log(products);
 
   const handleRemove = (id) => {
     deleteOneProductFromCart(id);
@@ -38,6 +37,8 @@ export default function MyCart({ cart, setCart }) {
   if (loading) {
     return <Skeleton height="200px" width={"100%"} />;
   }
+
+  console.log(products);
 
   return (
     <Helmet title="Giỏ hàng">
@@ -68,56 +69,61 @@ export default function MyCart({ cart, setCart }) {
                 <tbody>
                   {products.map((e, id) => (
                     <tr key={id}>
-                      <td className="td__checkbox">
-                        <input type="checkbox" />
-                      </td>
-                      <td className="td__trash">
-                        <i
-                          className="bx bx-trash"
-                          onClick={() => handleRemove(e.product[0]._id)}
-                        ></i>
-                      </td>
-                      <td>{/* <img src={e.imgsUrl[0]} alt="" /> */}</td>
-                      <td>{e.product[0].name}</td>
-                      <td>
-                        <div style={{ display: "flex" }}>
-                          <Button
-                            onClick={() =>
-                              handleChangeQuantity(
-                                e._id,
-                                e.quantity - 1 >= 1 ? e.quantity - 1 : 1,
-                                e.product
-                              )
-                            }
-                          >
-                            -
-                          </Button>
-                          <input
-                            type="number"
-                            style={{
-                              padding: "0",
-                              textAlign: "center",
-                              width: "40px",
-                            }}
-                            value={e.quantity}
-                          />
-                          <Button
-                            onClick={() =>
-                              handleChangeQuantity(
-                                e._id,
-                                e.quantity + 1,
-                                e.product
-                              )
-                            }
-                          >
-                            +
-                          </Button>
-                        </div>
-                      </td>
-                      <td className="td__price">
-                        {numberWithCommas(Number(e.product[0].price))}
-                      </td>
-                      <td>Còn hàng</td>
+                      {console.log(e.product[0])}
+                      {e.product[0] && (
+                        <>
+                          <td className="td__checkbox">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="td__trash">
+                            <i
+                              className="bx bx-trash"
+                              onClick={() => handleRemove(e.product[0]._id)}
+                            ></i>
+                          </td>
+                          <td>{/* <img src={e.imgsUrl[0]} alt="" /> */}</td>
+                          <td>{e.product[0].name}</td>
+                          <td>
+                            <div style={{ display: "flex" }}>
+                              <Button
+                                onClick={() =>
+                                  handleChangeQuantity(
+                                    e._id,
+                                    e.quantity - 1 >= 1 ? e.quantity - 1 : 1,
+                                    e.product
+                                  )
+                                }
+                              >
+                                -
+                              </Button>
+                              <input
+                                type="number"
+                                style={{
+                                  padding: "0",
+                                  textAlign: "center",
+                                  width: "40px",
+                                }}
+                                value={e.quantity}
+                              />
+                              <Button
+                                onClick={() =>
+                                  handleChangeQuantity(
+                                    e._id,
+                                    e.quantity + 1,
+                                    e.product
+                                  )
+                                }
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </td>
+                          <td className="td__price">
+                            {numberWithCommas(Number(e.product[0].price))}
+                          </td>
+                          <td>Còn hàng</td>
+                        </>
+                      )}
                     </tr>
                   ))}
                   <tr>
@@ -125,7 +131,9 @@ export default function MyCart({ cart, setCart }) {
                       <h4>{`Tổng tiền : ${numberWithCommas(
                         Number(price)
                       )} VND`}</h4>
-                      <Button content="Thanh toán" classNameBtn="m-2" />
+                      <Link to="/thanh-toan">
+                        <Button content="Thanh toán" classNameBtn="m-2" />
+                      </Link>
                       <Link to="/trang-suc/nhan/">
                         <Button content="Tiếp tục mua hàng" />
                       </Link>

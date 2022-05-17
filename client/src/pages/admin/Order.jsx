@@ -1,11 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Doughnut } from "react-chartjs-2";
+import moment from "moment";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
 import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
 import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
 import { FormDetail } from "../../components/common/Forms";
+import { OrderContext } from "../../provider/context/OrderContext";
 const dataTable_01 = [
   {
     province: "TP. Hồ Chí Minh",
@@ -152,6 +154,10 @@ const Selection = () => {
 const OrderAdmin = () => {
   const [viewDetail, setViewDetail] = useState(null);
   const [searchItem, setSearchItem] = useState("");
+  const {
+    orderState: { orders, loading },
+  } = useContext(OrderContext);
+  console.log(orders);
 
   const dataOrder = {
     labels: ["Trên 20k", "Trên 15k", "Trên 10k", "Trên 5k"],
@@ -260,7 +266,7 @@ const OrderAdmin = () => {
                 <thead>
                   <tr>
                     <td>ID</td>
-                    <td>Tên tài khoản</td>
+                    <td>Id người dùng</td>
                     <td>Số điện thoại</td>
                     <td>ID đặt hàng</td>
                     <td>Tổng tiền</td>
@@ -270,7 +276,7 @@ const OrderAdmin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dataTable_02
+                  {orders
                     .filter((val) => {
                       if (searchItem === "") {
                         return val;
@@ -288,11 +294,11 @@ const OrderAdmin = () => {
                     .map((e, id) => (
                       <tr key={id}>
                         <td>{id}</td>
-                        <td>{e.usename}</td>
-                        <td>{e.sdt}</td>
-                        <td>{e.id_order}</td>
-                        <td>{e.price}</td>
-                        <td>{e.date}</td>
+                        <td>{e.name}</td>
+                        <td>{e.phoneNumber}</td>
+                        <td>{e._id}</td>
+                        <td>{e.total}</td>
+                        <td>{moment(e.createdAt).format("LLL")}</td>
                         <td className="view__details">
                           <Button
                             content="Xem chi tiết"
@@ -311,7 +317,10 @@ const OrderAdmin = () => {
                               <div className="form__detail__header">
                                 <p>Tên khách hàng: {e.usename}</p>
                                 <p> Số điện thoại: {e.sdt}</p>
-                                <p>Thời gian đặt hàng: {e.date}</p>
+                                <p>
+                                  Thời gian đặt hàng:{" "}
+                                  {moment(e.updatedAt).format("LLL")}
+                                </p>
                                 <p>
                                   Tổng tiền: <strong>{e.price} vnđ</strong>
                                 </p>

@@ -7,6 +7,10 @@ const Invoice = new mongoose.Schema(
       ref: "user",
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+    },
     phoneNumber: {
       type: String,
       required: true,

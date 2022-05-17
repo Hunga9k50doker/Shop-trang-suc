@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
 import Button from "../../components/common/Button";
@@ -7,6 +10,7 @@ import Modal from "../../components/common/Modal";
 import { numberWithCommas } from "../../utils/utils";
 import { FormEdit, FormAdd } from "../../components/common/Forms";
 import { ProductContext } from "../../provider/context/ProductContext";
+import axios from "axios";
 
 // data render ui for color, gift
 const dataInput = [
@@ -67,6 +71,7 @@ const dataInput = [
   },
 ];
 const ProductAdmin = () => {
+  const [currentId, setCurrentId] = useState(null);
   const [isActiveForm, setIsActiveForm] = useState(false);
   const [isActiveFormAdd, setIsActiveFormAdd] = useState(false);
   const [activeGold, setActiveGold] = useState(false);
@@ -77,13 +82,16 @@ const ProductAdmin = () => {
   const [avatar, setAvatar] = useState([]);
   const goldRef = useRef(null);
   const typeRef = useRef(null);
-  const { addProducts, deleteProducts } = useContext(ProductContext);
-  
+  const { addProducts, deleteProducts, updateProducts } =
+    useContext(ProductContext);
+
   const [, setImgs] = useState([]);
+  const [files, setFiles] = useState([]);
   const {
-    productState: { products },
+    productState: { products, product, loadingOneProduct },
+    loadProduct_Id,
   } = useContext(ProductContext);
-  const dataInit = {
+  let dataInit = {
     imgsUrl: [],
     type: "Trang sức",
     category: {
@@ -104,6 +112,20 @@ const ProductAdmin = () => {
     disableGift: true,
   };
   const [data, setData] = useState(dataInit);
+  useEffect(() => {
+    if (currentId) {
+      loadProduct_Id(currentId);
+    }
+  }, [currentId]);
+
+  useEffect(() => {
+    if (loadingOneProduct == false)
+      setData({
+        ...data,
+        ...product,
+        disableGift: true,
+      });
+  }, [loadingOneProduct]);
 
   const notify = () =>
     toast(() => {
@@ -128,13 +150,16 @@ const ProductAdmin = () => {
     }
   }, []);
 
+  const update = () => {
+    updateProducts(currentId, data);
+  };
+
   const handleEvents = {
     // gold, sliver, platinum, alloy
     changMaterial: (e) => {
       if (goldRef.current) {
         if (goldRef.current.value === "Vàng") {
           setActiveGold(true);
-          
         } else {
           setActiveGold(false);
         }
@@ -147,7 +172,6 @@ const ProductAdmin = () => {
           setCateJewel(true);
           setCateWatch(false);
           setCateAccessory(false);
-         
         } else if (typeRef.current.value === "Đồng hồ") {
           setCateJewel(false);
           setCateWatch(true);
@@ -163,10 +187,10 @@ const ProductAdmin = () => {
     // add images
     changeImg: (e) => {
       if (e.target.files && !data.imgsUrl.includes(e.target.files[0].name)) {
-        const fileArray = Array.from(e.target.files).map((file) =>
-          URL.createObjectURL(file)
-        );
-
+        const fileArray = Array.from(e.target.files).map((file) => {
+          return URL.createObjectURL(file);
+        });
+        setFiles([...files, e.target.files[0]]);
         setAvatar((prevImg) => prevImg.concat(fileArray));
         setImgs(avatar);
         Array.from(e.target.files).map((file) => URL.revokeObjectURL(file));
@@ -236,6 +260,11 @@ const ProductAdmin = () => {
     // submit
     submit: () => {
       addProducts(data);
+      files.map((file) => {
+        const imageData = new FormData();
+        imageData.append("myFile", file);
+        axios.post("http://localhost:5000/api/uploadfile", imageData);
+      });
     },
     checkValid: (e) => {
       e.preventDefault();
@@ -543,13 +572,309 @@ const ProductAdmin = () => {
                         />
                       </li>
                     </FormAdd>
-                    <ToastContainer autoClose={2000} />
                   </Modal>
                 ) : (
                   ""
                 )}
 
                 {/* =============end add product ================== */}
+
+                {/* =============start update product ================== */}
+
+                {isActiveForm ? (
+                  <Modal
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
+                    }}
+                    active={isActiveForm}
+                    setActive={setIsActiveForm}
+                  >
+                    <FormEdit
+                      handleClick={notify}
+                      title="Cập nhật thông tin sản phẩm"
+                      onSubmit={() => updateProducts(data._id)}
+                    >
+                      {loadingOneProduct ? (
+                        <Skeleton height="60vh" width="50vw" />
+                      ) : (
+                        <>
+                          <li className="form__item">
+                            <input
+                              type="file"
+                              className="custom__input__file__form__add"
+                              id="custom__input__file__form__add"
+                              multiple
+                              accept="image/png,image/jpeg"
+                              onChange={(e) => handleEvents.changeImg(e)}
+                            />
+                            <label
+                              htmlFor="custom__input__file__form__add"
+                              className="label__custom__input__file__form__add"
+                            >
+                              Thêm ảnh
+                            </label>
+                          </li>
+                          <li className="form__item">
+                            <div className="row ">
+                              {handleEvents.previewAvatar(avatar)}
+                            </div>
+                          </li>
+                          <li className="form__item mt-4">
+                            <input
+                              onChange={(e) => handleEvents.getData(e)}
+                              value={data.name}
+                              type="text"
+                              placeholder="Tên sản phẩm"
+                              style={{ width: "100%" }}
+                              className="name"
+                            />
+                          </li>
+                          <li className="form__item">
+                            <p>Loại sản phẩm:</p>
+                            <select
+                              ref={typeRef}
+                              onChange={(e) => {
+                                handleEvents.changType(e);
+                                handleEvents.getData(e);
+                              }}
+                              value={data.ty}
+                              name="edit__type_product"
+                              id="type_product"
+                              className="type"
+                            >
+                              <option value="Trang sức">Trang sức</option>
+                              <option value="Đồng hồ">Đồng hồ</option>
+                              <option value="Phụ kiện">Phụ kiện</option>
+                            </select>
+                          </li>
+                          <li className="form__item form__item__category">
+                            {cateJewel === true && (
+                              <>
+                                <p>Loại trang sức:</p>
+                                <select
+                                  onChange={(e) => handleEvents.getData(e)}
+                                  value={data.category.jewel_type}
+                                  className="jewel_type"
+                                >
+                                  <option value="Nhẫn">Nhẫn</option>
+                                  <option value="Lắc">Lắc</option>
+                                  <option value="Bông tai">Bông tai</option>
+                                  <option value="Vòng tay">Vòng tay</option>
+                                  <option value="Dây cổ">Dây cổ</option>
+                                </select>
+                                <br />
+                                <p>Dòng trang sức:</p>
+                                <select
+                                  className="jewel_line"
+                                  onChange={(e) => handleEvents.getData(e)}
+                                  value={data.category.jewel_line}
+                                >
+                                  <option value="Kim cương">Kim cương</option>
+                                  <option value="Không đính đá">
+                                    Không đính đá
+                                  </option>
+                                  <option value="Ecz-cz">Ecz-cz</option>
+                                </select>
+                              </>
+                            )}
+                            {cateWatch === true && (
+                              <>
+                                <p>Thương hiệu:</p>
+                                <select
+                                  id="brand__watch"
+                                  className="brand"
+                                  onChange={(e) => handleEvents.getData(e)}
+                                  value={data.category.brand}
+                                >
+                                  <option value="Casio">Casio</option>
+                                  <option value="Gucci">Gucci</option>
+                                  <option value="Citizen">Citizen</option>
+                                </select>
+                              </>
+                            )}
+                            {cateAccessory === true && (
+                              <>
+                                <p>Loại phụ kiện:</p>
+                                <select
+                                  id="type_accessory"
+                                  className="accessory_type"
+                                  onChange={(e) => handleEvents.getData(e)}
+                                  value={data.category.accessory_type}
+                                >
+                                  {" "}
+                                  <option value="Mắt kính">Mắt kính</option>
+                                  <option value="Thắt Lưng">Thắt Lưng</option>
+                                </select>
+                              </>
+                            )}
+                          </li>
+                          <li className="form__item">
+                            <p>Chất liệu:</p>
+                            <select
+                              className="material"
+                              name="edit__material"
+                              id="material"
+                              ref={goldRef}
+                              onChange={(e) => {
+                                handleEvents.getData(e);
+                                handleEvents.changMaterial(e);
+                              }}
+                              value={data.category.material}
+                            >
+                              <option value="Vàng">Vàng</option>
+                              <option value="Bạc">Bạc</option>
+                              <option value="Hợp kim cao cấp">
+                                Hợp kim cao cấp
+                              </option>
+                              <option value="Platinum">Platinum</option>
+                            </select>
+                            <br />
+                            {activeGold === true && (
+                              <>
+                                <p>Chất liệu vàng:</p>
+                                <select
+                                  name="material__gold"
+                                  id="material__gold"
+                                  className="materialGold"
+                                  onChange={(e) => handleEvents.getData(e)}
+                                  value={data.category.materialGold}
+                                >
+                                  <option value="18k">18k</option>
+                                  <option value="22k">22k</option>
+                                  <option value="24k">24k</option>
+                                </select>
+                              </>
+                            )}
+                          </li>
+                          <li className="form__item">
+                            <p>Giới tính:</p>
+                            <select
+                              id="gender"
+                              className="gender"
+                              onChange={(e) => handleEvents.getData(e)}
+                              value={data.gender}
+                            >
+                              <option value="Nam">Nam</option>
+                              <option value="Nữ">Nữ</option>
+                              <option value="Unisex">Unisex</option>
+                            </select>
+                          </li>
+                          <li className="form__item">
+                            <p>Sản phẩm couple:</p>
+                            <select
+                              id="couple"
+                              className="isCouple"
+                              onChange={(e) => handleEvents.getData(e)}
+                              value={data.isCouple}
+                            >
+                              <option value={true}>Có</option>
+                              <option value={false}>Không</option>
+                            </select>
+                          </li>
+                          <li className="form__item form__item__type__gifts">
+                            <p>Loại quà tặng: </p>
+
+                            {dataInput.map(
+                              (e, id) =>
+                                e.type === "gift" && (
+                                  <React.Fragment key={id}>
+                                    <label htmlFor={e.title + id}>
+                                      {e.title}
+                                    </label>
+                                    <input
+                                      onChange={(e) => handleEvents.getData(e)}
+                                      className="gift"
+                                      id={e.title + id}
+                                      type="checkbox"
+                                      value={e.value}
+                                      checked={data.gift.includes(e.value)}
+                                      disabled={data.disableGift}
+                                    ></input>
+                                  </React.Fragment>
+                                )
+                            )}
+                            <label htmlFor="form__add__noGift">
+                              Không phải là quà tặng
+                            </label>
+                            <input
+                              defaultChecked
+                              className="gift"
+                              id="form__add__noGift"
+                              type="checkbox"
+                              value={""}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setData({
+                                    ...data,
+                                    gift: [],
+                                    disableGift: e.target.checked,
+                                  });
+                                } else {
+                                  setData({
+                                    ...data,
+                                    disableGift: e.target.checked,
+                                  });
+                                }
+                              }}
+                            ></input>
+                          </li>
+                          <li className="form__item form__item__type__colors">
+                            <p>Màu sắc:</p>
+                            {dataInput.map(
+                              (e, id) =>
+                                e.type === "color" && (
+                                  <React.Fragment key={id}>
+                                    <label htmlFor={e.title + id}>
+                                      {e.title}
+                                    </label>
+                                    <input
+                                      onChange={(e) => handleEvents.getData(e)}
+                                      className="color"
+                                      id={e.title + id}
+                                      type="checkbox"
+                                      value={e.value}
+                                      checked={data.color.includes(e.value)}
+                                    ></input>
+                                  </React.Fragment>
+                                )
+                            )}
+                          </li>{" "}
+                          <li className="form__item ">
+                            <input
+                              onChange={(e) => handleEvents.getData(e)}
+                              value={data.price}
+                              type="number"
+                              placeholder="Giá (VND)"
+                              maxLength="20"
+                              min="1000"
+                              className="price"
+                            />
+                          </li>
+                          <li className="form__item">
+                            <textarea
+                              onChange={(e) => handleEvents.getData(e)}
+                              value={data.description}
+                              type="text"
+                              className="description"
+                              placeholder="Mô tả chi tiết sản phẩm"
+                            />
+                          </li>
+                          <li className="form__item mt-4">
+                            <Button
+                              onClick={() => update()}
+                              content="Cập nhật sản phẩm"
+                            />
+                          </li>
+                        </>
+                      )}
+                    </FormEdit>
+                  </Modal>
+                ) : (
+                  ""
+                )}
+
+                {/* =============end update product ================== */}
 
                 <table className="p-4">
                   <thead>
@@ -581,15 +906,18 @@ const ProductAdmin = () => {
                         <tr key={id}>
                           <td>{id}</td>
                           <td>
-                            <img src={e.imgsUrl[0]} alt="" />
+                            <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
                           </td>
                           <td>{e.name}</td>
                           <td>{numberWithCommas(e.price)}</td>
-                          <td>{e.date}</td>
+                          <td>{moment(e.updatedAt).format("LLL")}</td>
                           <td>
                             <i
                               className="bx bx-edit-alt"
-                              onClick={() => setIsActiveForm(true)}
+                              onClick={() => {
+                                setIsActiveForm(true);
+                                setCurrentId(e._id);
+                              }}
                             ></i>
                           </td>
                           <td>
@@ -600,7 +928,6 @@ const ProductAdmin = () => {
                                 notifyDel();
                               }}
                             ></i>
-                            <ToastContainer autoClose={1000} />
                           </td>
                         </tr>
                       ))}

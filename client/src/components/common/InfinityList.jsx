@@ -151,7 +151,7 @@ const InfinityList = ({ props, path }) => {
     setLoad(false);
   }, [load, index, data, props.data]);
 
-  console.log(products);
+  // console.log(products);
 
   // useEffect(() => {
   //   if (typeData === "24k" || typeData === "22k" || typeData === "18k") {
@@ -161,32 +161,11 @@ const InfinityList = ({ props, path }) => {
   //     setFilterProduct(newFilterProduct);
   //   }
   // }, [typeData]);
-  console.log(filterProduct);
+  // console.log(filterProduct);
   return (
     <div className="row" ref={listRef}>
       {loading === false &&
         data.map((e, id) => {
-          // if (e.category.materialGold.includes(typeData))
-          //   console.log(e.category.materialGold);
-          //  if (
-          //   e.category.jewel_type !== "" &&
-          //   e.category.jewel_type === typeData
-          // ) {
-          //   return <Item key={id} e={e} props={props} loading={loading} />;
-          // }
-          //  if (
-          //   e.category.jewel_line !== "" &&
-          //   e.category.jewel_line === typeData
-          // ) {
-          //   return <Item key={id} e={e} props={props} loading={loading} />;
-          // }
-          //  if (
-          //   e.category.materialGold.length > 0 &&
-          //   e.category.materialGold.includes(typeData)
-          // ) {
-          //   return <Item key={id} e={e} props={props} loading={loading} />;
-          // }
-
           return <Item key={id} e={e} props={props} loading={loading} />;
         })}
     </div>

@@ -34,7 +34,7 @@ export const addProductToCart = async (req, res) => {
   const { productId, quantity } = req.body;
   try {
     const cart = await CartModel.find({ user: _id, productId });
-    if (cart === {}) {
+    if (cart.length !== 0) {
       return res
         .status(200)
         .json({ success: false, message: "Đã có sản phẩm trong giỏ" });

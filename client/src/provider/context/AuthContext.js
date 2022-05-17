@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext,  useReducer, useLayoutEffect } from "react";
+import { createContext, useReducer, useLayoutEffect } from "react";
 import {
   getAuth,
   signInWithPopup,
@@ -7,17 +7,20 @@ import {
   FacebookAuthProvider,
   GithubAuthProvider,
 } from "firebase/auth";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { Firebase } from "../../Firebase/firebase";
 import { setAuthToken } from "../../utils/setAuthToken";
-import { authReducer } from "../reducer/AuthReducer";
-import { API_URL, LOAD_USER, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
+import authReducer from "../reducer/AuthReducer";
+import {
+  API_URL,
+  LOAD_USER,
+  UPDATE_USER,
+  LOCAL_STORAGE_TOKEN_NAME,
+} from "./constant";
 
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  let notify = (e) => toast(e);
-
   let [authState, dispatch] = useReducer(authReducer, {
     userAuth: null,
     isLoginAuth: false,
@@ -53,9 +56,9 @@ export const AuthContextProvider = ({ children }) => {
       // .then((res) => console.log(res));
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
-        notify("Đăng nhập thành công") && <ToastContainer autoClose={2000} />;
+        toast.success("Đăng nhập thành công!");
       } else {
-        notify("Đăng nhập thất bại") && <ToastContainer autoClose={2000} />;
+        toast.error(`Đăng nhập thất bại: ${response.data.message}`);
       }
       await loadUser();
     } catch (error) {
@@ -145,11 +148,10 @@ export const AuthContextProvider = ({ children }) => {
       const response = await axios.post(`${API_URL}/users/register`, user);
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
-        notify("Đăng ký thành công") && <ToastContainer autoClose={2000} />;
+        toast.success("Đăng ký thành công!");
       } else {
         console.log(response.data);
-        alert(response.data.message);
-        notify("Đăng ký thất bại!") && <ToastContainer autoClose={2000} />;
+        toast.error(`Đăng ký thất bại: ${response.data.message}`);
       }
       await loadUser();
     } catch (error) {
@@ -158,6 +160,20 @@ export const AuthContextProvider = ({ children }) => {
         type: LOAD_USER,
         payload: null,
       });
+    }
+  };
+
+  const updateUser = async (id, userData) => {
+    try {
+      const response = await axios.put(`${API_URL}/users/${id}`, userData);
+      if (response.data.success) {
+        dispatch({
+          type: UPDATE_USER,
+          payload: response.data.data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -176,6 +192,7 @@ export const AuthContextProvider = ({ children }) => {
     LoginWithFirebase,
     register,
     logout,
+    updateUser,
   };
 
   return (

@@ -1,78 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AdminContext } from "../../provider/context/AdminContext";
 import Table from "../../components/common/Table";
 import Helmet from "../../components/common/Helmet";
 
-const dataTable_02 = [
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "dsas@gmail.com",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.comew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "2d2s@gmail.com",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12sd@gmail.comse1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "fwwq@gmail.com",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    email: "12e1@gmail.com34231",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    date: "23/2/2022 13:03 pm",
-  },
-];
 const CustomerAdmin = () => {
   const [searchItem, setSearchItem] = useState("");
-
+  const {
+    adminState: { users },
+  } = useContext(AdminContext);
   return (
     <Helmet title="Quản lý người dùng">
       <div className="container">
@@ -89,14 +24,14 @@ const CustomerAdmin = () => {
                   <tr>
                     <td>ID</td>
                     <td>Tên khách hàng</td>
-                    <td>Email</td>
+                    <td>Vai trò</td>
                     <td>Số điện thoại</td>
                     <td>Thời gian đăng ký</td>
                     <td>Xóa</td>
                   </tr>
                 </thead>
                 <tbody>
-                  {dataTable_02
+                  {users
                     .filter((val) => {
                       if (searchItem === "") {
                         return val;
@@ -114,10 +49,10 @@ const CustomerAdmin = () => {
                     .map((e, id) => (
                       <tr key={id}>
                         <td>{id}</td>
-                        <td>{e.name_customer}</td>
-                        <td>{e.email}</td>
-                        <td>{e.sdt}</td>
-                        <td>{e.date}</td>
+                        <td>{e.name}</td>
+                        <td>{e.role}</td>
+                        <td>{e.telephone}</td>
+                        <td>{e.createdAt}</td>
                         <td>
                           <i className="bx bx-trash"></i>
                         </td>
