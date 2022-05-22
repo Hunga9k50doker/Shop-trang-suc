@@ -9,12 +9,16 @@ export const favouriteReducer = (state, action) => {
   let products;
   switch (type) {
     case LOAD_FAVOURITE:
-      products = payload.favouriteDetails.product.map((product) => {
-        return {
-          ...product,
-          isChecked: false,
-        };
-      });
+      console.log(payload);
+      products =
+        payload === undefined
+          ? []
+          : payload.favouriteDetails.product.map((product) => {
+              return {
+                ...product,
+                isChecked: false,
+              };
+            });
       return {
         ...state,
         products: products,

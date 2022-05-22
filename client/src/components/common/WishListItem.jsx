@@ -1,5 +1,4 @@
 import React from "react";
-import { ToastContainer, toast } from "react-toastify";
 import { useContext } from "react";
 
 import Button from "./Button";
@@ -8,15 +7,13 @@ import { CartContext } from "../../provider/context/CartContext";
 import { numberWithCommas } from "../../utils/utils";
 
 export const WishlistItem = ({ e, isChecked, handleChange }) => {
-  const notify = (mes) => toast(mes);
   const { deleteOneProductFromFavourite } = useContext(FavouriteContext);
   const { addProductToCart } = useContext(CartContext);
   const handleDeleteFromFavourite = () => {
     deleteOneProductFromFavourite({ id: e._id });
-    notify("Xóa thành công!");
   };
   const handleAddToCart = () => {
-    addProductToCart({ id: e._id, quantity: 1 }, e);
+    addProductToCart({ id: e._id, quantity: 1 }, e, isChecked);
   };
   return (
     <tr>
@@ -33,7 +30,7 @@ export const WishlistItem = ({ e, isChecked, handleChange }) => {
         <i className="bx bx-trash" onClick={handleDeleteFromFavourite}></i>
       </td>
       <td>
-        <img src={e.imgsUrl[0]} alt="" />
+        <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
       </td>
       <td>{e.name}</td>
       <td className="td__price">{numberWithCommas(e.price)} </td>

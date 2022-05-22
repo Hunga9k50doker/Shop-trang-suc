@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 import { FavouriteContext } from "../provider/context/FavouriteContext";
 import { AuthContext } from "../provider/context/AuthContext";
 import { Banner } from "../components/common/Banner";
@@ -13,25 +14,8 @@ export default function Wishlist() {
     favouriteState: { loading, products },
   } = useContext(FavouriteContext);
   const {
-    authState: { user, isAuthenticated, userAuth },
+    authState: { user },
   } = useContext(AuthContext);
-  // handleEvents
-  // const [users, setUsers] = useState([]);
-
-  // const handleChange = (e) => {
-  //   const { name, checked } = e.target;
-  //   if (name === "checkAll") {
-  //     let tempUser = users.map((user) => {
-  //       return { ...user, isChecked: checked };
-  //     });
-  //     setUsers(tempUser);
-  //   } else {
-  //     let tempUser = users.map((user) =>
-  //       user.name === name ? { ...user, isChecked: checked } : user
-  //     );
-  //     setUsers(tempUser);
-  //   }
-  // };
 
   if (loading) {
     return <Skeleton height="200px" width={"100%"} />;
@@ -42,7 +26,7 @@ export default function Wishlist() {
       <div className="wishlist">
         <Banner img={banner_sub_02} title="Danh sách yêu thích" />
         <div className="container ">
-          {user ? (
+          {products.length > 0 ? (
             <table
               className="wishlist__table mb-4"
               style={{ marginTop: "8rem" }}
@@ -51,16 +35,13 @@ export default function Wishlist() {
                 <tr>
                   <th>
                     <input
-                      // ref={refCheckAll}
                       className="wishlist__checked__all"
                       type="checkbox"
                       name="checkAll"
-                      // checked={!users.some((user) => user?.isChecked !== true)}
-                      // onChange={handleChange}
                     />
                   </th>
                   <th> </th>
-                  <th></th>
+                  <th>Hình ảnh</th>
                   <th>Tên sản phẩm</th>
                   <th>Giá (vnđ)</th>
                   <th>Trạng thái sản phẩm</th>
@@ -69,14 +50,7 @@ export default function Wishlist() {
               </thead>
               <tbody>
                 {products.length > 0 &&
-                  products.map((e, id) => (
-                    <WishlistItem
-                      key={id}
-                      e={e}
-                      // isChecked={e.isChecked}
-                      // handleChange={handleChange}
-                    />
-                  ))}
+                  products.map((e, id) => <WishlistItem key={id} e={e} />)}
                 <tr
                   className="last__row
                 "
@@ -97,7 +71,12 @@ export default function Wishlist() {
               </tbody>
             </table>
           ) : (
-            <p> Bạn cần đăng nhập để xem các sản phẩm</p>
+            <div style={{ marginTop: "8rem", textAlign: "center" }}>
+              <h3>Bạn chưa có sản phẩm nào trong danh sách yêu thích</h3>
+              <Link to="/trang-suc/nhan/">
+                <Button content="Thêm ngay" />
+              </Link>
+            </div>
           )}
         </div>
       </div>

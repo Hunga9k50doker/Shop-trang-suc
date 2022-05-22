@@ -1,4 +1,5 @@
 import { createContext, useReducer, useEffect } from "react";
+import { toast } from "react-toastify";
 import { favouriteReducer } from "../reducer/FavouriteReducer";
 import axios from "axios";
 import {
@@ -25,7 +26,7 @@ const FavouriteContextProvider = ({ children }) => {
           payload: response.data.data,
         });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -43,6 +44,9 @@ const FavouriteContextProvider = ({ children }) => {
           type: ADD_FAVOURITE,
           payload: product,
         });
+        toast.success("Thêm vào mục ưa thích thành công, hãy kiểm tra!");
+      } else {
+        toast.error("Thêm vào mục ưa thích thất bại!");
       }
     } catch (error) {
       console.log(error.message);
@@ -60,6 +64,7 @@ const FavouriteContextProvider = ({ children }) => {
           type: DELETE_FAVOURITE,
           payload: id,
         });
+        toast.success("Xóa thành công!");
       }
     } catch (error) {
       console.log(error.message);

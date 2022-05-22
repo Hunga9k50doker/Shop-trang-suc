@@ -59,7 +59,7 @@ export default function MyCart({ cart, setCart }) {
                       <input type="checkbox" />
                     </th>
                     <th> </th>
-                    <th></th>
+                    <th>Hình ảnh</th>
                     <th>Tên sản phẩm</th>
                     <th>Số lượng</th>
                     <th>Giá</th>
@@ -81,7 +81,12 @@ export default function MyCart({ cart, setCart }) {
                               onClick={() => handleRemove(e.product[0]._id)}
                             ></i>
                           </td>
-                          <td>{/* <img src={e.imgsUrl[0]} alt="" /> */}</td>
+                          <td>
+                            <img
+                              src={`../../images/${e.product[0].imgsUrl[0]}`}
+                              alt=""
+                            />
+                          </td>
                           <td>{e.product[0].name}</td>
                           <td>
                             <div style={{ display: "flex" }}>

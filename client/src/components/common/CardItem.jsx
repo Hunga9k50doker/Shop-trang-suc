@@ -30,13 +30,11 @@ const CardItem = ({ item }) => {
       e.preventDefault();
       setLike(true);
       addProductToFavourite({ product, id: product._id });
-      notify("Thêm vào mục ưa thích thành công, hãy kiểm tra!");
     },
     handleDeleteFromFavourite: (e) => {
       e.preventDefault();
       setLike(false);
       deleteOneProductFromFavourite({ id: item._id });
-      notify("Đã xóa khỏi mục ưa thích, hãy kiểm tra!");
     },
   };
 

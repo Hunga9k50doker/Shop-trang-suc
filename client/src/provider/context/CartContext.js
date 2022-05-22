@@ -35,7 +35,7 @@ const CartContextProvider = ({ children }) => {
     loadCartProduct();
   }, []);
 
-  const addProductToCart = async ({ id, quantity }, product) => {
+  const addProductToCart = async ({ id, quantity }, product,checked=true) => {
     try {
       const response = await axios.post(`${API_URL}/carts/user`, {
         productId: id,
@@ -46,8 +46,11 @@ const CartContextProvider = ({ children }) => {
           type: ADD_CART,
           payload: { data: response.data.data, product },
         });
+        checked = true;
         toast.success("Thêm thành công!");
+
       } else {
+        checked = false;
         toast.error("Đã có sản phẩm trong giỏ hàng");
       }
     } catch (error) {

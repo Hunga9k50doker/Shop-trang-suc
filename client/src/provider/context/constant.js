@@ -26,3 +26,5 @@ export const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 //Invoice Constant
 export const LOAD_ORDERS = "LOAD_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
+export const FETCH_ONE_ORDER = "FETCH_ONE_ORDER";
+export const CHANGE_STATUS_ORDER = "CHANGE_STATUS_ORDER";

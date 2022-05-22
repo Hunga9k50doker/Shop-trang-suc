@@ -1,6 +1,6 @@
-.App {
-  width: 100vw !important;
-  overflow-x: hidden !important;
+#root {
+  width: calc(99vw - 2px);
+  overflow: hidden;
 }
 
 .main {

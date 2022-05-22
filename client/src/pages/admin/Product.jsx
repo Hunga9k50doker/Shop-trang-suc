@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import { toast } from "react-toastify";
-import { useParams } from "react-router-dom";
 import moment from "moment";
 import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
@@ -265,6 +264,7 @@ const ProductAdmin = () => {
         imageData.append("myFile", file);
         axios.post("http://localhost:5000/api/uploadfile", imageData);
       });
+      setData(dataInit);
     },
     checkValid: (e) => {
       e.preventDefault();
@@ -279,7 +279,6 @@ const ProductAdmin = () => {
     },
   };
 
-  console.log(data);
   return (
     <Helmet title="Quản lý sản phẩm">
       <div className="product__admin">
@@ -312,7 +311,11 @@ const ProductAdmin = () => {
                     <FormAdd
                       handleClick={notify}
                       title="Thêm thông tin sản phẩm"
-                      onSubmit={(e) => handleEvents.checkValid(e)}
+                      onSubmit={(e) => {
+                        handleEvents.checkValid(e);
+                        setIsActiveFormAdd(false);
+                        setData(dataInit);
+                      }}
                     >
                       <li className="form__item">
                         <input

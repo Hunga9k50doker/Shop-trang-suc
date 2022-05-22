@@ -148,6 +148,8 @@ export const AuthContextProvider = ({ children }) => {
       const response = await axios.post(`${API_URL}/users/register`, user);
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
+        setAuthToken(response.data.token);
+        await axios.post(`${API_URL}/favourite/user`);
         toast.success("Đăng ký thành công!");
       } else {
         console.log(response.data);

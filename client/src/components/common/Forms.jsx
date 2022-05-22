@@ -224,10 +224,14 @@ const FormRegister = () => {
         onClick={(e) => e.stopPropagation()}
         className="form__register p-4"
       >
+        <p style={{ textAlign: "center", color: "red", width: "100%" }}>
+          Các trường ở dưới là bắt buộc
+        </p>
         <ul className="form__list">
           <li className="form__item m-2">
             <input
               type="text"
+              required="required"
               className="form__name"
               placeholder="Tên của bạn"
               maxLength="20"
@@ -241,7 +245,8 @@ const FormRegister = () => {
             <input
               type="text"
               className="form__number"
-              placeholder="Số điện thoại"
+              required="required"
+              placeholder="Số điện thoại (9-11 số)"
               minLength="9"
               maxLength="11"
               name="telephone"
@@ -253,6 +258,7 @@ const FormRegister = () => {
           <li className="form__item m-2">
             <input
               type="text"
+              required="required"
               className="form__username"
               placeholder="Tên đăng nhập"
               maxLength="20"
@@ -265,6 +271,7 @@ const FormRegister = () => {
           <li className="form__item m-2">
             <input
               type="password"
+              required="required"
               className="form__password"
               placeholder="Mật khẩu"
               maxLength="20"
@@ -279,6 +286,7 @@ const FormRegister = () => {
               type="password"
               className="form__confirm__password"
               placeholder="Xác nhận mật khẩu"
+              required="required"
               name="repassword"
               onChange={handleChange}
             />

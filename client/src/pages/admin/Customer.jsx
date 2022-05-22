@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import moment from "moment";
 import { AdminContext } from "../../provider/context/AdminContext";
 import Table from "../../components/common/Table";
 import Helmet from "../../components/common/Helmet";
@@ -7,7 +8,11 @@ const CustomerAdmin = () => {
   const [searchItem, setSearchItem] = useState("");
   const {
     adminState: { users },
+    deleteUser,
   } = useContext(AdminContext);
+  const deleteUserId = (id) => {
+    deleteUser(id);
+  };
   return (
     <Helmet title="Quản lý người dùng">
       <div className="container">
@@ -52,9 +57,14 @@ const CustomerAdmin = () => {
                         <td>{e.name}</td>
                         <td>{e.role}</td>
                         <td>{e.telephone}</td>
-                        <td>{e.createdAt}</td>
+                        <td>{moment(e.createdAt).format("LLLL")}</td>
                         <td>
-                          <i className="bx bx-trash"></i>
+                          <i
+                            className="bx bx-trash"
+                            onClick={() => {
+                              deleteUserId(e._id);
+                            }}
+                          ></i>
                         </td>
                       </tr>
                     ))}

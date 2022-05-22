@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { to_slug, get_random, numberWithCommas } from "../utils/utils";
 import CountNumber from "../components/common/CountNumber";
@@ -13,9 +12,7 @@ import { FavouriteContext } from "../provider/context/FavouriteContext";
 import { CartContext } from "../provider/context/CartContext";
 
 export default function Product() {
-  const notify = (e) => toast(e);
 
-  let item = null;
   const [, setActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { slug } = useParams();
@@ -51,144 +48,146 @@ export default function Product() {
             products.map(
               (e, id) =>
                 to_slug(e.name) === slug && (
-                  <div className="row mb-4" key={id}>
-                    <div className="col col-xxl-6 col-xl-6 col-md-6 col-sm-12">
-                      <div className="product__img">
-                        <div className="product__slide__img">
-                          {e.imgsUrl.map((img, id) => (
-                            <img key={id} src={`../../images/${img}`} alt="" />
-                          ))}
-                        </div>
-                        <div className="product__item__img">
-                          <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
+                  <React.Fragment key={id}>
+                    <div className="row mb-4">
+                      <div className="col col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                        <div className="product__img">
+                          <div className="product__slide__img">
+                            {e.imgsUrl.map((img, id) => (
+                              <img
+                                key={id}
+                                src={`../../images/${img}`}
+                                alt=""
+                              />
+                            ))}
+                          </div>
+                          <div className="product__item__img">
+                            <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col col-xxl-6 col-xl-6 col-md-6 col-sm-12">
-                      <div className="product__detail">
-                        <h4 className="product__title">{e.name}</h4>
-                        <h6 className="product__desc mt-2 mb-2">
-                          {e.description}
-                        </h6>
-                        <p className="product__price">
-                          Giá: {numberWithCommas(e.price)} vnđ
-                        </p>
-                        <div className="product__add__cart">
-                          <CountNumber
-                            quantity={quantity}
-                            setQuantity={setQuantity}
-                          />
-                          <Button
-                            onClick={() => {
-                              handleAddToCart(e._id, e);
-                            }}
-                            classNameBtn="add ms-5"
-                            content={"Thêm vào giỏ hàng"}
-                          />
-                        </div>
-                        <div
-                          style={{ cursor: "pointer" }}
-                          className="product__add__wishlist"
-                        >
-                          <i
-                            ref={heartRef}
-                            className={
-                              favouriteState.products.find(
-                                (p) => p._id === e._id
-                              )
-                                ? "bx bxs-heart"
-                                : "bx bx-heart"
-                            }
-                          ></i>
-                          {favouriteState.products.find(
-                            (p) => p._id === e._id
-                          ) ? (
-                            <p className="ms-4 mt-4">
-                              <Link to="/danh-sach-san-pham-yeu-thich/">
-                                Xem danh sách yêu thích của bạn
-                              </Link>
-                            </p>
-                          ) : (
-                            <>
-                              <p
-                                className="ms-4 mt-4"
-                                onClick={() => {
-                                  addToFavourite(e);
-                                  favouriteState.products.find(
-                                    (p) => p._id === e._id
-                                  )
-                                    ? notify(
-                                        "Thêm thất bại, sản phẩm đã được thêm!"
-                                      )
-                                    : notify("Thêm thành công, hãy kiểm tra!");
-                                }}
-                              >
-                                Thêm vào danh sách yêu thích
+                      <div className="col col-xxl-6 col-xl-6 col-md-6 col-sm-12">
+                        <div className="product__detail">
+                          <h4 className="product__title">{e.name}</h4>
+                          <h6 className="product__desc mt-2 mb-2">
+                            {e.description}
+                          </h6>
+                          <p className="product__price">
+                            Giá: {numberWithCommas(e.price)} vnđ
+                          </p>
+                          <div className="product__add__cart">
+                            <CountNumber
+                              quantity={quantity}
+                              setQuantity={setQuantity}
+                            />
+                            <Button
+                              onClick={() => {
+                                handleAddToCart(e._id, e);
+                              }}
+                              classNameBtn="add ms-5"
+                              content={"Thêm vào giỏ hàng"}
+                            />
+                          </div>
+                          <div
+                            style={{ cursor: "pointer" }}
+                            className="product__add__wishlist"
+                          >
+                            <i
+                              ref={heartRef}
+                              className={
+                                favouriteState.products.find(
+                                  (p) => p._id === e._id
+                                )
+                                  ? "bx bxs-heart"
+                                  : "bx bx-heart"
+                              }
+                            ></i>
+                            {favouriteState.products.find(
+                              (p) => p._id === e._id
+                            ) ? (
+                              <p className="ms-4 mt-4">
+                                <Link to="/danh-sach-san-pham-yeu-thich/">
+                                  Xem danh sách yêu thích của bạn
+                                </Link>
                               </p>
-                            </>
-                          )}
+                            ) : (
+                              <>
+                                <p
+                                  className="ms-4 mt-4"
+                                  onClick={() => {
+                                    addToFavourite(e);
+                                  }}
+                                >
+                                  Thêm vào danh sách yêu thích
+                                </p>
+                              </>
+                            )}
+                          </div>
+                          <ul className="product__other_desc ps-0">
+                            <li className="ps-0">
+                              <i className="bx bxs-check-shield"></i>
+                              <p className="m-0 ms-2">
+                                Giá sản phẩm thay đổi tuỳ trọng lượng vàng và đá
+                                Đổi
+                              </p>
+                            </li>
+                            <li className="ps-0">
+                              <i className="bx bxs-check-shield"></i>
+                              <p className="m-0 ms-2">
+                                Sản phẩm trong 48h tại hệ thống cửa hàng Dimond
+                                City Miễn phí
+                              </p>
+                            </li>
+                            <li className="ps-0">
+                              <i className="bx bxs-check-shield"></i>
+                              <p className="m-0 ms-2">
+                                Giao nhanh Toàn Quốc 1-7 ngày
+                              </p>
+                            </li>
+                          </ul>
                         </div>
-                        <ul className="product__other_desc ps-0">
-                          <li className="ps-0">
-                            <i className="bx bxs-check-shield"></i>
-                            <p className="m-0 ms-2">
-                              Giá sản phẩm thay đổi tuỳ trọng lượng vàng và đá
-                              Đổi
-                            </p>
-                          </li>
-                          <li className="ps-0">
-                            <i className="bx bxs-check-shield"></i>
-                            <p className="m-0 ms-2">
-                              Sản phẩm trong 48h tại hệ thống cửa hàng Dimond
-                              City Miễn phí
-                            </p>
-                          </li>
-                          <li className="ps-0">
-                            <i className="bx bxs-check-shield"></i>
-                            <p className="m-0 ms-2">
-                              Giao nhanh Toàn Quốc 1-7 ngày
-                            </p>
-                          </li>
-                        </ul>
                       </div>
                     </div>
-                  </div>
+                    <div className="row">
+                      <h4 className="product__other__title mt-5">
+                        Thông tin chi tiết
+                      </h4>
+                      <div className="row mb-5 accordion__list">
+                        <div className="col col-12">
+                          {" "}
+                          <Accordion
+                            classNameAccordion="p-1"
+                            title="Mô tả sản phẩm"
+                          >
+                            <p>{e.description}</p>
+                          </Accordion>
+                        </div>
+                        <div className="col col-12">
+                          <Accordion
+                            classNameAccordion="p-1"
+                            title="Chính sách hoàn trả"
+                          >
+                            <p>Bao đổi 1-1 trong vòng 7 ngày</p>
+                          </Accordion>
+                        </div>
+                        <div className="col col-12">
+                          {" "}
+                          <Accordion
+                            classNameAccordion="p-1"
+                            title="Câu hỏi thường gặp"
+                          >
+                            <p>
+                              Làm sao tìm size nhẫn phù hợp? <br />
+                              Chính sách giảm giá của shop như thế nào?
+                            </p>
+                          </Accordion>
+                        </div>
+                      </div>
+                    </div>
+                  </React.Fragment>
                 )
             )}
-          <div className="row">
-            <h4 className="product__other__title mt-5">Thông tin chi tiết</h4>
-            <div className="row mb-5 accordion__list">
-              <div className="col col-12">
-                {" "}
-                <Accordion classNameAccordion="p-1" title="Mô tả sản phẩm">
-                  <p>
-                    Justo dolore et elitr takimata diam ipsum rebum gubergren
-                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
-                    sed.
-                  </p>
-                </Accordion>
-              </div>
-              <div className="col col-12">
-                <Accordion classNameAccordion="p-1" title="Chính sách hoàn trả">
-                  <p>
-                    Justo dolore et elitr takimata diam ipsum rebum gubergren
-                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
-                    sed.
-                  </p>
-                </Accordion>
-              </div>
-              <div className="col col-12">
-                {" "}
-                <Accordion classNameAccordion="p-1" title="Câu hỏi thường gặp">
-                  <p>
-                    Justo dolore et elitr takimata diam ipsum rebum gubergren
-                    et, sed sit ea sanctus amet consetetur. Clita dolores diam
-                    sed.
-                  </p>
-                </Accordion>
-              </div>
-            </div>
-          </div>
+
           <div className="row">
             <div className="product__other">
               <div className="row ">

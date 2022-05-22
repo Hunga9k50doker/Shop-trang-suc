@@ -8,6 +8,8 @@ import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
 import { FormDetail } from "../../components/common/Forms";
 import { OrderContext } from "../../provider/context/OrderContext";
+import { numberWithCommas } from "../../utils/utils";
+import Skeleton from "react-loading-skeleton";
 const dataTable_01 = [
   {
     province: "TP. Hồ Chí Minh",
@@ -35,107 +37,21 @@ const dataTable_01 = [
   },
 ];
 
-const dataTable_02 = [
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "dsas",
-    sdt: "0442441532",
-    id_order: "2112",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e1ew",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "2d2s",
-    sdt: "0423441532",
-    id_order: "2312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12sdse1ew",
-    sdt: "0423425532",
-    id_order: "1312",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "fwwq",
-    sdt: "0973441532",
-    id_order: "23123",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-  {
-    usename: "12e134231",
-    sdt: "0423441537",
-    id_order: "2317",
-    product_name: "Bông tai vài Y 18k",
-    price: 12300000,
-    date: "23/2/2022 13:03 pm",
-  },
-];
 ChartJS.register(ArcElement, Title, Tooltip, Legend);
-const Selection = () => {
+const Selection = ({ product }) => {
   const selectedRef = useRef(null);
+  const { changeStatusOrder } = useContext(OrderContext);
   const handleChange = () => {
     if (selectedRef.current) {
       if (Number(selectedRef.current.value) === 1) {
         selectedRef.current.style.color = "red";
+        changeStatusOrder("Đang giao", product._id);
       } else if (Number(selectedRef.current.value) === 2) {
         selectedRef.current.style.color = "green";
+        changeStatusOrder("Đã giao", product._id);
       } else {
         selectedRef.current.style.color = "black";
+        changeStatusOrder("Xác nhận", product._id);
       }
     }
   };
@@ -144,10 +60,23 @@ const Selection = () => {
       style={{ fontWeight: "bold" }}
       onChange={handleChange}
       ref={selectedRef}
+      value={
+        product.status === "Đang giao"
+          ? "1"
+          : product.status === "Đã giao"
+          ? "2"
+          : "0"
+      }
     >
-      <option value="0">Xác nhận</option>
-      <option value="1">Đang giao</option>
-      <option value="2">Đã giao</option>
+      <option value="0" style={{ color: "black" }}>
+        Xác nhận
+      </option>
+      <option style={{ color: "red" }} value="1">
+        Đang giao
+      </option>
+      <option style={{ color: "green" }} value="2">
+        Đã giao
+      </option>
     </select>
   );
 };
@@ -155,7 +84,8 @@ const OrderAdmin = () => {
   const [viewDetail, setViewDetail] = useState(null);
   const [searchItem, setSearchItem] = useState("");
   const {
-    orderState: { orders, loading },
+    orderState: { orders, order, loadingOrder },
+    fetchOneOrder,
   } = useContext(OrderContext);
   console.log(orders);
 
@@ -171,6 +101,7 @@ const OrderAdmin = () => {
       },
     ],
   };
+
   const config = {
     type: "dought",
     data: dataOrder,
@@ -182,6 +113,13 @@ const OrderAdmin = () => {
       },
     },
   };
+
+  const showOrderById = (id) => {
+    setViewDetail(id);
+    fetchOneOrder(id);
+  };
+
+  console.log(order, loadingOrder);
 
   return (
     <Helmet title="Quản lý đơn hàng">
@@ -302,10 +240,10 @@ const OrderAdmin = () => {
                         <td className="view__details">
                           <Button
                             content="Xem chi tiết"
-                            onClick={() => setViewDetail(id)}
+                            onClick={() => showOrderById(e._id)}
                           ></Button>
                         </td>
-                        {viewDetail === id ? (
+                        {viewDetail === e._id ? (
                           <Modal
                             setViewDetail={setViewDetail}
                             style={{
@@ -313,51 +251,74 @@ const OrderAdmin = () => {
                                 "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                             }}
                           >
-                            <FormDetail title={e.id_order}>
-                              <div className="form__detail__header">
-                                <p>Tên khách hàng: {e.usename}</p>
-                                <p> Số điện thoại: {e.sdt}</p>
-                                <p>
-                                  Thời gian đặt hàng:{" "}
-                                  {moment(e.updatedAt).format("LLL")}
-                                </p>
-                                <p>
-                                  Tổng tiền: <strong>{e.price} vnđ</strong>
-                                </p>
-                              </div>
-                              <div className="form__detail__body">
-                                <h5 className="form__detail__body__title mt-5">
-                                  Thông tin chi tiết
-                                </h5>
-                                <table>
-                                  <thead>
-                                    <tr>
-                                      <td></td>
-                                      <td>Tên sản phẩm</td>
-                                      <td>Số lượng</td>
-                                      <td>Giá tiền</td>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td></td>
-                                      <td>Nhẫn vàng 18k</td>
-                                      <td>3</td>
-                                      <td>23000</td>
-                                    </tr>
-                                    <tr>
-                                      <td colSpan="4">Tổng tiền: {e.price}</td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </FormDetail>
+                            {loadingOrder ? (
+                              <Skeleton height={"300px"} />
+                            ) : (
+                              <FormDetail title={e._id}>
+                                <div className="form__detail__header">
+                                  <p>Tên khách hàng: {e.name}</p>
+                                  <p> Số điện thoại: {e.phoneNumber}</p>
+                                  <p>
+                                    Thời gian đặt hàng:{" "}
+                                    {moment(e.updatedAt).format("LLL")}
+                                  </p>
+                                  <p>
+                                    Tổng tiền:{" "}
+                                    <strong>
+                                      {numberWithCommas(e.total)} vnđ
+                                    </strong>
+                                  </p>
+                                  <p>
+                                    Trạng thái:
+                                    {e.status}
+                                  </p>
+                                </div>
+                                <div className="form__detail__body">
+                                  <h5 className="form__detail__body__title mt-5">
+                                    Thông tin chi tiết
+                                  </h5>
+                                  <table>
+                                    <thead>
+                                      <tr>
+                                        <td></td>
+                                        <td>Tên sản phẩm</td>
+                                        <td>Số lượng</td>
+                                        <td>Giá tiền</td>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {order.map((o, i) => (
+                                        <tr>
+                                          <td></td>
+                                          <td>
+                                            {o.invoiceDetails.product[0].name}
+                                          </td>
+                                          <td>{o.invoiceDetails.quantity}</td>
+                                          <td>
+                                            {numberWithCommas(
+                                              o.invoiceDetails.quantity *
+                                                o.invoiceDetails.product[0]
+                                                  .price
+                                            )}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                      <tr>
+                                        <td colSpan="4">
+                                          Tổng tiền: {numberWithCommas(e.total)}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </FormDetail>
+                            )}
                           </Modal>
                         ) : (
                           ""
                         )}
                         <td>
-                          <Selection />
+                          <Selection product={e} />
                           {/* <Button content="Xác nhận" /> */}
                         </td>
                       </tr>

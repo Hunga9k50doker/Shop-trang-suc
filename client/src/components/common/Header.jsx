@@ -21,14 +21,14 @@ export default function Header() {
     telephone: "",
   });
   useEffect(() => {
-    if (loading === false)
+    if (user)
       setData({
         ...data,
         name: user.name,
         address: user.address,
         telephone: user.telephone,
       });
-  }, [loading]);
+  }, [user]);
   const handleChange = (e) => {
     const newData = { ...data };
     newData[e.target.className] = e.target.value;
@@ -58,6 +58,7 @@ export default function Header() {
   const update = () => {
     updateUser(user._id, data);
   };
+
   return (
     <div className="header">
       <ul className="header__left">
@@ -100,7 +101,7 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p>Hello, {user.name ? user.name : userAuth.displayName}</p>
+            <p>Hello, {user.name ? user.name : "user0123"}</p>
             <ul className="my__account__list">
               <li
                 className="my__account__item"

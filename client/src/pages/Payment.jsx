@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { toast } from "react-toastify";
-import styled from "styled-components";
 import { CartContext } from "../provider/context/CartContext";
 import { AuthContext } from "../provider/context/AuthContext";
 import { OrderContext } from "../provider/context/OrderContext";
@@ -13,18 +12,8 @@ import Button from "../components/common/Button";
 import { banner_sub_02 } from "../assets/img";
 
 export default function Payment() {
-  const NewStyle = styled.div`
-    ul {
-      margin-left: 16px;
-      width: 100%;
-    }
-    li {
-      margin-top: 1rem;
-    }
-    input {
-      border: 1px solid #ccc;
-    }
-  `;
+  const navigate = useNavigate();
+
   const [price, setPrice] = useState(0);
   const {
     cartState: { loading, products },
@@ -35,7 +24,6 @@ export default function Payment() {
   const {
     authState: { user },
   } = useContext(AuthContext);
-  const [dataShipName, setDataShipName] = useState(user.name);
   const [dataShip, setDataShip] = useState({
     name: "",
     address: "",
@@ -51,6 +39,16 @@ export default function Payment() {
   useEffect(() => {
     handlePrice();
   }, []);
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      setDataShip({
+        name: user.name,
+        address: user.address,
+        phoneNumber: user.telephone,
+      });
+    }
+  }, [user]);
   if (loading) {
     return <Skeleton height="200px" width={"100%"} />;
   }
@@ -63,11 +61,18 @@ export default function Payment() {
   };
 
   const handlePay = () => {
-    let invoiceDetails = products.map((item) => {
-      return { product: item.product[0]._id, quantity: item.quantity };
-    });
-    createOrder({ ...dataShip, invoiceDetails, total: price });
-    toast.success("Thanh toán thành công!");
+    if (dataShip.name && dataShip.address && dataShip.phoneNumber) {
+      let invoiceDetails = products.map((item) => {
+        return { product: item.product[0]._id, quantity: item.quantity };
+      });
+      createOrder({ ...dataShip, invoiceDetails, total: price });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+      toast.success("Thanh toán thành công!");
+    } else {
+      toast.warning("Bạn chưa nhập đầy đủ thông tin");
+    }
   };
 
   return (
@@ -80,43 +85,46 @@ export default function Payment() {
               Địa chỉ giao hàng
             </h4>
           </div>
-          <NewStyle>
-            <ul>
-              <li>
-                <h5>Tên người nhận: </h5>
-                <input
-                  type="text"
-                  defaultValue={dataShipName}
-                  onChange={(e) => setDataShipName(e.target.value)}
-                  name="name"
-                  key="name"
-                  // onChange={handleChange}
-                />
-              </li>
-              <li>
-                <h5>Số điện thoại: </h5>
-                <input
-                  type="text"
-                  key={"phone"}
-                  value={dataShip.phoneNumber}
-                  name="phoneNumber"
-                  onChange={handleChange}
-                />
-              </li>
-              <li>
-                <h5>Địa chỉ: </h5>
-                <textarea
-                  rows="4"
-                  cols="50"
-                  type="text"
-                  value={dataShip.address}
-                  name="address"
-                  key="address"
-                  onChange={handleChange}
-                />
-              </li>
-            </ul>
-          </NewStyle>
+          <ul>
+            <li>
+              <h5>Tên người nhận: </h5>
+              <input
+                style={{ border: "1px solid #ccc" }}
+                type="text"
+                defaultValue={dataShip.name}
+                name="name"
+                key="name"
+                required="required"
+                onChange={handleChange}
+              />
+            </li>
+            <li>
+              <h5>Số điện thoại: </h5>
+              <input
+                style={{ border: "1px solid #ccc" }}
+                type="text"
+                key={"phone"}
+                required="required"
+                defaultValue={dataShip.phoneNumber}
+                name="phoneNumber"
+                onChange={handleChange}
+              />
+            </li>
+            <li>
+              <h5>Địa chỉ: </h5>
+              <textarea
+                style={{ border: "1px solid #ccc" }}
+                rows="4"
+                required="required"
+                cols="50"
+                type="text"
+                defaultValue={dataShip.address}
+                name="address"
+                key="address"
+                onChange={handleChange}
+              />
+            </li>
+          </ul>
         </div>
         <div className="container">
           {products.length > 0 ? (

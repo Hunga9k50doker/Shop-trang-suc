@@ -25,7 +25,7 @@ export const getUser = async (req, res) => {
     if (!user) {
       return res
         .status(404)
-        .json({ success: false, message: "User not found" });
+        .json({ success: false, message: "Người dùng không tồn tại" });
     }
 
     const { password, ...rest } = user.toObject();
@@ -43,12 +43,15 @@ export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ username });
     if (!user) {
-      return res.json({ success: false, message: "User not found" });
+      return res.json({ success: false, message: "Người dùng không tồn tại" });
     }
     const isMatch = await argon2.verify(user.password, password);
 
     if (!isMatch) {
-      return res.json({ success: false, message: "Password is incorrect" });
+      return res.json({
+        success: false,
+        message: "Sai tên đăng nhập hoặc mật khẩu",
+      });
     }
 
     const token = generateToken(user);
@@ -65,15 +68,15 @@ export const register = async (req, res) => {
   const { username, password, repassword, name, telephone } = req.body;
   if (password !== repassword) {
     return res
-      .status(400)
-      .json({ success: false, message: "Password not match" });
+      .status(200)
+      .json({ success: false, message: "Mật khẩu không khớp" });
   }
   try {
     const user = await UserModel.findOne({ username });
     if (user) {
       return res
-        .status(400)
-        .json({ success: false, message: "Username already exists" });
+        .status(200)
+        .json({ success: false, message: "Tên đăng nhập đã tồn tại" });
     }
 
     const encryptedPassword = await argon2.hash(password);
@@ -90,7 +93,7 @@ export const register = async (req, res) => {
     const token = generateToken(newUser);
     return res.json({ success: true, token });
   } catch (error) {
-    console.log(error.message);
+    return res.json({ success: false, message: error.message });
   }
 };
 
@@ -109,14 +112,14 @@ export const getAllUsers = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const user = await UserModel.findById(id);
+    let user = await UserModel.findById(id);
     if (!user) {
       return res
         .status(404)
-        .json({ success: false, message: "User not found" });
+        .json({ success: false, message: "Người dùng không tồn tại" });
     }
-    await user.remove();
-    return res.status(200).json({ success: true, message: "User deleted" });
+    user = await UserModel.findByIdAndDelete(id);
+    return res.status(200).json({ success: true, data: user });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
@@ -126,14 +129,13 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   if (req._id !== id && req.role !== "admin") {
-    return res.json({ success: false, message: "You are not authorized" });
+    return res.json({ success: false, message: "Bạn chưa được xác thực" });
   }
   const { name, telephone, address } = req.body;
   try {
     const user = await UserModel.findById(id);
     if (!user) {
-      return res
-        .json({ success: false, message: "User not found" });
+      return res.json({ success: false, message: "Người dùng không tồn tại" });
     }
     user.name = name;
     user.telephone = telephone;

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import logo from "../../assets/img/logo/DC_Logo_New_opt.png";
 import Modal from "./Modal";
 import Accordion from "./Accordion";
@@ -141,6 +142,9 @@ const arrNav = [
 ];
 
 export default function Navigation({ size, sizeFavorite }) {
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const [active, setActive] = useState(false);
   const [menu, setMenu] = useState(false);
   const [screenWitdh, setScreenWitdh] = useState(window.screen.width);
@@ -151,7 +155,6 @@ export default function Navigation({ size, sizeFavorite }) {
   // sizeFavorite=favouriteState.products.length
   useEffect(() => {
     setScreenWitdh(window.screen.width);
-    // console.log(screenWitdh);
   }, [screenWitdh]);
   useEffect(
     () =>
@@ -162,9 +165,13 @@ export default function Navigation({ size, sizeFavorite }) {
       }),
     []
   );
-  const {
-    authState: { user },
-  } = useContext(AuthContext);
+  const checkLogin = (e) => {
+    if (!user) {
+      e.preventDefault();
+      toast.warning("Bạn chưa đăng nhập!");
+    } else {
+    }
+  };
   return (
     <div ref={navRef} className="nav">
       {screenWitdh < 786 ? (
@@ -278,13 +285,22 @@ export default function Navigation({ size, sizeFavorite }) {
             className={`bx bx-search-alt-2 `}
           ></i>
         </div>
-        <Link to="/danh-sach-san-pham-yeu-thich/" className="nav__right__item">
+
+        <Link
+          to="/danh-sach-san-pham-yeu-thich/"
+          className="nav__right__item"
+          onClick={(e) => checkLogin(e)}
+        >
           <i className="bx bx-heart"></i>
           <p className="nav__count__product">
             {favouriteState ? favouriteState.products.length : 0}
           </p>
         </Link>
-        <Link to="/gio-hang-cua-ban/" className="nav__right__item">
+        <Link
+          to="/gio-hang-cua-ban/"
+          className="nav__right__item"
+          onClick={(e) => checkLogin(e)}
+        >
           <i className="bx bx-cart-alt"></i>
           <p className="nav__count__product">
             {cartState ? cartState.products.length : 0}

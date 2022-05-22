@@ -4,6 +4,7 @@ import {
   createInvoice,
   getAllInvoice,
   getInvoiceUser,
+  getInvoiceById,
 } from "../controllers/Invoice.controller.js";
 import verifyAdmin from "../middleware/verifyAdmin.js";
 import verifyToken from "../middleware/verifyToken.js";
@@ -16,5 +17,6 @@ router
   .get(verifyToken, getInvoiceUser)
   .post(verifyToken, createInvoice)
   .put(verifyToken, changeStatus);
+router.get("/user/:id", verifyToken, getInvoiceById);
 
 export default router;

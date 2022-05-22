@@ -43,6 +43,41 @@ export const getInvoiceUser = async (req, res) => {
   }
 };
 
+export const getInvoiceById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const invoice = await InvoiceModel.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $unwind: "$invoiceDetails",
+      },
+      {
+        $lookup: {
+          from: "products",
+          localField: "invoiceDetails.product",
+          foreignField: "_id",
+          as: "invoiceDetails.product",
+        },
+      },
+    ]);
+    const quantity = await InvoiceModel.find(
+      { _id: mongoose.Types.ObjectId(id) },
+      { "invoiceDetails.quantity": 1 }
+    );
+    return res.json({
+      success: true,
+      data: invoice,
+      quantityProduct: quantity[0].invoiceDetails,
+    });
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
+};
+
 export const createInvoice = async (req, res) => {
   const { _id } = req;
   const { phoneNumber, address, total, invoiceDetails, name } = req.body;

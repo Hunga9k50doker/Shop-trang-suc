@@ -15,6 +15,11 @@ export const getUserCart = async (req, res) => {
   try {
     const cart = await CartModel.aggregate([
       {
+        $match: {
+          user: mongoose.Types.ObjectId(_id),
+        },
+      },
+      {
         $lookup: {
           from: "products",
           localField: "productId",
@@ -76,11 +81,10 @@ export const removeProductFromCart = async (req, res) => {
 export const removeAllProductFromCart = async (req, res) => {
   const { _id } = req;
   try {
-    const cart = await CartModel.find({ user: _id });
-    if (!cart) {
-      return res.status(200).json({ success: false, message: "Cart is empty" });
-    }
-    await cart.remove();
+    const carts = await CartModel.deleteMany({
+      user: mongoose.Types.ObjectId(_id),
+    });
+    return res.status(200).json({ success: true, data: carts });
   } catch (error) {
     console.log(error.message);
   }
