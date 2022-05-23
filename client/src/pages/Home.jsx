@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import React from "react";
-
+import Skeleton from "react-loading-skeleton";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import { FormContact } from "../components/common/Forms";
@@ -20,10 +20,9 @@ import {
 } from "../assets/img";
 export default function Home() {
   const {
-    productState: { products },
+    productState: { products, loading },
   } = useContext(ProductContext);
   const [data, setData] = useState(products);
-  console.log(data);
   useEffect(() => {
     setData(products);
   }, [products]);
@@ -33,7 +32,7 @@ export default function Home() {
     amount: 24,
     classNameCol: "col-xl-3 col-lg-4 col-md-6",
   };
-
+  if (loading) return <Skeleton height="300px" />;
   return (
     <Helmet title="Trang chủ">
       <div className="home">

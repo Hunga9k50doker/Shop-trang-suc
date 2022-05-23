@@ -56,6 +56,7 @@ export default function Product() {
   useEffect(() => {
     loadingReviews(slug);
   }, [slug]);
+  
   if (loading) return "Loading...";
 
   const handleAddReview = () => {

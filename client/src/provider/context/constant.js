@@ -1,6 +1,5 @@
 export const LOCAL_STORAGE_TOKEN_NAME = "token_kithuat";
-export const API_URL =
-  "http://localhost:5000https://morning-ridge-04544.herokuapp.com/api";
+export const API_URL = "https://morning-ridge-04544.herokuapp.com/api";
 //User Constant
 export const LOAD_USER = "LOAD_USER";
 export const UPDATE_USER = "UPDATE_USER";

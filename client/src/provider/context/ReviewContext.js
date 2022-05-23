@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import { toast } from "react-toastify";
 import axios from "axios";
 import { FETCH_REVIEWS_BY_PRODUCT_ID, ADD_REVIEW, API_URL } from "./constant";
 import { reviewReducer } from "../reducer/ReviewReducer";
@@ -30,11 +31,15 @@ const ReviewContextProvider = ({ children }) => {
         `${API_URL}/review/${id}`,
         reviewDescription
       );
-      if (response.data.success)
+      if (response.data.success) {
         dispatch({
           type: ADD_REVIEW,
           payload: response.data.data,
         });
+        toast.success("Thêm thành công!");
+      } else {
+        toast.warning("Bạn chưa đăng nhập hoặc chưa nhập nội dung!");
+      }
     } catch (error) {
       console.log(error);
     }

@@ -113,52 +113,67 @@ const InfinityList = ({ props, path }) => {
         );
         break;
       case "Gucci":
+      case "gucci":
         setData(products.filter((p) => p.category.brand === "Gucci"));
         break;
       case "Casio":
+      case "casio":
         setData(products.filter((p) => p.category.brand === "Casio"));
         break;
       case "Citizen":
+      case "citizen":
         setData(products.filter((p) => p.category.brand === "Citizen"));
         break;
       case "Nam":
+      case "nam":
         setData(products.filter((p) => p.gender === "Nam"));
         break;
       case "Nữ":
+      case "nu":
         setData(products.filter((p) => p.gender === "Nữ"));
         break;
       case "Unisex":
+      case "unisex":
         setData(products.filter((p) => p.gender === "Unisex"));
         break;
       case "Đồng hồ":
+      case "dong-ho":
         setData(products.filter((p) => p.type === "Đồng hồ"));
         break;
       case "Mắt Kính":
+      case "mat-kinh":
         setData(
           products.filter((p) => p.category.accessory_type === "Mắt Kính")
         );
         break;
       case "Đồng hồ cặp":
+      case "dong-ho-cap":
         setData(
           products.filter((p) => p.type === "Đồng hồ" && p.isCouple === true)
         );
         break;
       case "Phụ kiện":
+      case "phu-kien":
         setData(products.filter((p) => p.type === "Phụ kiện"));
         break;
       case "Cho cha":
+      case "cho-cha":
         setData(products.filter((p) => p.gift.find((e) => e === "Cho cha")));
         break;
       case "Cho mẹ":
+      case "cho-me":
         setData(products.filter((p) => p.gift.find((e) => e === "Cho mẹ")));
         break;
       case "Cho chàng":
+      case "cho-chang":
         setData(products.filter((p) => p.gift.find((e) => e === "Cho chàng")));
         break;
       case "Cho nàng":
+      case "cho-nang":
         setData(products.filter((p) => p.gift.find((e) => e === "Cho nàng")));
         break;
       case "Cho bé":
+      case "cho-be":
         setData(products.filter((p) => p.gift.find((e) => e === "Cho bé")));
         break;
       default:
@@ -172,7 +187,6 @@ const InfinityList = ({ props, path }) => {
   //   }
   // }, [props.data]);
   useEffect(() => {
-    console.log(typeData);
     newFilterProduct(typeData);
   }, [typeData, loading]);
   const handleFilter = () => {
@@ -235,13 +249,11 @@ const InfinityList = ({ props, path }) => {
       typeData = "auto";
     }
     newFilterProduct(typeData);
-    // console.log(data);
   };
 
   useLayoutEffect(() => {
     handleFilter();
   }, [path]);
-  // console.log(typeData);
 
   useEffect(() => {
     setFilterProduct(products);
