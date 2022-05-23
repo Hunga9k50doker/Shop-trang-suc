@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect,  useContext } from "react";
+import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { CartContext } from "../provider/context/CartContext";
-import { to_slug, numberWithCommas } from "../utils/utils";
+import {  numberWithCommas } from "../utils/utils";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
-import CountNumber from "../components/common/CountNumber";
-import { banner_sub_02, product_img_01 } from "../assets/img";
+import { banner_sub_02 } from "../assets/img";
 
 export default function MyCart({ cart, setCart }) {
   const [price, setPrice] = useState(0);
@@ -55,9 +54,6 @@ export default function MyCart({ cart, setCart }) {
               <table className="mycart__table mb-5">
                 <thead>
                   <tr>
-                    <th>
-                      <input type="checkbox" />
-                    </th>
                     <th> </th>
                     <th>Hình ảnh</th>
                     <th>Tên sản phẩm</th>
@@ -72,9 +68,6 @@ export default function MyCart({ cart, setCart }) {
                       {console.log(e.product[0])}
                       {e.product[0] && (
                         <>
-                          <td className="td__checkbox">
-                            <input type="checkbox" />
-                          </td>
                           <td className="td__trash">
                             <i
                               className="bx bx-trash"

@@ -1,5 +1,4 @@
 import React, { useRef, useState, useContext } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import {
   CircularProgressbarWithChildren,
   buildStyles,
@@ -18,7 +17,6 @@ const CardItem = ({ item }) => {
   const { imgsUrl, name, price } = item;
   const heartIconRef = useRef(null);
   const cardRef = useRef(null);
-  const notify = (mess) => toast(mess);
 
   const isFav = favouriteState.products.find((p) => p._id === item._id);
   const [like, setLike] = useState(() => {

@@ -27,7 +27,7 @@ const CustomerAdmin = () => {
               <table className="p-4">
                 <thead>
                   <tr>
-                    <td>ID</td>
+                    <td>STT</td>
                     <td>Tên khách hàng</td>
                     <td>Vai trò</td>
                     <td>Số điện thoại</td>
@@ -53,7 +53,7 @@ const CustomerAdmin = () => {
                     })
                     .map((e, id) => (
                       <tr key={id}>
-                        <td>{id}</td>
+                        <td>{id + 1}</td>
                         <td>{e.name}</td>
                         <td>{e.role}</td>
                         <td>{e.telephone}</td>

@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 
 // import Modal from "./Modal";
 import { to_slug } from "../../utils/utils";
 import { CardItem } from "./CardItem";
-import arrPro from "../../assets/fake-data/Product";
 import { AuthContext } from "../../provider/context/AuthContext";
 import { ProductContext } from "../../provider/context/ProductContext";
 
 import { theme_fb, theme_gg, theme_gh } from "../../assets/img";
-
-const checkValid = () => {};
 
 const FormContact = (props) => {
   return (
@@ -377,7 +374,11 @@ const FormConfirm = (props) => {
 const FormEdit = (props) => {
   // const [isActive, setIsActive] = useState(false);
   return (
-    <form className="form form__edit" method="post">
+    <form
+      className="form form__edit"
+      method="post"
+      onClick={(e) => e.preventDefault()}
+    >
       <h3 className="form__title">{props.title}</h3>
       <ul className="form__list">{props.children}</ul>
     </form>

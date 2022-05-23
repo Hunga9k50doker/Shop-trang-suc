@@ -125,7 +125,7 @@ const RevenueByMonthsChart = () => {
 };
 const HomeAdmin = () => {
   const {
-    authState: { user, loading, isAuthenticated, userAuth },
+    authState: { user, },
   } = useContext(AuthContext);
   return (
     <Helmet title="Trang chủ quản lý">

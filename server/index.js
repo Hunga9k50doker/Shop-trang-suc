@@ -7,6 +7,7 @@ import ProductRouter from "./routers/Product.router.js";
 import CartRouter from "./routers/Cart.router.js";
 import FavouriteRouter from "./routers/Favourite.router.js";
 import InvoiceRouter from "./routers/Invoice.router.js";
+import ReviewRouter from "./routers/Review.router.js";
 import multer from "multer";
 
 const app = express();
@@ -28,6 +29,7 @@ app.use("/api/products", ProductRouter);
 app.use("/api/carts", CartRouter);
 app.use("/api/favourite", FavouriteRouter);
 app.use("/api/invoice", InvoiceRouter);
+app.use("/api/review", ReviewRouter);
 app.post("/api/uploadfile", upload.single("myFile"), (req, res, next) => {
   console.log(req.file.originalname + " file successfully uploaded !!");
   res.sendStatus(200);

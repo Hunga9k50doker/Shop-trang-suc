@@ -19,7 +19,7 @@ const OrderContextProvider = ({ children }) => {
   });
   const loadOrders = async () => {
     try {
-      const response = await axios.get(`${API_URL}/invoice`);
+      const response = await axios.get(`${API_URL}/invoice/user`);
       if (response.data.success) {
         dispatch({
           type: LOAD_ORDERS,

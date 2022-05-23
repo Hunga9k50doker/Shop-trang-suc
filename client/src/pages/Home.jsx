@@ -1,5 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import React from "react";
+
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import { FormContact } from "../components/common/Forms";
@@ -28,7 +30,7 @@ export default function Home() {
 
   const item = {
     data: data,
-    amount: 20,
+    amount: 24,
     classNameCol: "col-xl-3 col-lg-4 col-md-6",
   };
 
@@ -42,10 +44,14 @@ export default function Home() {
           title="Màu sắc tưởng tượng"
           subtitle="Bộ sưu tập được hỗ trợ bởi Passion"
         >
-          <div className="sub__img">
+          <div data-aos="zoom-out-up" className="sub__img">
             <img src={banner_sub_01} alt="" />
           </div>
-          <Link to={"/trang-suc/nhan/"}>
+          <Link
+            data-aos="fade-up"
+            data-aos-duration="2000"
+            to={"/trang-suc/nhan/"}
+          >
             <Button classNameBtn="btn__view__more" content="Xem thêm" />
           </Link>
         </Banner>

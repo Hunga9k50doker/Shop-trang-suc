@@ -9,6 +9,7 @@ import {
   DELETE_PRODUCTS,
   FETCH_ONE_PRODUCT,
 } from "./constant";
+import { toast } from "react-toastify";
 
 export const ProductContext = createContext();
 
@@ -85,7 +86,6 @@ export const ProductContextProvider = ({ children }) => {
     }
   };
   const updateProducts = async (id, productData) => {
-    // console.log(product);
     try {
       const response = await axios.put(
         `${API_URL}/products/${id}`,
@@ -97,6 +97,7 @@ export const ProductContextProvider = ({ children }) => {
           type: UPDATE_PRODUCTS,
           payload: response.data.data,
         });
+        toast.success("Product Updated Successfully");
       }
       await loadProducts();
     } catch (error) {

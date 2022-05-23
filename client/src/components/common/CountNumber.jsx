@@ -1,4 +1,3 @@
-import { useState } from "react";
 import PropTypes from "prop-types";
 const CountNumber = ({ quantity, setQuantity }) => {
   return (

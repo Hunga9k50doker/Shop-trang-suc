@@ -17,15 +17,6 @@ export const WishlistItem = ({ e, isChecked, handleChange }) => {
   };
   return (
     <tr>
-      <td className="td__checkbox">
-        <input
-          className="wishlist__checked__item"
-          type="checkbox"
-          name={e.name}
-          checked={e?.isChecked || false}
-          onChange={handleChange}
-        />
-      </td>
       <td className="td__trash">
         <i className="bx bx-trash" onClick={handleDeleteFromFavourite}></i>
       </td>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { Doughnut } from "react-chartjs-2";
 import moment from "moment";
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from "chart.js";
@@ -87,7 +87,6 @@ const OrderAdmin = () => {
     orderState: { orders, order, loadingOrder },
     fetchOneOrder,
   } = useContext(OrderContext);
-  console.log(orders);
 
   const dataOrder = {
     labels: ["Trên 20k", "Trên 15k", "Trên 10k", "Trên 5k"],
@@ -118,8 +117,6 @@ const OrderAdmin = () => {
     setViewDetail(id);
     fetchOneOrder(id);
   };
-
-  console.log(order, loadingOrder);
 
   return (
     <Helmet title="Quản lý đơn hàng">
@@ -203,8 +200,8 @@ const OrderAdmin = () => {
               <table>
                 <thead>
                   <tr>
-                    <td>ID</td>
-                    <td>Id người dùng</td>
+                    <td>STT</td>
+                    <td>Tên </td>
                     <td>Số điện thoại</td>
                     <td>ID đặt hàng</td>
                     <td>Tổng tiền</td>
@@ -231,15 +228,15 @@ const OrderAdmin = () => {
                     })
                     .map((e, id) => (
                       <tr key={id}>
-                        <td>{id}</td>
+                        <td>{id + 1}</td>
                         <td>{e.name}</td>
                         <td>{e.phoneNumber}</td>
                         <td>{e._id}</td>
-                        <td>{e.total}</td>
+                        <td>{numberWithCommas(e.total)} </td>
                         <td>{moment(e.createdAt).format("LLL")}</td>
                         <td className="view__details">
                           <Button
-                            content="Xem chi tiết"
+                            content="Chi tiết"
                             onClick={() => showOrderById(e._id)}
                           ></Button>
                         </td>
@@ -288,7 +285,7 @@ const OrderAdmin = () => {
                                     </thead>
                                     <tbody>
                                       {order.map((o, i) => (
-                                        <tr>
+                                        <tr key={i}>
                                           <td></td>
                                           <td>
                                             {o.invoiceDetails.product[0].name}
@@ -319,7 +316,6 @@ const OrderAdmin = () => {
                         )}
                         <td>
                           <Selection product={e} />
-                          {/* <Button content="Xác nhận" /> */}
                         </td>
                       </tr>
                     ))}

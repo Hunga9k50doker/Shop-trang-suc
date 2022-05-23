@@ -1,13 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useCallback, useMemo, useContext, useEffect } from "react";
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { NavLink, Link } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import CheckBox from "./CheckBox";
-import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
+import { sortLowToHigh } from "../../utils/utils";
 import InfinityList from "./InfinityList";
-import products from "../../assets/fake-data/Product";
 import { logo } from "../../assets/img";
 import { AuthContext } from "../../provider/context/AuthContext";
 import { ProductContext } from "../../provider/context/ProductContext";
@@ -129,11 +135,37 @@ const dataFilter = {
   ],
 };
 const SideBarLeftAdmin = () => {
-  const { logout } = useContext(AuthContext);
+  const [active, setActive] = useState(false);
+  const showRef = useRef(null);
+  const sidebarRef = useRef(null);
 
+  const { logout } = useContext(AuthContext);
+  const handleShow = () => {
+    if (active) {
+      showRef.current.style.transform = "rotate(0deg)";
+      sidebarRef.current.style.transform = "translateX(-100%)";
+      sidebarRef.current.style.transition = "all 0.3s linear";
+    } else {
+      showRef.current.style.transform = "rotate(180deg)";
+      sidebarRef.current.style.transform = "translateX(0%)";
+      sidebarRef.current.style.transition = "all 0.3s linear";
+    }
+  };
   return (
     <div className="sidebar">
-      <div className="sidebar__left__admin">
+      <div
+        ref={sidebarRef}
+        className={`sidebar__left__admin ${active ? "active" : ""}`}
+      >
+        <i
+          className="bx bxs-chevron-right show__menu__table__mobile"
+          ref={showRef}
+          onClick={() => {
+            setActive(!active);
+            handleShow();
+          }}
+        ></i>
+
         <Link
           to="/"
           className="mt-5 mb-4"
@@ -144,7 +176,14 @@ const SideBarLeftAdmin = () => {
           }}
         >
           {logo ? (
-            <img src={logo} alt="" style={{ transform: "scale(0.5)" }} />
+            <img
+              src={logo}
+              alt=""
+              style={{
+                transform: "scale(0.5)",
+                width: window.screen > 768 ? "" : "300px",
+              }}
+            />
           ) : (
             <i className="header__icon bx bxs-category-alt mt-5 mb-4"></i>
           )}
@@ -311,7 +350,6 @@ const SideBarFilter = ({ typeData, path }) => {
           sortLowToHigh(productList);
           setProductList(productList);
 
-          // setFilter({ ...filter, color: newColor });
           break;
         case "SORT_HIGHTOLOW":
           break;
@@ -392,7 +430,7 @@ const SideBarFilter = ({ typeData, path }) => {
       <div className="row">
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
-            {/* {console.log(productList)} */}
+            {console.log(productList)}
             {/* {console.log(filter)} */}
 
             <div className="row row__header">

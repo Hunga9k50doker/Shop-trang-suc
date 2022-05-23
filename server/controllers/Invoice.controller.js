@@ -13,30 +13,10 @@ export const getAllInvoice = async (req, res) => {
 export const getInvoiceUser = async (req, res) => {
   const { _id } = req;
   try {
-    const invoice = await InvoiceModel.aggregate([
-      {
-        $match: {
-          user: mongoose.Types.ObjectId(_id),
-        },
-      },
-      {
-        $lookup: {
-          from: "products",
-          localField: "invoiceDetails.product",
-          foreignField: "_id",
-          as: "invoiceDetails.product",
-        },
-      },
-    ]);
-    const quantity = await InvoiceModel.find(
-      { user: _id },
-      { "invoiceDetails.quantity": 1 }
-    );
-    // const invoice = await InvoiceModel.find({ user: _id });
+    const invoice = await InvoiceModel.find({ user: _id });
     return res.status(200).json({
       success: true,
       data: invoice,
-      quantityProduct: quantity[0].invoiceDetails,
     });
   } catch (error) {
     console.log(error.message);

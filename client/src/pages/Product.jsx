@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 import "react-toastify/dist/ReactToastify.css";
 import { to_slug, get_random, numberWithCommas } from "../utils/utils";
 import CountNumber from "../components/common/CountNumber";
@@ -10,19 +12,30 @@ import Accordion from "../components/common/Accordion";
 import { ProductContext } from "../provider/context/ProductContext";
 import { FavouriteContext } from "../provider/context/FavouriteContext";
 import { CartContext } from "../provider/context/CartContext";
+import { ReviewContext } from "../provider/context/ReviewContext";
+import moment from "moment";
 
 export default function Product() {
-
+  const [pos, setPos] = useState(0);
   const [, setActive] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const { slug } = useParams();
   const heartRef = useRef(null);
+  const [review, setReview] = useState({
+    description: "",
+    rating: 5,
+  });
   const {
     productState: { products },
   } = useContext(ProductContext);
   const { addProductToFavourite, favouriteState } =
     useContext(FavouriteContext);
   const { addProductToCart } = useContext(CartContext);
+  const {
+    reviewState: { loading, reviews },
+    loadingReviews,
+    addReview,
+  } = useContext(ReviewContext);
   useEffect(() => {
     if (heartRef.current) {
       return heartRef.current.className === "bx bxs-heart"
@@ -37,9 +50,24 @@ export default function Product() {
   };
 
   const handleAddToCart = (id, product) => {
-    console.log(id);
     addProductToCart({ id, quantity }, product);
   };
+
+  useEffect(() => {
+    loadingReviews(slug);
+  }, [slug]);
+  if (loading) return "Loading...";
+
+  const handleAddReview = () => {
+    addReview(slug, review);
+    setReview({
+      description: "",
+      rating: 5,
+    });
+  };
+
+  console.log(loading, reviews);
+
   return (
     <Helmet title="Chi tiết Sản phẩm">
       <div className="product">
@@ -47,7 +75,7 @@ export default function Product() {
           {products.length > 0 &&
             products.map(
               (e, id) =>
-                to_slug(e.name) === slug && (
+                to_slug(e._id) === slug && (
                   <React.Fragment key={id}>
                     <div className="row mb-4">
                       <div className="col col-xxl-6 col-xl-6 col-md-6 col-sm-12">
@@ -55,14 +83,23 @@ export default function Product() {
                           <div className="product__slide__img">
                             {e.imgsUrl.map((img, id) => (
                               <img
+                                style={{
+                                  border: pos === id ? "2px solid green" : "",
+                                }}
                                 key={id}
                                 src={`../../images/${img}`}
                                 alt=""
+                                onClick={() => setPos(id)}
                               />
                             ))}
                           </div>
                           <div className="product__item__img">
-                            <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
+                            <Zoom>
+                              <img
+                                src={`../../images/${e.imgsUrl[pos]}`}
+                                alt=""
+                              />
+                            </Zoom>
                           </div>
                         </div>
                       </div>
@@ -184,6 +221,46 @@ export default function Product() {
                         </div>
                       </div>
                     </div>
+                    <div className="row">
+                      <h4 className="product__other__title mt-5">Đánh giá</h4>
+                      <ul className="row mb-5 accordion__list">
+                        {reviews.map((r) => (
+                          <li>
+                            <div
+                              className="form__review__header"
+                              style={{ borderBottom: "1px solid #ccc" }}
+                            >
+                              <i className="bx bxs-user"></i>
+                              <p>{r.user[0].name}</p>
+                              <p style={{ float: "right" }}>
+                                {moment(r.createdAt).fromNow()}
+                              </p>
+                            </div>
+                            <p className="form__review__content">
+                              {r.description}
+                            </p>
+                          </li>
+                        ))}
+                      </ul>
+                      <textarea
+                        className="pt-2 ps-2 mb-2"
+                        cols="20"
+                        rows="5"
+                        placeholder="Đánh giá của bạn..."
+                        onChange={(e) =>
+                          setReview({
+                            ...review,
+                            description: e.target.value,
+                          })
+                        }
+                        value={review.description}
+                      ></textarea>
+                      <Button
+                        content="Thêm đánh giá"
+                        style={{ width: "fit-content" }}
+                        onClick={handleAddReview}
+                      />
+                    </div>
                   </React.Fragment>
                 )
             )}
@@ -201,7 +278,7 @@ export default function Product() {
                     <Link
                       onClick={() => window.scroll(0, 0)}
                       style={{ width: "100%" }}
-                      to={`/chi-tiet/${to_slug(e.name)}`}
+                      to={`/chi-tiet/${to_slug(e._id)}`}
                     >
                       <CardItem item={e} />
                     </Link>

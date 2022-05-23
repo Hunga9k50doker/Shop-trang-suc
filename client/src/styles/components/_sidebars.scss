@@ -10,7 +10,6 @@
   &__left__admin {
     position: fixed;
     width: 24vw;
-    // min-width: 320px;
     left: 0;
     top: 0;
     bottom: 0;
@@ -20,11 +19,24 @@
     @include tablet {
       z-index: 99;
       @include box_shadow(0.3);
-      // display: none;
+      transform: translateX(-100%);
       min-width: 0;
       width: -webkit-fit-content;
       width: -moz-fit-content;
       width: fit-content;
+    }
+    .show__menu__table__mobile {
+      display: none;
+      font-size: 2rem;
+      position: absolute;
+      right: -2rem;
+      top: 4px;
+      background: $white-color;
+      @include box_shadow(0.2);
+      border-radius: 4px;
+      @include tablet {
+        display: block;
+      }
     }
   }
   &__item {

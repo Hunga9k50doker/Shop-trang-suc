@@ -149,7 +149,7 @@ const ProductAdmin = () => {
     }
   }, []);
 
-  const update = () => {
+  const updateProduct = () => {
     updateProducts(currentId, data);
   };
 
@@ -865,7 +865,12 @@ const ProductAdmin = () => {
                           </li>
                           <li className="form__item mt-4">
                             <Button
-                              onClick={() => update()}
+                              onClick={() => {
+                                updateProduct();
+                                setTimeout(() => {
+                                  setIsActiveForm(false);
+                                }, 1000);
+                              }}
                               content="Cập nhật sản phẩm"
                             />
                           </li>
@@ -882,8 +887,8 @@ const ProductAdmin = () => {
                 <table className="p-4">
                   <thead>
                     <tr>
-                      <td>ID</td>
-                      <td></td>
+                      <td>STT</td>
+                      <td>Hình ảnh</td>
                       <td>Tên sản phẩm</td>
                       <td>Giá</td>
                       <td>Thời gian cập nhật</td>
@@ -907,7 +912,7 @@ const ProductAdmin = () => {
                       })
                       .map((e, id) => (
                         <tr key={id}>
-                          <td>{id}</td>
+                          <td>{id + 1}</td>
                           <td>
                             <img src={`../../images/${e.imgsUrl[0]}`} alt="" />
                           </td>

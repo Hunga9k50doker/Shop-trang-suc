@@ -1,9 +1,22 @@
 import ProductModel from "../models/Product.model.js";
 
 export const getAllProducts = async (req, res) => {
+  const { page, limit } = req.query;
   try {
-    const products = await ProductModel.find();
-    return res.status(200).json({ success: true, data: products });
+    if (!page || !limit) {
+      const products = await ProductModel.find();
+      return res.status(200).json({
+        success: true,
+        data: products,
+      });
+    }
+    const products = await ProductModel.find()
+      .skip(parseInt(page) * parseInt(limit))
+      .limit(parseInt(limit));
+    return res.status(200).json({
+      success: true,
+      data: products,
+    });
   } catch (error) {
     console.log(error.message);
   }

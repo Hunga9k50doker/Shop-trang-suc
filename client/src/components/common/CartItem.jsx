@@ -1,5 +1,7 @@
 import React, { useRef, useState, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { numberWithCommas } from "../../utils/utils";
 import {
   CircularProgressbarWithChildren,
@@ -8,6 +10,9 @@ import {
 import { FavouriteContext } from "../../provider/context/FavouriteContext";
 
 const CardItem = ({ item }) => {
+  AOS.init({
+    duration: 1000,
+  });
   const { imgsUrl, name, price } = item;
   const heartIconRef = useRef(null);
   const cardRef = useRef(null);
@@ -35,7 +40,7 @@ const CardItem = ({ item }) => {
   };
 
   return (
-    <div className="card__item" ref={cardRef}>
+    <div  className="card__item" ref={cardRef}>
       <i
         ref={heartIconRef}
         onClick={(e) =>

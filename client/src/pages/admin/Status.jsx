@@ -135,7 +135,7 @@ const StatusAdmin = () => {
                 >
                   <thead>
                     <tr>
-                      <td>ID</td>
+                      <td>STT</td>
                       <td>Tên khách hàng</td>
                       <td>Số điện thoại</td>
                       <td>Thời gian đặt hàng</td>
@@ -162,7 +162,7 @@ const StatusAdmin = () => {
                       })
                       .map((e, id) => (
                         <tr key={id}>
-                          <td>{id}</td>
+                          <td>{id + 1}</td>
                           <td>{e.name_customer}</td>
                           <td>{e.sdt}</td>
                           <td>{e.date}</td>

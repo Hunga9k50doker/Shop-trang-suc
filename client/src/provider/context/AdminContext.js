@@ -13,7 +13,6 @@ const AdminContextProvider = ({ children }) => {
   const loadAllUsers = async () => {
     try {
       const response = await axios.get(`${API_URL}/users/admin`);
-      console.log(response.data);
       if (response.data.success) {
         dispatch({
           type: FETCH_ALL_USERS,

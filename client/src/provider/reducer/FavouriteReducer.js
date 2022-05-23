@@ -9,7 +9,6 @@ export const favouriteReducer = (state, action) => {
   let products;
   switch (type) {
     case LOAD_FAVOURITE:
-      console.log(payload);
       products =
         payload === undefined
           ? []

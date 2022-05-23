@@ -10,17 +10,20 @@ import FavouriteContextProvider from "./provider/context/FavouriteContext";
 import CartContextProvider from "./provider/context/CartContext";
 import AdminContextProvider from "./provider/context/AdminContext";
 import OrderContextProvider from "./provider/context/OrderContext";
+import ReviewContextProvider from "./provider/context/ReviewContext";
 ReactDOM.render(
   <React.StrictMode>
     <AuthContextProvider>
       <AdminContextProvider>
         <ProductContextProvider>
           <FavouriteContextProvider>
-            <OrderContextProvider>
-              <CartContextProvider>
-                <App />
-              </CartContextProvider>
-            </OrderContextProvider>
+            <ReviewContextProvider>
+              <OrderContextProvider>
+                <CartContextProvider>
+                  <App />
+                </CartContextProvider>
+              </OrderContextProvider>
+            </ReviewContextProvider>
           </FavouriteContextProvider>
         </ProductContextProvider>
       </AdminContextProvider>

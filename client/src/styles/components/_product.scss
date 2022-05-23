@@ -1,6 +1,17 @@
 .product {
   margin-top: 10rem;
 
+  &__desc {
+    display: -webkit-box;
+    -webkit-box-oriant: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .form__review__content {
+    color: $text-color;
+    font-weight: 400;
+  }
   &__list {
     @include flex(center, space-around);
   }
@@ -11,6 +22,8 @@
       @include flex(center, center);
       margin: 1rem 2rem;
       flex-direction: column;
+      max-height: 300px;
+      overflow-y: auto;
       img {
         cursor: pointer;
         width: 50px;

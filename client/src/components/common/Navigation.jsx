@@ -148,11 +148,16 @@ export default function Navigation({ size, sizeFavorite }) {
   const [active, setActive] = useState(false);
   const [menu, setMenu] = useState(false);
   const [screenWitdh, setScreenWitdh] = useState(window.screen.width);
+
   const navRef = useRef(null);
   const { favouriteState } = useContext(FavouriteContext);
   const { cartState } = useContext(CartContext);
-  // size = cartState.products.length
-  // sizeFavorite=favouriteState.products.length
+  const [sizeCart, setSizeCart] = useState(0);
+  const [sizeFav, setSizeFav] = useState(0);
+  useEffect(() => {
+    setSizeCart(cartState.products.length);
+    setSizeFav(favouriteState.products.length);
+  }, [cartState.products.length, favouriteState.products.length]);
   useEffect(() => {
     setScreenWitdh(window.screen.width);
   }, [screenWitdh]);
@@ -292,9 +297,7 @@ export default function Navigation({ size, sizeFavorite }) {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-heart"></i>
-          <p className="nav__count__product">
-            {favouriteState ? favouriteState.products.length : 0}
-          </p>
+          <p className="nav__count__product">{sizeFav}</p>
         </Link>
         <Link
           to="/gio-hang-cua-ban/"
@@ -302,9 +305,7 @@ export default function Navigation({ size, sizeFavorite }) {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-cart-alt"></i>
-          <p className="nav__count__product">
-            {cartState ? cartState.products.length : 0}
-          </p>
+          <p className="nav__count__product">{sizeCart}</p>
         </Link>
       </div>
       {active ? (

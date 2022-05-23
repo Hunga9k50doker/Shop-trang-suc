@@ -28,3 +28,9 @@ export const LOAD_ORDERS = "LOAD_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FETCH_ONE_ORDER = "FETCH_ONE_ORDER";
 export const CHANGE_STATUS_ORDER = "CHANGE_STATUS_ORDER";
+
+//Review Constant
+export const LOAD_REVIEWS = "LOAD_REVIEWS";
+export const ADD_REVIEW = "ADD_REVIEW";
+export const FETCH_REVIEWS_BY_PRODUCT_ID = "FETCH_REVIEWS_BY_PRODUCT_ID";
+export const DELETE_REVIEW = "DELETE_REVIEW";

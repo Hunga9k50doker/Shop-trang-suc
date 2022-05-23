@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/context/AuthContext";
@@ -12,7 +13,7 @@ export default function Header() {
   const { logout } = useContext(AuthContext);
 
   const {
-    authState: { user, loading, isAuthenticated, userAuth },
+    authState: { user, loading, isAuthenticated, },
     updateUser,
   } = useContext(AuthContext);
   const [data, setData] = useState({
@@ -101,8 +102,14 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p>Hello, {user.name ? user.name : "user0123"}</p>
+            <p> {user.name ? user.name : "user0123"} </p>
             <ul className="my__account__list">
+              <Link to="/don-hang-cua-ban">
+                <li className="my__account__item">
+                  <i className="bx bx-news"></i>
+                  Đơn hàng
+                </li>
+              </Link>
               <li
                 className="my__account__item"
                 onClick={() => setIsActiveForm(true)}
@@ -110,6 +117,7 @@ export default function Header() {
                 <i className="bx bx-cog me-2"></i>
                 Cài đặt
               </li>
+
               <li className="my__account__item" onClick={logout}>
                 <i className="bx bx-log-out-circle me-2"></i>
                 Đăng xuất

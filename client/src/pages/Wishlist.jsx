@@ -1,8 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
 import { FavouriteContext } from "../provider/context/FavouriteContext";
-import { AuthContext } from "../provider/context/AuthContext";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
 import Helmet from "../components/common/Helmet";
@@ -13,9 +12,6 @@ export default function Wishlist() {
   const {
     favouriteState: { loading, products },
   } = useContext(FavouriteContext);
-  const {
-    authState: { user },
-  } = useContext(AuthContext);
 
   if (loading) {
     return <Skeleton height="200px" width={"100%"} />;
@@ -33,13 +29,6 @@ export default function Wishlist() {
             >
               <thead>
                 <tr>
-                  <th>
-                    <input
-                      className="wishlist__checked__all"
-                      type="checkbox"
-                      name="checkAll"
-                    />
-                  </th>
                   <th> </th>
                   <th>Hình ảnh</th>
                   <th>Tên sản phẩm</th>
@@ -55,16 +44,8 @@ export default function Wishlist() {
                   className="last__row
                 "
                 >
-                  <td colSpan={7}>
-                    <Button
-                      classNameBtn="wishlist__delete__selected"
-                      content="Xóa các sản phẩm đã chọn"
-                    />
-
-                    <Button
-                      classNameBtn="m-2"
-                      content="Thêm sản phẩm đã chọn vào giỏ hàng"
-                    />
+                  <td colSpan={5}>
+                  
                     <Button content="Thêm tất cả sản phẩm vào giỏ hàng" />
                   </td>
                 </tr>

@@ -1,6 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { AuthContext } from "./provider/context/AuthContext";
 import MainLayout from "./components/layout/MainLayout";
 import AdminLayout from "./components/layout/AdminLayout";
@@ -23,8 +25,12 @@ import Product from "./pages/Product";
 import Wishlist from "./pages/Wishlist";
 import MyCart from "./pages/MyCart";
 import Payment from "./pages/Payment";
+import OrderDetail from "./pages/OrderDetail";
 import NotFound from "./pages/NotFound";
 export default function App() {
+  AOS.init({
+    duration: 1000,
+  });
   const {
     authState: { user },
   } = useContext(AuthContext);
@@ -120,36 +126,36 @@ export default function App() {
               path="chi-tiet/:slug"
               element={<Product handleClick={handleClick} />}
             ></Route>
+            {/* order detail user */}
+            <Route
+              exact
+              path="don-hang-cua-ban/"
+              element={<OrderDetail />}
+            ></Route>
             {/* cart */}
-            {
-              <Route
-                exact
-                path="gio-hang-cua-ban/"
-                element={
-                  <MyCart
-                    cart={cart}
-                    setCart={setCart}
-                    handleChange={handleChange}
-                  />
-                }
-              ></Route>
-            }
+            <Route
+              exact
+              path="gio-hang-cua-ban/"
+              element={
+                <MyCart
+                  cart={cart}
+                  setCart={setCart}
+                  handleChange={handleChange}
+                />
+              }
+            ></Route>
             {/* wishlist */}
-            {
-              <Route path="/" element={<ProtectedRoute />}>
-                <Route
-                  path="danh-sach-san-pham-yeu-thich/"
-                  element={<Wishlist />}
-                ></Route>
-              </Route>
-            }
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route
+                path="danh-sach-san-pham-yeu-thich/"
+                element={<Wishlist />}
+              ></Route>
+            </Route>
             {/* payment */}
-            {
-              <Route path="/" element={<ProtectedRoute />}>
-                <Route path="thanh-toan/" element={<Payment />}></Route>
-              </Route>
-            }
-            {/* not found */}{" "}
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route path="thanh-toan/" element={<Payment />}></Route>
+            </Route>
+            {/* not found */}
             <Route exact path="*" element={<NotFound />}></Route>
           </Route>
           {/* ====================admin========================== */}
