@@ -44,7 +44,7 @@ const FavouriteContextProvider = ({ children }) => {
           type: ADD_FAVOURITE,
           payload: product,
         });
-        toast.success("Thêm vào mục ưa thích thành công, hãy kiểm tra!");
+        toast.success("Thêm thành công, hãy kiểm tra!");
       } else {
         toast.error("Thêm vào mục ưa thích thất bại!");
       }

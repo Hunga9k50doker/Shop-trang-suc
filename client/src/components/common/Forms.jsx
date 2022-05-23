@@ -73,7 +73,7 @@ const FormSearch = ({ active, setActive }) => {
           .map((e, id) => (
             <Link
               key={id}
-              to={`/chi-tiet/${to_slug(e.name)}`}
+              to={`/chi-tiet/${to_slug(e._id)}`}
               onClick={() => {
                 setActive(!active);
               }}

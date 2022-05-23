@@ -141,7 +141,7 @@ const arrNav = [
   },
 ];
 
-export default function Navigation({ size, sizeFavorite }) {
+export default function Navigation() {
   const {
     authState: { user },
   } = useContext(AuthContext);

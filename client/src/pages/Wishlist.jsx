@@ -40,15 +40,16 @@ export default function Wishlist() {
               <tbody>
                 {products.length > 0 &&
                   products.map((e, id) => <WishlistItem key={id} e={e} />)}
-                <tr
+                {/* <tr
                   className="last__row
                 "
                 >
-                  <td colSpan={5}>
-                  
-                    <Button content="Thêm tất cả sản phẩm vào giỏ hàng" />
+                  <td colSpan={6}>
+                    <Button content="Thêm tất cả sản phẩm vào giỏ hàng" 
+                    
+                    />
                   </td>
-                </tr>
+                </tr> */}
               </tbody>
             </table>
           ) : (

@@ -29,7 +29,33 @@ const arr = [
 export default function Watches() {
   let [path, setPath] = useState("");
   path = window.location.pathname;
+  let typeData;
+  const handleFilter = () => {
+    if (path === "/dong-ho/gucci/") {
+      typeData = "Gucci";
+    } else if (path === "/dong-ho/citizen/") {
+      typeData = "Citizen";
+    } else if (path === "/dong-ho/casio/") {
+      typeData = "casio";
+    } else if (path === "/dong-ho/nam/") {
+      typeData = "Nam";
+    } else if (path === "/dong-ho/nu/") {
+      typeData = "Nữ";
+    } else if (path === "/dong-ho/unisex/") {
+      typeData = "Unisex";
+    } else if (path === "/dong-ho/dong-ho/") {
+      typeData = "Đồng hồ";
+    } else if (path === "/dong-ho/mat-kinh/") {
+      typeData = "Mắt kính";
+    } else if (path === "/dong-ho/dong-ho-cap/") {
+      typeData = "Đồng hồ cặp";
+    } else if (path === "/dong-ho/phu-kien/") {
+      typeData = "Phụ kiện";
+    }
+  };
+  useEffect(() => handleFilter(), [path]);
   useEffect(() => setPath(), [path]);
+
   return (
     <Helmet title="Đồng hồ">
       <div className="watches">
@@ -49,7 +75,7 @@ export default function Watches() {
               </Banner>
             )
         )}
-        <SideBarFilter />
+        <SideBarFilter path={path} typeData={typeData} />
       </div>
     </Helmet>
   );

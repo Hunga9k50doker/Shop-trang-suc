@@ -46,7 +46,6 @@ const InfinityList = ({ props, path }) => {
   const [index, setIndex] = useState(0);
 
   let [typeData, setTypeData] = useState(location.pathname.split("/").at(-2));
-
   const newFilterProduct = (type) => {
     switch (type) {
       case "Nhẫn":
@@ -97,6 +96,7 @@ const InfinityList = ({ props, path }) => {
             p.category.materialGold.find((e) => e === "24k")
           )
         );
+
         break;
       case "22k":
         setData(
@@ -126,15 +126,23 @@ const InfinityList = ({ props, path }) => {
         break;
       case "Nam":
       case "nam":
-        setData(products.filter((p) => p.gender === "Nam"));
+        setData(
+          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nam")
+        );
+        console.log(data);
+
         break;
       case "Nữ":
       case "nu":
-        setData(products.filter((p) => p.gender === "Nữ"));
+        setData(
+          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nữ")
+        );
         break;
       case "Unisex":
       case "unisex":
-        setData(products.filter((p) => p.gender === "Unisex"));
+        setData(
+          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Unisex")
+        );
         break;
       case "Đồng hồ":
       case "dong-ho":
@@ -143,7 +151,10 @@ const InfinityList = ({ props, path }) => {
       case "Mắt Kính":
       case "mat-kinh":
         setData(
-          products.filter((p) => p.category.accessory_type === "Mắt Kính")
+          products.filter(
+            (p) =>
+              p.type === "Phụ kiện" && p.category.accessory_type === "Mắt kính"
+          )
         );
         break;
       case "Đồng hồ cặp":
@@ -180,12 +191,7 @@ const InfinityList = ({ props, path }) => {
         return setData(products);
     }
   };
-  // useEffect(() => {
-  //   if (products.length > 0) {
-  //     setData(props.data.slice(0, perLoad));
-  //     setIndex(1);
-  //   }
-  // }, [props.data]);
+
   useEffect(() => {
     newFilterProduct(typeData);
   }, [typeData, loading]);
@@ -228,11 +234,11 @@ const InfinityList = ({ props, path }) => {
       typeData = "Unisex";
     } else if (path === "/dong-ho/dong-ho/") {
       typeData = "Đồng hồ";
-    } else if (path === "/trang-suc/mat-kinh/") {
+    } else if (path === "/dong-ho/mat-kinh/") {
       typeData = "Mắt kính";
-    } else if (path === "/trang-suc/dong-ho-cap/") {
+    } else if (path === "/dong-ho/dong-ho-cap/") {
       typeData = "Đồng hồ cặp";
-    } else if (path === "/trang-suc/phu-kien/") {
+    } else if (path === "/dong-ho/phu-kien/") {
       typeData = "Phụ kiện";
     } else if (path === "/qua-tang/cho-cha/") {
       typeData = "Cho cha";
@@ -248,6 +254,9 @@ const InfinityList = ({ props, path }) => {
       path = "/";
       typeData = "auto";
     }
+    console.log(path);
+    console.log(typeData);
+    console.log(location.pathname);
     newFilterProduct(typeData);
   };
 
@@ -286,10 +295,15 @@ const InfinityList = ({ props, path }) => {
   }, [load, index, data, props.data]);
   return (
     <div className="row" ref={listRef}>
-      {loading === false &&
-        data.map((e, id) => {
+      {loading === false && data.length > 0 ? (
+        data.slice(0, perLoad).map((e, id) => {
           return <Item key={id} e={e} props={props} loading={loading} />;
-        })}
+        })
+      ) : (
+        <p style={{ marginTop: "8rem", textAlign: "center" }}>
+          Không tìm thấy sản phẩm phù hợp
+        </p>
+      )}
     </div>
   );
 };

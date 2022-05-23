@@ -378,7 +378,6 @@ const SideBarFilter = ({ typeData, path }) => {
     let temp = products;
     if (filter.color.length > 0) {
       temp = temp.filter((e) => {
-        // console.log(e.color);
         const check = e.color.find((color) => filter.color.includes(color));
         return check !== undefined;
       });
@@ -395,7 +394,6 @@ const SideBarFilter = ({ typeData, path }) => {
       });
     }
     if (filter.materialGold.length > 0) {
-      console.log(temp);
       temp = temp.filter((e) => {
         if (e.category.materialGold.length > 0) {
           const check = e.category.materialGold.find((materialGold) =>

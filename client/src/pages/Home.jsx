@@ -29,7 +29,7 @@ export default function Home() {
 
   const item = {
     data: data,
-    amount: 24,
+    amount: 16,
     classNameCol: "col-xl-3 col-lg-4 col-md-6",
   };
   if (loading) return <Skeleton height="300px" />;

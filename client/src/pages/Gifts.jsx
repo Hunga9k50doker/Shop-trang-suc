@@ -17,6 +17,21 @@ const arr = [
 export default function Gifts() {
   let [path, setPath] = useState("");
   path = window.location.pathname;
+  let typeData;
+  const handleFilter = () => {
+    if (path === "/qua-tang/cho-nang/") {
+      typeData = "Cho nàng";
+    } else if (path === "/qua-tang/cho-chang/") {
+      typeData = "Cho chàng";
+    } else if (path === "/qua-tang/cho-cha/") {
+      typeData = "Cho cha";
+    } else if (path === "/qua-tang/cho-me/") {
+      typeData = "Cho me";
+    } else if (path === "/qua-tang/cho-be/") {
+      typeData = "Cho bé";
+    }
+  };
+  useEffect(() => handleFilter(), [path]);
   useEffect(() => setPath(), [path]);
   return (
     <Helmet title="Quà tặng">
@@ -42,7 +57,7 @@ export default function Gifts() {
             )
         )}
 
-        <SideBarFilter />
+        <SideBarFilter path={path} typeData={typeData} />
       </div>
     </Helmet>
   );

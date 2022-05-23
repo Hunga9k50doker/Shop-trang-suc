@@ -56,7 +56,7 @@ export default function Product() {
   useEffect(() => {
     loadingReviews(slug);
   }, [slug]);
-  
+
   if (loading) return "Loading...";
 
   const handleAddReview = () => {
@@ -66,8 +66,6 @@ export default function Product() {
       rating: 5,
     });
   };
-
-  console.log(loading, reviews);
 
   return (
     <Helmet title="Chi tiết Sản phẩm">
