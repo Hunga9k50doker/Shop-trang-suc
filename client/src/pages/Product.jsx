@@ -274,7 +274,10 @@ export default function Product() {
               </div>
               <div className="row mb-5">
                 {get_random(products, 12).map((e, id) => (
-                  <div key={id} className="col col-xl-3 col-md-6 col-sm-12">
+                  <div
+                    key={id}
+                    className="col col-xl-3 col-md-12 col-sm-12 col-12"
+                  >
                     <Link
                       onClick={() => window.scroll(0, 0)}
                       style={{ width: "100%" }}

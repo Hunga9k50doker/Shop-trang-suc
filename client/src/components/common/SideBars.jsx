@@ -430,7 +430,7 @@ const SideBarFilter = ({ typeData, path }) => {
       <div className="row">
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
-            {console.log(productList)}
+            {/* {console.log(productList)} */}
             {/* {console.log(filter)} */}
 
             <div className="row row__header">
