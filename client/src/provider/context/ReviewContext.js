@@ -38,7 +38,10 @@ const ReviewContextProvider = ({ children }) => {
         });
         toast.success("Thêm thành công!");
       } else {
-        toast.warning("Bạn chưa đăng nhập hoặc chưa nhập nội dung!");
+        console.log(response.data.message);
+        response.data.message === "Token not found"
+          ? toast.warning("Bạn cần đăng nhập để thực hiện thao tác này!")
+          : toast.warning("Bạn chưa nhập nội dung");
       }
     } catch (error) {
       console.log(error);

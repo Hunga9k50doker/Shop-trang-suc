@@ -1,6 +1,4 @@
-
 export const Banner = (props) => {
- 
   return (
     <div className={`banner `} style={props.style}>
       <div
@@ -19,9 +17,13 @@ export const Banner = (props) => {
         </div>
         {props.children}
       </div>
-      <img 
-      
-      className="banner__img" src={props.img} alt="" />
+      <img
+        className={`banner__img ${
+          props.classNameImg ? props.classNameImg : ""
+        }`}
+        src={props.img}
+        alt=""
+      />
     </div>
   );
 };

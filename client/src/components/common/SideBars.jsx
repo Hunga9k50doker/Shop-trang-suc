@@ -70,17 +70,17 @@ const arrAccodion = [
     subtitle: [
       { title: "Gucci", path: "/dong-ho/gucci/" },
       { title: "Citizen", path: "/dong-ho/citizen/" },
-      { title: "Casio", path: "/dong-ho/casio" },
+      { title: "Casio", path: "/dong-ho/casio/" },
     ],
   },
   {
     title: "Quà tặng",
     subtitle: [
       { title: "Cho chàng", path: "/qua-tang/cho-chang/" },
-      { title: "Cho nàng", path: "/qua-tang/cho-chang/" },
-      { title: "Cho cha", path: "/qua-tang/cho-chang/" },
-      { title: "Cho mẹ", path: "/qua-tang/cho-chang/" },
-      { title: "Cho bé", path: "/qua-tang/cho-chang/" },
+      { title: "Cho nàng", path: "/qua-tang/cho-nang/" },
+      { title: "Cho cha", path: "/qua-tang/cho-cha/" },
+      { title: "Cho mẹ", path: "/qua-tang/cho-me/" },
+      { title: "Cho bé", path: "/qua-tang/cho-be/" },
     ],
   },
 ];
@@ -428,7 +428,7 @@ const SideBarFilter = ({ typeData, path }) => {
       <div className="row">
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
-            {/* {console.log(productList)} */}
+            {console.log(productList)}
             {/* {console.log(filter)} */}
 
             <div className="row row__header">

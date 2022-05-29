@@ -63,7 +63,7 @@ export default function Watches() {
           (e, id) =>
             e.path === path && (
               <Banner key={id} img={banner_sub_02} title={`Đồng Hồ ${e.title}`}>
-                <div className="sub__link">
+                <div data-aos="fade-up" className="sub__link">
                   <Link to="/">Trang chủ</Link>
                   <i className="bx bx-chevron-right"></i>
                   <p>

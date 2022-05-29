@@ -46,7 +46,9 @@ const FavouriteContextProvider = ({ children }) => {
         });
         toast.success("Thêm thành công, hãy kiểm tra!");
       } else {
-        toast.error("Thêm vào mục ưa thích thất bại!");
+        response.data.message === "Token not found"
+          ? toast.warning("Bạn cần đăng nhập để thực hiện thao tác này!")
+          : toast.warning("Thêm vào mục ưa thích thất bại!");
       }
     } catch (error) {
       console.log(error.message);

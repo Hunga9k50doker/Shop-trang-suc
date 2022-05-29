@@ -296,9 +296,12 @@ const InfinityList = ({ props, path }) => {
   return (
     <div className="row" ref={listRef}>
       {loading === false && data.length > 0 ? (
-        data.slice(0, perLoad).map((e, id) => {
-          return <Item key={id} e={e} props={props} loading={loading} />;
-        })
+        data
+          .slice(0, perLoad)
+          .reverse()
+          .map((e, id) => {
+            return <Item key={id} e={e} props={props} loading={loading} />;
+          })
       ) : (
         <p style={{ marginTop: "8rem", textAlign: "center" }}>
           Không tìm thấy sản phẩm phù hợp

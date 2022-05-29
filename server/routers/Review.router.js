@@ -4,15 +4,14 @@ import {
   fetchReviewsByProductId,
   addReview,
 } from "../controllers/Review.controller.js";
-import verifyAdmin from "../middleware/verifyAdmin.js";
 import verifyToken from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-router.get("/", verifyToken, verifyAdmin, fetchReviews);
+router.get("/", verifyToken, fetchReviews);
 router
   .route("/:productId")
-  .get(verifyToken, verifyAdmin, fetchReviewsByProductId)
-  .post(verifyToken, verifyAdmin, addReview);
+  .get(fetchReviewsByProductId)
+  .post(verifyToken, addReview);
 
 export default router;

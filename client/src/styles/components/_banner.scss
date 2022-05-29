@@ -6,15 +6,24 @@
   top: 5rem;
   overflow: hidden;
   @include smallpc {
-    // top: 10rem;
     top: 8rem;
     .banner__title {
       font-size: 1rem;
     }
   }
   @include tablet {
-    // top: 10rem;
     top: 6rem;
+    .banner__title {
+      margin: 10px;
+      font-size: 1rem;
+    }
+  }
+  @include mobile {
+    top: 4rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+
     .banner__title {
       margin: 10px;
       font-size: 1rem;
@@ -26,10 +35,14 @@
     top: 50%;
     left: 30%;
     transform: translate(-50%, -50%);
+
     .banner__solgan {
       font-style: italic;
       letter-spacing: 2px;
       color: #be5656;
+      @include mobile {
+        margin: 0;
+      }
     }
     .banner__title {
       margin: 1.6rem;
@@ -38,6 +51,9 @@
       @include tablet {
         margin: 10px;
         font-size: 1rem;
+      }
+      @include mobile {
+        margin: 4px 0;
       }
     }
     .banner__subtitle {
@@ -48,12 +64,18 @@
         margin: 0;
         font-size: 12px;
       }
+      @include mobile {
+        font-size: 8px;
+      }
     }
     .sub__img {
       img {
         max-width: 350px;
         @include tablet {
           width: 200px;
+        }
+        @include mobile {
+          width: 100px;
         }
       }
     }
@@ -79,6 +101,15 @@
         margin-top: 1rem;
         font-size: 1.2rem;
       }
+      @include mobile {
+        font-size: 10px;
+      }
+    }
+  }
+
+  &__img:not(.home__banner__img) {
+    @include mobile {
+      height: 100px;
     }
   }
   .btn__view__more {
@@ -90,6 +121,10 @@
     padding: 10px 20px;
     @include tablet {
       padding: 5px 10px;
+    }
+    @include mobile {
+      margin-top: 0;
+      font-size: 8px;
     }
   }
   .sub__link {

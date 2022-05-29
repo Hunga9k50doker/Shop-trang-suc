@@ -44,7 +44,7 @@ export default function Gifts() {
                 img={banner_sub_02}
                 title={`Quà tặng ${e.title}`}
               >
-                <div className="sub__link">
+                <div data-aos="fade-up" className="sub__link">
                   <Link to="/">Trang chủ</Link>
                   <i className="bx bx-chevron-right"></i>
                   <p>

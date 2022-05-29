@@ -57,8 +57,9 @@ export default function Product() {
     loadingReviews(slug);
   }, [slug]);
 
+  const [proOther, setProOther] = useState(get_random(products, 12));
+  // get random products other
   if (loading) return "Loading...";
-
   const handleAddReview = () => {
     addReview(slug, review);
     setReview({
@@ -81,15 +82,17 @@ export default function Product() {
                         <div className="product__img">
                           <div className="product__slide__img">
                             {e.imgsUrl.map((img, id) => (
-                              <img
-                                style={{
-                                  border: pos === id ? "2px solid green" : "",
-                                }}
-                                key={id}
-                                src={`../../images/${img}`}
-                                alt=""
-                                onClick={() => setPos(id)}
-                              />
+                              <>
+                                <img
+                                  style={{
+                                    border: pos === id ? "2px solid green" : "",
+                                  }}
+                                  key={id}
+                                  src={`../../images/${img}`}
+                                  alt=""
+                                  onClick={() => setPos(id)}
+                                />
+                              </>
                             ))}
                           </div>
                           <div className="product__item__img">
@@ -223,14 +226,18 @@ export default function Product() {
                     <div className="row">
                       <h4 className="product__other__title mt-5">Đánh giá</h4>
                       <ul className="row mb-5 accordion__list">
-                        {reviews.map((r) => (
-                          <li>
+                        {reviews.map((r, id) => (
+                          <li key={id}>
                             <div
                               className="form__review__header"
                               style={{ borderBottom: "1px solid #ccc" }}
                             >
                               <i className="bx bxs-user"></i>
-                              <p>{r.user[0].name}</p>
+                              <p>
+                                {r.user[0].name
+                                  ? r.user[0].name
+                                  : r.user[0].username}
+                              </p>
                               <p style={{ float: "right" }}>
                                 {moment(r.createdAt).fromNow()}
                               </p>
@@ -242,6 +249,7 @@ export default function Product() {
                         ))}
                       </ul>
                       <textarea
+                        style={{ border: "1px solid #ccc" }}
                         className="pt-2 ps-2 mb-2"
                         cols="20"
                         rows="5"
@@ -272,7 +280,7 @@ export default function Product() {
                 </h4>
               </div>
               <div className="row mb-5">
-                {get_random(products, 12).map((e, id) => (
+                {proOther.map((e, id) => (
                   <div
                     key={id}
                     className="col col-xl-3 col-md-12 col-sm-12 col-12"

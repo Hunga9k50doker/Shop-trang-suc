@@ -87,9 +87,6 @@ const FormSearch = ({ active, setActive }) => {
 };
 // ============login========================
 const FormLogin = () => {
-  // const {
-  //   authState: { isAuthenticated },
-  // } = useContext(AuthContext);
   const [user, setUser] = useState({
     username: "",
     password: "",

@@ -64,7 +64,7 @@ export default function OrderDetail() {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map(
+                  {orders.reverse().map(
                     (e, id) =>
                       e.user === user._id && (
                         <tr key={id}>

@@ -13,7 +13,7 @@ export default function Header() {
   const { logout } = useContext(AuthContext);
 
   const {
-    authState: { user, loading, isAuthenticated, },
+    authState: { user, loading, isAuthenticated },
     updateUser,
   } = useContext(AuthContext);
   const [data, setData] = useState({
@@ -76,7 +76,12 @@ export default function Header() {
         {!isAuthenticated ? (
           <>
             {console.log()}
-            <li className="login strong" onClick={() => setIsLogin(!isLogin)}>
+            <li
+              className="login strong"
+              onClick={() => {
+                setIsLogin(!isLogin);
+              }}
+            >
               <i className="bx bx-log-in"></i>
               <p>Đăng nhập</p>
             </li>
@@ -118,7 +123,12 @@ export default function Header() {
                 Cài đặt
               </li>
 
-              <li className="my__account__item" onClick={logout}>
+              <li
+                className="my__account__item"
+                onClick={() => {
+                  logout();
+                }}
+              >
                 <i className="bx bx-log-out-circle me-2"></i>
                 Đăng xuất
               </li>
@@ -164,6 +174,7 @@ export default function Header() {
                     <Button
                       content="Cập nhật"
                       onClick={() => {
+                        update();
                         toast.success("Cập nhật thành công!");
                         setTimeout(() => {
                           setIsActiveForm(false);

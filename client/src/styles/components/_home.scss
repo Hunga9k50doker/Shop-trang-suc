@@ -9,6 +9,9 @@
     strong {
       color: $primary-color;
     }
+    @include mobile {
+      font-size: 1.2rem;
+    }
   }
   &__theme {
     width: 100%;

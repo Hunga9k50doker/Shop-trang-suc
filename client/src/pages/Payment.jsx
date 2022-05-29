@@ -146,7 +146,6 @@ export default function Payment() {
                 <tbody>
                   {products.map((e, id) => (
                     <tr key={id}>
-                      {console.log(e.product[0])}
                       {e.product[0] && (
                         <>
                           <td>{e.product[0].name}</td>

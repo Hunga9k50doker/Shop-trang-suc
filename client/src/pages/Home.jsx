@@ -38,6 +38,7 @@ export default function Home() {
       <div className="home">
         <Banner
           classNameSub="home__banner"
+          classNameImg="home__banner__img"
           img={banner_01}
           sologan="Giới thiệu"
           title="Màu sắc tưởng tượng"

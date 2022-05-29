@@ -9,7 +9,8 @@
   @include tablet {
     font-size: 1rem;
   }
-  ul {
+  &__left,
+  &__right {
     height: 100%;
     @include flex(center, center);
     li {
@@ -22,6 +23,11 @@
           font-size: 0.8rem;
         }
       }
+    }
+  }
+  &__left {
+    @include mobile {
+      display: none;
     }
   }
   .login,

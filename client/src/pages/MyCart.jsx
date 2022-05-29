@@ -1,14 +1,14 @@
-import React, { useState, useEffect,  useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { CartContext } from "../provider/context/CartContext";
-import {  numberWithCommas } from "../utils/utils";
+import { numberWithCommas } from "../utils/utils";
 import Helmet from "../components/common/Helmet";
 import { Banner } from "../components/common/Banner";
 import Button from "../components/common/Button";
 import { banner_sub_02 } from "../assets/img";
 
-export default function MyCart({ cart, setCart }) {
+export default function MyCart() {
   const [price, setPrice] = useState(0);
   const {
     cartState: { loading, products },

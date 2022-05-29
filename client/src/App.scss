@@ -10,6 +10,17 @@
   overflow-x: hidden;
 }
 
+.jewels,
+.watches,
+.gifts {
+  .container {
+    margin-top: 10rem;
+    @include mobile {
+      margin-top: 4rem;
+    }
+  }
+}
+
 .wishlist,
 .mycart {
   .banner__title {

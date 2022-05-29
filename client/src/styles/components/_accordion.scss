@@ -16,6 +16,7 @@
     }
   }
   &__content {
+    position: relative;
     @include flex(flex-start, center);
     overflow: hidden;
     flex-direction: column;
@@ -32,6 +33,10 @@
     }
     @include tablet {
       flex-direction: row;
+      @include flex(center, flex-start);
+    }
+    @include mobile {
+      flex-direction: column;
     }
   }
 }
@@ -44,6 +49,7 @@
     max-height: 10rem;
     @include tablet {
       max-height: 20rem;
+      overflow: auto;
     }
   }
 }

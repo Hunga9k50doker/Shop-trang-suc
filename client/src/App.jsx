@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AOS from "aos";
@@ -35,46 +35,11 @@ export default function App() {
     authState: { user },
   } = useContext(AuthContext);
 
-  const [favoriteItems, setFavoriteItems] = useState([]);
-  const [cart, setCart] = useState([]);
-  const items = JSON.parse(localStorage.getItem("cart"));
-
-  const handleClick = (item) => {
-    if (cart.indexOf(item) !== -1) return -1;
-    setCart([...cart, item]);
-    console.log(cart);
-  };
-
-  const handleChange = (item, d) => {
-    const ind = cart.indexOf(item);
-    const arr = cart;
-    arr[ind].amount += d;
-
-    if (arr[ind].amount === 0) arr[ind].amount = 1;
-    setCart([...arr]);
-  };
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-  useEffect(() => {
-    if (items) {
-      setCart(items);
-    }
-  }, []);
   return (
     <div className="app">
       <BrowserRouter>
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={
-              <MainLayout
-                sizeFavorite={favoriteItems.length}
-                size={cart.length}
-              />
-            }
-          >
+          <Route exact path="/" element={<MainLayout />}>
             <Route exact={true} path="/" element={<Home />}></Route>
             {/* trang suc */}
             <Route exact path="trang-suc/nhan" element={<Jewels />}></Route>
@@ -121,11 +86,7 @@ export default function App() {
             {/* lien he */}
             <Route exact path="lien-he/" element={<Contact />}></Route>
             {/* product detail */}
-            <Route
-              exact
-              path="chi-tiet/:slug"
-              element={<Product handleClick={handleClick} />}
-            ></Route>
+            <Route exact path="chi-tiet/:slug" element={<Product />}></Route>
             {/* order detail user */}
             <Route
               exact
@@ -133,17 +94,7 @@ export default function App() {
               element={<OrderDetail />}
             ></Route>
             {/* cart */}
-            <Route
-              exact
-              path="gio-hang-cua-ban/"
-              element={
-                <MyCart
-                  cart={cart}
-                  setCart={setCart}
-                  handleChange={handleChange}
-                />
-              }
-            ></Route>
+            <Route exact path="gio-hang-cua-ban/" element={<MyCart />}></Route>
             {/* wishlist */}
             <Route path="/" element={<ProtectedRoute />}>
               <Route

@@ -148,16 +148,21 @@ export default function Navigation() {
   const [active, setActive] = useState(false);
   const [menu, setMenu] = useState(false);
   const [screenWitdh, setScreenWitdh] = useState(window.screen.width);
-
   const navRef = useRef(null);
   const { favouriteState } = useContext(FavouriteContext);
   const { cartState } = useContext(CartContext);
   const [sizeCart, setSizeCart] = useState(0);
   const [sizeFav, setSizeFav] = useState(0);
   useEffect(() => {
-    setSizeCart(cartState.products.length);
-    setSizeFav(favouriteState.products.length);
-  }, [cartState.products.length, favouriteState.products.length]);
+    if (!user) {
+      setSizeCart(0);
+      setSizeFav(0);
+    } else {
+      setSizeCart(cartState.products.length);
+      setSizeFav(favouriteState.products.length);
+    }
+  }, [cartState.products.length, favouriteState.products.length, user]);
+
   useEffect(() => {
     setScreenWitdh(window.screen.width);
   }, [screenWitdh]);
@@ -173,73 +178,70 @@ export default function Navigation() {
   const checkLogin = (e) => {
     if (!user) {
       e.preventDefault();
-      toast.warning("Bạn chưa đăng nhập!");
+      toast.warning("Bạn cần đăng nhập để thực hiện thao tác này!!");
     } else {
     }
   };
   return (
     <div ref={navRef} className="nav">
-      {screenWitdh < 786 ? (
-        <div
-          className="menu__mobile
+      <div
+        className="menu__mobile
         "
-        >
-          <i className="bx bx-menu" onClick={() => setMenu(!menu)}></i>
-          {menu && (
-            <Modal active={menu} setActive={setMenu}>
-              <ul className="nav__mobile__list">
-                {arrNav.map((e, id) => (
-                  <li key={id} className="nav__item">
-                    <Accordion
-                      classNameAccordion="accordion__title__link"
-                      link={e.path}
-                      title={e.nav_title}
-                      classNameIcon={`  ${
-                        e.nav_title === "Trang chủ"
-                          ? "hidden"
-                          : `${e.nav_title === "Liên hệ" ? "hidden" : ""}`
-                      }`}
-                    >
-                      {e.sub_nav.map((element, index) => (
-                        <ul key={index} className="sub__nav__list">
-                          <h3 className="sub__nav__title">
-                            {element.sub_nav_title}
-                          </h3>
-                          <ul className="sub__nav__list">
-                            <li className="sub__nav__item">
-                              {element.sub_nav_desc.map((ele, ix) => (
-                                <NavLink
-                                  onClick={() => setMenu(false)}
-                                  className={({ isActive }) =>
-                                    isActive ? "selected " : "  "
-                                  }
-                                  key={ix}
-                                  to={ele.path}
-                                >
-                                  {ele.title}
-                                </NavLink>
-                              ))}
-                            </li>
-                          </ul>
+      >
+        <i className="bx bx-menu" onClick={() => setMenu(!menu)}></i>
+        {menu && (
+          <Modal active={menu} setActive={setMenu}>
+            <ul className="nav__mobile__list">
+              {arrNav.map((e, id) => (
+                <li key={id} className="nav__item">
+                  <Accordion
+                    classNameAccordion="accordion__title__link"
+                    link={e.path}
+                    title={e.nav_title}
+                    classNameIcon={`  ${
+                      e.nav_title === "Trang chủ"
+                        ? "hidden"
+                        : `${e.nav_title === "Liên hệ" ? "hidden" : ""}`
+                    }`}
+                  >
+                    {e.sub_nav.map((element, index) => (
+                      <ul key={index} className="sub__nav__list">
+                        <h3 className="sub__nav__title">
+                          {element.sub_nav_title}
+                        </h3>
+                        <ul className="sub__nav__list">
+                          <li className="sub__nav__item">
+                            {element.sub_nav_desc.map((ele, ix) => (
+                              <NavLink
+                                onClick={() => setMenu(false)}
+                                className={({ isActive }) =>
+                                  isActive ? "selected " : "  "
+                                }
+                                key={ix}
+                                to={ele.path}
+                              >
+                                {ele.title}
+                              </NavLink>
+                            ))}
+                          </li>
                         </ul>
-                      ))}
-                    </Accordion>
-                  </li>
-                ))}
-                {user && user.role === "admin" && (
-                  <li className="nav__item">
-                    <NavLink className="nav__link__admin" to={"/admin"}>
-                      Admin
-                    </NavLink>
-                  </li>
-                )}
-              </ul>
-            </Modal>
-          )}
-        </div>
-      ) : (
-        ""
-      )}
+                      </ul>
+                    ))}
+                  </Accordion>
+                </li>
+              ))}
+              {user && user.role === "admin" && (
+                <li className="nav__item">
+                  <NavLink className="nav__link__admin" to={"/admin"}>
+                    Admin
+                  </NavLink>
+                </li>
+              )}
+            </ul>
+          </Modal>
+        )}
+      </div>
+
       <div className="nav__logo">
         <NavLink to="/">
           <img src={logo} alt="" />
@@ -297,7 +299,7 @@ export default function Navigation() {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-heart"></i>
-          <p className="nav__count__product">{sizeFav}</p>
+          <p className="nav__count__product">{sizeFav ? sizeFav : 0}</p>
         </Link>
         <Link
           to="/gio-hang-cua-ban/"
@@ -305,7 +307,7 @@ export default function Navigation() {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-cart-alt"></i>
-          <p className="nav__count__product">{sizeCart}</p>
+          <p className="nav__count__product">{sizeCart ? sizeCart : 0}</p>
         </Link>
       </div>
       {active ? (
