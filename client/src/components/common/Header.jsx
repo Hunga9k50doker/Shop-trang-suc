@@ -100,7 +100,11 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p>{user.name ? user.name : "NguyenHung2310"}</p>
+            <p>
+              {user.name || userAuth.name
+                ? user.name || userAuth.name
+                : "NguyenHung2310"}
+            </p>
             <ul className="my__account__list">
               <Link to="/don-hang-cua-ban">
                 <li className="my__account__item">

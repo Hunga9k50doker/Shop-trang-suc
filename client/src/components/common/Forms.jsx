@@ -150,36 +150,42 @@ const FormLogin = () => {
           <li className="form__item form__item__login__auth m-2">
             {theme_fb ? (
               <img
+                disabled={true}
                 src={theme_fb}
                 alt=""
                 onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
               />
             ) : (
               <i
+                disabled={true}
                 className="bx bxl-facebook-circle"
                 onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
               ></i>
             )}
             {theme_gg ? (
               <img
+                disabled={true}
                 src={theme_gg}
                 alt=""
                 onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
               />
             ) : (
               <i
+                disabled={true}
                 className="bx bxl-google"
                 onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
               ></i>
             )}
             {theme_gh ? (
               <img
+                disabled={true}
                 src={theme_gh}
                 alt=""
                 onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
               />
             ) : (
               <i
+                disabled={true}
                 class="bx bxl-github"
                 onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
               ></i>
