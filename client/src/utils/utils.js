@@ -30,11 +30,15 @@ function to_slug(str) {
 const numberWithCommas = (num) =>
   num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-const sortLowToHigh = (a, b, arr) => {
-  arr.sort(() => (a.price > b.price ? 1 : a.price < b.price ? -1 : 0));
+const sortLowToHigh = (arr) => {
+  return arr.sort((a, b) =>
+    a.price > b.price ? 1 : a.price < b.price ? -1 : 0
+  );
 };
-const sortHighToLow = (a, b, arr) => {
-  arr.sort(() => (a.price < b.price ? 1 : a.price > b.price ? -1 : 0));
+const sortHighToLow = (arr) => {
+  return arr.sort((a, b) =>
+    a.price < b.price ? 1 : a.price > b.price ? -1 : 0
+  );
 };
 
 // get random
@@ -44,7 +48,6 @@ const get_random = (arr, count) => {
   const start = Math.floor(Math.random() * (max - min) + min);
   return arr.slice(start, start + count);
 };
-
 
 const getAllProducts = (products) => products;
 

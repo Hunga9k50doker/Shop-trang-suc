@@ -37,8 +37,6 @@ export default function MyCart() {
     return <Skeleton height="200px" width={"100%"} />;
   }
 
-  console.log(products);
-
   return (
     <Helmet title="Giỏ hàng">
       <div className="mycart">
@@ -65,7 +63,6 @@ export default function MyCart() {
                 <tbody>
                   {products.map((e, id) => (
                     <tr key={id}>
-                      {console.log(e.product[0])}
                       {e.product[0] && (
                         <>
                           <td className="td__trash">

@@ -1,4 +1,4 @@
-import { createContext, useLayoutEffect, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import AdminReducer from "../reducer/AdminReducer";
 import { API_URL, FETCH_ALL_USERS, DELETE_USER } from "./constant";
@@ -30,7 +30,6 @@ const AdminContextProvider = ({ children }) => {
   const deleteUser = async (id) => {
     try {
       const response = await axios.delete(`${API_URL}/users/admin/${id}`);
-      console.log(response.data.data);
       if (response.data.success) {
         dispatch({
           type: DELETE_USER,

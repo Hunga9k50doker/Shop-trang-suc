@@ -27,7 +27,6 @@ export default function OrderDetail() {
   const {
     authState: { user },
   } = useContext(AuthContext);
-  console.log(user);
   const handlePrice = () => {
     let ans = 0;
     products.map((item) => (ans += item.quantity * item.product[0].price));
@@ -44,7 +43,6 @@ export default function OrderDetail() {
     return <Skeleton height="200px" width={"100%"} />;
   }
 
-  console.log(orders, loading);
 
   return (
     <Helmet title="Thông tin đơn hàng">

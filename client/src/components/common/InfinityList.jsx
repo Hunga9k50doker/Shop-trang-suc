@@ -34,13 +34,17 @@ const InfinityList = ({ props, path }) => {
   const {
     productState: { products, loading },
   } = useContext(ProductContext);
-  const [filterProduct, setFilterProduct] = useState(products);
+  const [filterProduct, setFilterProduct] = useState(
+    props.data ? props.data : products
+  );
   const perLoad = props.amount; // items each load
   const location = useLocation();
   const listRef = useRef(null);
 
   const [data, setData] = useState(products);
-
+  useEffect(() => {
+    setData(props.data ? props.data : products);
+  }, [props.data]);
   const [load, setLoad] = useState(true);
 
   const [index, setIndex] = useState(0);
@@ -129,7 +133,6 @@ const InfinityList = ({ props, path }) => {
         setData(
           products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nam")
         );
-        console.log(data);
 
         break;
       case "Nữ":
@@ -254,9 +257,6 @@ const InfinityList = ({ props, path }) => {
       path = "/";
       typeData = "auto";
     }
-    console.log(path);
-    console.log(typeData);
-    console.log(location.pathname);
     newFilterProduct(typeData);
   };
 

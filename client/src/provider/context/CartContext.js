@@ -35,11 +35,7 @@ const CartContextProvider = ({ children }) => {
     loadCartProduct();
   }, []);
 
-  const addProductToCart = async (
-    { id, quantity },
-    product,
-    checked = true
-  ) => {
+  const addProductToCart = async ({ id, quantity }, product) => {
     try {
       const response = await axios.post(`${API_URL}/carts/user`, {
         productId: id,
@@ -67,7 +63,6 @@ const CartContextProvider = ({ children }) => {
         cartId: id,
         quantity,
       });
-      console.log(response.data);
       if (response.data.success) {
         dispatch({
           type: CHANGE_QUANTITY,
@@ -86,7 +81,6 @@ const CartContextProvider = ({ children }) => {
           productId,
         },
       });
-      console.log(response.data);
       if (response.data.success) {
         dispatch({
           type: DELETE_CART,

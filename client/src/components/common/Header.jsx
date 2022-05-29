@@ -13,7 +13,7 @@ export default function Header() {
   const { logout } = useContext(AuthContext);
 
   const {
-    authState: { user, loading, isAuthenticated },
+    authState: { user, loading, isAuthenticated, isLoginAuth, userAuth },
     updateUser,
   } = useContext(AuthContext);
   const [data, setData] = useState({
@@ -59,7 +59,6 @@ export default function Header() {
   const update = () => {
     updateUser(user._id, data);
   };
-
   return (
     <div className="header">
       <ul className="header__left">
@@ -73,15 +72,9 @@ export default function Header() {
         </li>
       </ul>
       <ul className="header__right">
-        {!isAuthenticated ? (
+        {!isAuthenticated && !isLoginAuth ? (
           <>
-            {console.log()}
-            <li
-              className="login strong"
-              onClick={() => {
-                setIsLogin(!isLogin);
-              }}
-            >
+            <li className="login strong" onClick={() => setIsLogin(!isLogin)}>
               <i className="bx bx-log-in"></i>
               <p>Đăng nhập</p>
             </li>
@@ -107,7 +100,7 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p> {user.name ? user.name : "user0123"} </p>
+            <p>{user.name ? user.name : "NguyenHung2310"}</p>
             <ul className="my__account__list">
               <Link to="/don-hang-cua-ban">
                 <li className="my__account__item">

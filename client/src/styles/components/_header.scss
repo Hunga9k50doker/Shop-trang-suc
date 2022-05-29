@@ -47,7 +47,6 @@
       position: absolute;
       background: $white-color;
       @include box_shadow(0.12);
-      // border-radius: 8px;
       top: 100%;
       left: 0;
       right: 0;
@@ -60,7 +59,20 @@
       transition: all 0.3s ease;
       z-index: 99;
       flex-direction: column;
-      // padding: 4px;
+      a {
+        width: 100%;
+      }
+      .my__account__item {
+        width: 100%;
+        color: $text-color;
+        font-size: 1rem;
+        &:not(:first-child) {
+          border-top: 1px solid $text-color;
+        }
+        &:hover {
+          color: $second-color;
+        }
+      }
       &::after {
         content: "";
         position: absolute;
@@ -75,6 +87,7 @@
         border-bottom: 10px solid $white-color;
       }
     }
+
     &:hover {
       color: $second-color;
       p {
@@ -83,17 +96,6 @@
       .my__account__list {
         transform-origin: top center;
         transform: scaleY(1);
-        .my__account__item {
-          width: 100%;
-          color: $text-color;
-          font-size: 1rem;
-          &:not(:first-child) {
-            border-top: 1px solid $text-color;
-          }
-          &:hover {
-            color: $second-color;
-          }
-        }
       }
     }
   }

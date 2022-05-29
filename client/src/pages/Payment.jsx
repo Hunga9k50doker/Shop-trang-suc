@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { toast } from "react-toastify";
 import { CartContext } from "../provider/context/CartContext";
@@ -12,8 +12,6 @@ import Button from "../components/common/Button";
 import { banner_sub_02 } from "../assets/img";
 
 export default function Payment() {
-  const navigate = useNavigate();
-
   const [price, setPrice] = useState(0);
   const {
     cartState: { loading, products },
@@ -41,7 +39,6 @@ export default function Payment() {
   }, []);
   useEffect(() => {
     if (user) {
-      console.log(user);
       setDataShip({
         name: user.name,
         address: user.address,
@@ -67,7 +64,7 @@ export default function Payment() {
       });
       createOrder({ ...dataShip, invoiceDetails, total: price });
       setTimeout(() => {
-        navigate("/");
+        window.location.replace("/");
       }, 1000);
       toast.success("Thanh toán thành công!");
     } else {

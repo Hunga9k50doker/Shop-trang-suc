@@ -53,7 +53,6 @@ export const AuthContextProvider = ({ children }) => {
   const login = async (user) => {
     try {
       const response = await axios.post(`${API_URL}/users/login`, user);
-      // .then((res) => console.log(res));
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
         toast.success("Đăng nhập thành công!");
@@ -77,7 +76,6 @@ export const AuthContextProvider = ({ children }) => {
       case "GOOGLE_LOGIN":
         await signInWithPopup(auth, google_provider)
           .then((result) => {
-            console.log(result.user);
             if (result.user) {
               localStorage.setItem(
                 LOCAL_STORAGE_TOKEN_NAME,
@@ -85,6 +83,7 @@ export const AuthContextProvider = ({ children }) => {
               );
               authState.userAuth = result.user;
               authState.isLoginAuth = true;
+              toast.success("Đăng nhập thành công!");
             }
             loadUser();
           })
@@ -105,9 +104,9 @@ export const AuthContextProvider = ({ children }) => {
               );
               authState.userAuth = result.user;
               authState.isLoginAuth = true;
+              toast.success("Đăng nhập thành công!");
             }
             loadUser();
-            console.log(result.user);
           })
           .catch((error) => {
             console.log(error.message);
@@ -127,6 +126,7 @@ export const AuthContextProvider = ({ children }) => {
               );
               authState.userAuth = result.user;
               authState.isLoginAuth = true;
+              toast.success("Đăng nhập thành công!");
             }
             loadUser();
           })
@@ -141,7 +141,6 @@ export const AuthContextProvider = ({ children }) => {
       default:
         break;
     }
-    // console.log(authState.isAuthenticated);
   };
   const register = async (user) => {
     try {
@@ -152,7 +151,6 @@ export const AuthContextProvider = ({ children }) => {
         await axios.post(`${API_URL}/favourite/user`);
         toast.success("Đăng ký thành công!");
       } else {
-        console.log(response.data);
         toast.error(`Đăng ký thất bại: ${response.data.message}`);
       }
       await loadUser();

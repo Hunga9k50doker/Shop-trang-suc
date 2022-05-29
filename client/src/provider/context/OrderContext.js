@@ -61,7 +61,6 @@ const OrderContextProvider = ({ children }) => {
   };
 
   const changeStatusOrder = async (status, id) => {
-    console.log(id, status);
     try {
       const response = await axios.put(`${API_URL}/invoice/user`, {
         invoiceId: id,
@@ -79,7 +78,6 @@ const OrderContextProvider = ({ children }) => {
   };
 
   const createOrder = async (data) => {
-    console.log(data);
     try {
       const response = await axios.post(`${API_URL}/invoice/user`, data);
       if (response.data.success) {

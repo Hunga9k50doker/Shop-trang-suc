@@ -44,7 +44,6 @@ export default function Product() {
     }
   }, []);
 
-  // console.log(item);
   const addToFavourite = (product) => {
     addProductToFavourite({ product, id: product._id });
   };
