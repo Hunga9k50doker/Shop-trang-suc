@@ -13,7 +13,7 @@ export default function Header() {
   const { logout } = useContext(AuthContext);
 
   const {
-    authState: { user, loading, isAuthenticated, },
+    authState: { user, loading, isAuthenticated },
     updateUser,
   } = useContext(AuthContext);
   const [data, setData] = useState({
@@ -75,7 +75,6 @@ export default function Header() {
       <ul className="header__right">
         {!isAuthenticated ? (
           <>
-            {console.log()}
             <li className="login strong" onClick={() => setIsLogin(!isLogin)}>
               <i className="bx bx-log-in"></i>
               <p>Đăng nhập</p>

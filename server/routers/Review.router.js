@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/", verifyToken, verifyAdmin, fetchReviews);
 router
   .route("/:productId")
-  .get(verifyToken, verifyAdmin, fetchReviewsByProductId)
-  .post(verifyToken, verifyAdmin, addReview);
+  .get(fetchReviewsByProductId)
+  .post(verifyToken, addReview);
 
 export default router;

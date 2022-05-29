@@ -143,8 +143,9 @@ const arrNav = [
 
 export default function Navigation() {
   const {
-    authState: { user },
+    authState: { user, isAuthenticated },
   } = useContext(AuthContext);
+  console.log(isAuthenticated);
   const [active, setActive] = useState(false);
   const [menu, setMenu] = useState(false);
   const [screenWitdh, setScreenWitdh] = useState(window.screen.width);
@@ -297,7 +298,9 @@ export default function Navigation() {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-heart"></i>
-          <p className="nav__count__product">{sizeFav}</p>
+          <p className="nav__count__product">
+            {!isAuthenticated ? 0 : sizeFav}
+          </p>
         </Link>
         <Link
           to="/gio-hang-cua-ban/"
@@ -305,7 +308,9 @@ export default function Navigation() {
           onClick={(e) => checkLogin(e)}
         >
           <i className="bx bx-cart-alt"></i>
-          <p className="nav__count__product">{sizeCart}</p>
+          <p className="nav__count__product">
+            {!isAuthenticated ? 0 : sizeCart}
+          </p>
         </Link>
       </div>
       {active ? (

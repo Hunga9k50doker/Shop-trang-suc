@@ -13,7 +13,9 @@ import multer from "multer";
 const app = express();
 
 var storage = multer.diskStorage({
-  destination: "../client/public/images",
+  destination: function (req, file, cb) {
+    cb(null, "https://spectacular-faloodeh-7ed823.netlify.app/public/images");
+  },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },
@@ -53,4 +55,4 @@ const connectDB = async () => {
 
 connectDB();
 
-app.listen(5000, () => console.log("Port 5000"));
+app.listen(process.env.PORT, () => console.log("Port 5000"));

@@ -12,7 +12,7 @@ import { Filter } from "./Filter";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import CheckBox from "./CheckBox";
-import { sortLowToHigh } from "../../utils/utils";
+import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
 import InfinityList from "./InfinityList";
 import { logo } from "../../assets/img";
 import { AuthContext } from "../../provider/context/AuthContext";
@@ -347,35 +347,50 @@ const SideBarFilter = ({ typeData, path }) => {
           setFilter({ ...filter, gender: newGender });
           break;
         case "SORT_LOWTOHIGH":
-          sortLowToHigh(productList);
-          setProductList(productList);
+          setFilter({ ...filter, sortMethod: "LOWTOHIGH" });
 
           break;
         case "SORT_HIGHTOLOW":
+          setFilter({ ...filter, sortMethod: "HIGHTOLOW" });
           break;
         case "SORT_DEFAULT":
+          setFilter({ ...filter, sortMethod: null });
           break;
         default:
       }
     }
   };
   const filterSort = (value) => {
-    // console.log(value);
-    if (value === 1) {
-      const a = sortLowToHigh(productList);
-      setProductList(productList);
-      console.log(a);
-    } else if (value === 2) {
-      sortLowToHigh(productList);
-      setProductList(productList);
-      console.log(productList);
+    if (value === "1") {
+      setFilter({ ...filter, sortMethod: "LOWTOHIGH" });
+    } else if (value === "2") {
+      setFilter({ ...filter, sortMethod: "HIGHTOLOW" });
     } else {
-      console.log(0);
+      setFilter({ ...filter, sortMethod: null });
     }
   };
   const clearFilter = () => setFilter(initFilter);
   const updateProducts = useCallback(() => {
     let temp = products;
+    if (filter.sortMethod !== null) {
+      if (filter.sortMethod === "LOWTOHIGH") {
+        temp = temp
+          .sort((a, b) => a.price - b.price)
+          .filter((e) => {
+            if (true) {
+              return e;
+            }
+          });
+      } else {
+        temp = temp
+          .sort((a, b) => b.price - a.price)
+          .filter((e) => {
+            if (true) {
+              return e;
+            }
+          });
+      }
+    }
     if (filter.color.length > 0) {
       temp = temp.filter((e) => {
         const check = e.color.find((color) => filter.color.includes(color));
@@ -413,13 +428,12 @@ const SideBarFilter = ({ typeData, path }) => {
         return check !== undefined;
       });
     }
-
     setProductList(temp);
   }, [filter, products]);
   useMemo(() => {
     updateProducts();
   }, [updateProducts]);
-  const item = {
+  let item = {
     data: productList,
     amount: 12,
   };
@@ -429,7 +443,7 @@ const SideBarFilter = ({ typeData, path }) => {
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
             {/* {console.log(productList)} */}
-            {/* {console.log(filter)} */}
+            {console.log(filter)}
 
             <div className="row row__header">
               <Filter title="Danh mục sản phẩm">

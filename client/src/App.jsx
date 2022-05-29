@@ -42,7 +42,6 @@ export default function App() {
   const handleClick = (item) => {
     if (cart.indexOf(item) !== -1) return -1;
     setCart([...cart, item]);
-    console.log(cart);
   };
 
   const handleChange = (item, d) => {
