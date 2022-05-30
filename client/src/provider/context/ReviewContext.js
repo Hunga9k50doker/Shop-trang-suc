@@ -12,7 +12,7 @@ const ReviewContextProvider = ({ children }) => {
     authState: { user },
   } = useContext(AuthContext);
   const [reviewState, dispatch] = useReducer(reviewReducer, {
-    loading: true,
+    loadingReview: true,
     reviews: [],
   });
 

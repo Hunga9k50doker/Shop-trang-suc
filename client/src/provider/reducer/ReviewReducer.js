@@ -7,7 +7,7 @@ export const reviewReducer = (state, action) => {
       return {
         ...state,
         reviews: payload,
-        loading: false,
+        loadingReview: false,
       };
     case ADD_REVIEW:
       return {
