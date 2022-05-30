@@ -293,6 +293,7 @@ const InfinityList = ({ props, path }) => {
     getItems();
     setLoad(false);
   }, [load, index, data, props.data]);
+  console.log(data);
   return (
     <div className="row" ref={listRef}>
       {loading === false && data.length > 0 ? (
