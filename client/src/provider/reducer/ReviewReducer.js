@@ -12,7 +12,10 @@ export const reviewReducer = (state, action) => {
     case ADD_REVIEW:
       return {
         ...state,
-        reviews: [...state.reviews, payload],
+        reviews: [
+          ...state.reviews,
+          { ...payload.review, user: [payload.user] },
+        ],
       };
     default:
       return state;

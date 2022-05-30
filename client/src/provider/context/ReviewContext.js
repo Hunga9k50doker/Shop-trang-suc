@@ -1,12 +1,16 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FETCH_REVIEWS_BY_PRODUCT_ID, ADD_REVIEW, API_URL } from "./constant";
 import { reviewReducer } from "../reducer/ReviewReducer";
+import { AuthContext } from "./AuthContext";
 
 export const ReviewContext = createContext();
 
 const ReviewContextProvider = ({ children }) => {
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
   const [reviewState, dispatch] = useReducer(reviewReducer, {
     loading: true,
     reviews: [],
@@ -34,7 +38,7 @@ const ReviewContextProvider = ({ children }) => {
       if (response.data.success) {
         dispatch({
           type: ADD_REVIEW,
-          payload: response.data.data,
+          payload: { review: response.data.data, user: user },
         });
         toast.success("Thêm thành công!");
       } else {

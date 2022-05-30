@@ -7,7 +7,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useParams } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
 import Button from "./Button";
@@ -288,10 +288,6 @@ const SideBarFilter = ({ typeData, path }) => {
   const {
     productState: { products },
   } = useContext(ProductContext);
-  const [data, setData] = useState(products);
-  useEffect(() => {
-    setData(products);
-  }, [products]);
   const initFilter = {
     // category: [],
     color: [],
