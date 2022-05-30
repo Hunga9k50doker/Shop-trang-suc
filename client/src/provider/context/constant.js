@@ -24,6 +24,7 @@ export const DELETE_CART = "DELETE_CART";
 export const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 
 //Invoice Constant
+export const FETCH_ALL_ORDERS = "FETCH_ALL_ORDERS";
 export const LOAD_ORDERS = "LOAD_ORDERS";
 export const CREATE_ORDER = "CREATE_ORDER";
 export const FETCH_ONE_ORDER = "FETCH_ONE_ORDER";
