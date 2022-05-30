@@ -32,7 +32,7 @@ export default function Product() {
     useContext(FavouriteContext);
   const { addProductToCart } = useContext(CartContext);
   const {
-    reviewState: { loading, reviews },
+    reviewState: { reviews, loading },
     loadingReviews,
     addReview,
   } = useContext(ReviewContext);
@@ -55,10 +55,16 @@ export default function Product() {
   useEffect(() => {
     loadingReviews(slug);
   }, [slug]);
+  const [proOther, setProOther] = useState([]);
 
-  const [proOther, setProOther] = useState(get_random(products, 12));
+  useEffect(() => {
+    if (!loading) {
+      setProOther(get_random(products, 12));
+    }
+  }, []);
   // get random products other
   if (loading) return "Loading...";
+
   const handleAddReview = () => {
     addReview(slug, review);
     setReview({

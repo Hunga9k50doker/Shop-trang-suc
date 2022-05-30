@@ -41,10 +41,10 @@ const CustomerAdmin = () => {
                       if (searchItem === "") {
                         return val;
                       } else if (
-                        val.sdt
+                        val.phoneNumber
                           .toLowerCase()
                           .includes(searchItem.toLowerCase()) ||
-                        val.name_customer
+                        val.name
                           .toLowerCase()
                           .includes(searchItem.toLowerCase())
                       ) {

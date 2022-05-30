@@ -216,10 +216,13 @@ const OrderAdmin = () => {
                       if (searchItem === "") {
                         return val;
                       } else if (
-                        val.sdt
+                        val.phoneNumber
                           .toLowerCase()
                           .includes(searchItem.toLowerCase()) ||
-                        val.id_order
+                        val._id
+                          .toLowerCase()
+                          .includes(searchItem.toLowerCase()) ||
+                        val.name
                           .toLowerCase()
                           .includes(searchItem.toLowerCase())
                       ) {
@@ -254,17 +257,23 @@ const OrderAdmin = () => {
                               <FormDetail title={e._id}>
                                 <div className="form__detail__header">
                                   <p>Tên khách hàng: {e.name}</p>
+                                  <br />
                                   <p> Số điện thoại: {e.phoneNumber}</p>
+                                  <br />
+                                  <p> Địa chỉ: {e.address}</p>
+                                  <br />
                                   <p>
-                                    Thời gian đặt hàng:{" "}
+                                    Thời gian đặt hàng
                                     {moment(e.updatedAt).format("LLL")}
                                   </p>
+                                  <br />
                                   <p>
-                                    Tổng tiền:{" "}
+                                    Tổng tiền:
                                     <strong>
                                       {numberWithCommas(e.total)} vnđ
                                     </strong>
                                   </p>
+                                  <br />
                                   <p>
                                     Trạng thái:
                                     {e.status}

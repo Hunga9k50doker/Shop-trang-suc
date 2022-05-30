@@ -151,7 +151,7 @@ const InfinityList = ({ props, path }) => {
       case "dong-ho":
         setData(products.filter((p) => p.type === "Đồng hồ"));
         break;
-      case "Mắt Kính":
+      case "Mắt kính":
       case "mat-kinh":
         setData(
           products.filter(

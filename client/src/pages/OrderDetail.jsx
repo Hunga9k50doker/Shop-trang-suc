@@ -43,7 +43,6 @@ export default function OrderDetail() {
     return <Skeleton height="200px" width={"100%"} />;
   }
 
-
   return (
     <Helmet title="Thông tin đơn hàng">
       <div className="mycart">
@@ -91,6 +90,7 @@ export default function OrderDetail() {
                                   <div className="form__detail__header">
                                     <p>Tên khách hàng: {e.name}</p>
                                     <p> Số điện thoại: {e.phoneNumber}</p>
+                                    <p> Địa chỉ: {e.address}</p>
                                     <p>
                                       Thời gian đặt hàng:{" "}
                                       {moment(e.updatedAt).format("LLL")}

@@ -99,7 +99,7 @@ const ProductAdmin = () => {
       jewel_line: "Kim cương",
       material: "Bạc",
       materialGold: "18k",
-      accessory_type: "",
+      accessory_type: "Mắt kính",
     },
     price: "",
     gender: "Nam",
@@ -908,7 +908,6 @@ const ProductAdmin = () => {
                         ) {
                           return val;
                         }
-                        return true;
                       })
                       .map((e, id) => (
                         <tr key={id}>
