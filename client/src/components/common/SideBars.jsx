@@ -1,18 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  useState,
-  useCallback,
-  useMemo,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import { NavLink, Link, useParams } from "react-router-dom";
+import { useState, useCallback, useMemo, useContext, useRef } from "react";
+import { NavLink, Link } from "react-router-dom";
 import { Filter } from "./Filter";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import CheckBox from "./CheckBox";
-import { sortLowToHigh, sortHighToLow } from "../../utils/utils";
 import InfinityList from "./InfinityList";
 import { logo } from "../../assets/img";
 import { AuthContext } from "../../provider/context/AuthContext";

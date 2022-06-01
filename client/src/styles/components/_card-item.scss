@@ -37,7 +37,9 @@
   &__header {
     position: relative;
     min-height: 60%;
-    flex: 1;
+    max-height: 220px;
+    overflow: hidden;
+    flex: 2;
     width: 100%;
     @include flex(center, center);
     img {
@@ -50,11 +52,13 @@
     }
   }
   &__body {
-    @include flex(center, center);
+    flex: 1;
+    @include flex(center, flex-start);
     flex-direction: column;
     padding-bottom: 1rem;
   }
   &__title {
+    flex: 1;
     font-weight: 300;
     text-align: center;
   }

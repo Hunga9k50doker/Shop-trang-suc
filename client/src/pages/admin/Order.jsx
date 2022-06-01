@@ -7,9 +7,10 @@ import Table from "../../components/common/Table";
 import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
 import { FormDetail } from "../../components/common/Forms";
-import { OrderContext } from "../../provider/context/OrderContext";
 import { numberWithCommas } from "../../utils/utils";
 import Skeleton from "react-loading-skeleton";
+import { OrderContext } from "../../provider/context/OrderContext";
+import { AdminContext } from "../../provider/context/AdminContext";
 const dataTable_01 = [
   {
     province: "TP. Hồ Chí Minh",
@@ -84,9 +85,12 @@ const OrderAdmin = () => {
   const [viewDetail, setViewDetail] = useState(null);
   const [searchItem, setSearchItem] = useState("");
   const {
-    orderState: { orders, order, loadingOrder },
+    orderState: { order, loadingOrder },
     fetchOneOrder,
   } = useContext(OrderContext);
+  const {
+    adminState: { orders },
+  } = useContext(AdminContext);
 
   const dataOrder = {
     labels: ["Trên 20k", "Trên 15k", "Trên 10k", "Trên 5k"],

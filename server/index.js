@@ -16,6 +16,9 @@ var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "https://spectacular-faloodeh-7ed823.netlify.app/public/images");
   },
+  // destination: function (req, file, cb) {
+  //   cb(null, "../client/public/images");
+  // },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
   },

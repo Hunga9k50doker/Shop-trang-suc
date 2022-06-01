@@ -1,109 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import Skeleton from "react-loading-skeleton";
+import moment from "moment";
 import Helmet from "../../components/common/Helmet";
 import Table from "../../components/common/Table";
-
-const dataTable_02 = [
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đã giao",
-  },
-  {
-    usename: "dsas",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đã giao",
-  },
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đã giao",
-  },
-  {
-    usename: "12e1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đã giao",
-  },
-  {
-    usename: "2d2s",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-  {
-    usename: "12sdse1ew",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-  {
-    usename: "fwwq",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đã giao",
-  },
-  {
-    usename: "12e134231",
-    name_customer: "Tran Ngoc Huy",
-    sdt: "0342411175",
-    product_name: "Bông tai vài Y 18k",
-    price: 123000212,
-    date: "23/2/2022",
-    status: "Đang giao",
-  },
-];
+import { FormDetail } from "../../components/common/Forms";
+import { numberWithCommas } from "../../utils/utils";
+import { OrderContext } from "../../provider/context/OrderContext";
+import { AdminContext } from "../../provider/context/AdminContext";
+import Button from "../../components/common/Button";
+import Modal from "../../components/common/Modal";
 const StatusAdmin = () => {
+  const [viewDetail, setViewDetail] = useState(null);
   const [searchItem, setSearchItem] = useState("");
 
   useEffect(() => {
@@ -114,6 +21,17 @@ const StatusAdmin = () => {
         : (i.style.color = "#16D96F");
     }
   });
+  const {
+    orderState: { order, loadingOrder },
+    fetchOneOrder,
+  } = useContext(OrderContext);
+  const {
+    adminState: { orders },
+  } = useContext(AdminContext);
+  const showOrderById = (id) => {
+    setViewDetail(id);
+    fetchOneOrder(id);
+  };
 
   return (
     <Helmet title="Quản lý trạng thái">
@@ -145,15 +63,15 @@ const StatusAdmin = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dataTable_02
+                    {orders
                       .filter((val) => {
                         if (searchItem === "") {
                           return val;
                         } else if (
-                          val.sdt
+                          val.phoneNumber
                             .toLowerCase()
                             .includes(searchItem.toLowerCase()) ||
-                          val.status
+                          val.name
                             .toLowerCase()
                             .includes(searchItem.toLowerCase())
                         ) {
@@ -163,12 +81,98 @@ const StatusAdmin = () => {
                       .map((e, id) => (
                         <tr key={id}>
                           <td>{id + 1}</td>
-                          <td>{e.name_customer}</td>
-                          <td>{e.sdt}</td>
-                          <td>{e.date}</td>
+                          <td>{e.name}</td>
+                          <td>{e.phoneNumber}</td>
+                          <td>{moment(e.updatedAt).format("LLL")}</td>
                           <td className="status">{e.status}</td>
-                          <td>123231</td>
-                          <td className="view__details">Xem chi tiết</td>
+                          <td> {numberWithCommas(e.total)} </td>
+                          <td className="view__details">
+                            <Button
+                              content="Chi tiết"
+                              onClick={() => showOrderById(e._id)}
+                            ></Button>
+                          </td>
+                          {viewDetail === e._id ? (
+                            <Modal
+                              setViewDetail={setViewDetail}
+                              style={{
+                                backgroundImage:
+                                  "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
+                              }}
+                            >
+                              {loadingOrder ? (
+                                <Skeleton height={"300px"} />
+                              ) : (
+                                <FormDetail title={e._id}>
+                                  <div className="form__detail__header">
+                                    <p>Tên khách hàng: {e.name}</p>
+                                    <br />
+                                    <p> Số điện thoại: {e.phoneNumber}</p>
+                                    <br />
+                                    <p> Địa chỉ: {e.address}</p>
+                                    <br />
+                                    <p>
+                                      Thời gian đặt hàng
+                                      {moment(e.updatedAt).format("LLL")}
+                                    </p>
+                                    <br />
+                                    <p>
+                                      Tổng tiền:
+                                      <strong>
+                                        {numberWithCommas(e.total)} vnđ
+                                      </strong>
+                                    </p>
+                                    <br />
+                                    <p>
+                                      Trạng thái:
+                                      {e.status}
+                                    </p>
+                                  </div>
+                                  <div className="form__detail__body">
+                                    <h5 className="form__detail__body__title mt-5">
+                                      Thông tin chi tiết
+                                    </h5>
+                                    <table>
+                                      <thead>
+                                        <tr>
+                                          <td></td>
+                                          <td>Tên sản phẩm</td>
+                                          <td>Số lượng</td>
+                                          <td>Giá tiền</td>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        {order.map((o, i) => (
+                                          <tr key={i}>
+                                            <td></td>
+                                            <td>
+                                              {o.invoiceDetails.product[0].name}
+                                            </td>
+                                            <td>{o.invoiceDetails.quantity}</td>
+                                            <td>
+                                              {numberWithCommas(
+                                                o.invoiceDetails.quantity *
+                                                  o.invoiceDetails.product[0]
+                                                    .price
+                                              )}
+                                            </td>
+                                          </tr>
+                                        ))}
+                                        <tr>
+                                          <td colSpan="4">
+                                            Tổng tiền:{" "}
+                                            {numberWithCommas(e.total)}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </FormDetail>
+                              )}
+                            </Modal>
+                          ) : (
+                            ""
+                          )}
                         </tr>
                       ))}
                   </tbody>
