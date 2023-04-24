@@ -9,7 +9,7 @@ import theme_02 from "./img/other/Polygon 1.svg";
 import theme_03 from "./img/other/Polygon 2.svg";
 import theme_04 from "./img/other/theme_diamond.svg";
 import theme_fb from "./img/other/fb.png";
-import theme_gg from "./img/other/gg.png";
+import theme_gg from "./img/other/gg.svg";
 import theme_gh from "./img/other/gh.png";
 
 // product

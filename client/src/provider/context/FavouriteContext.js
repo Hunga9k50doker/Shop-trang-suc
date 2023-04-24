@@ -2,13 +2,7 @@ import { createContext, useReducer, useEffect } from "react";
 import { toast } from "react-toastify";
 import { favouriteReducer } from "../reducer/FavouriteReducer";
 import axios from "axios";
-import {
-  API_URL,
-  LOAD_FAVOURITE,
-  DELETE_FAVOURITE,
-  ADD_FAVOURITE,
-} from "./constant";
-
+import { API_URL, LOAD_FAVOURITE, DELETE_FAVOURITE, ADD_FAVOURITE, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
 export const FavouriteContext = createContext();
 
 const FavouriteContextProvider = ({ children }) => {
@@ -31,7 +25,7 @@ const FavouriteContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadFavouriteProduct();
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) loadFavouriteProduct();
   }, []);
 
   const addProductToFavourite = async ({ id, product }) => {
@@ -78,11 +72,7 @@ const FavouriteContextProvider = ({ children }) => {
     deleteOneProductFromFavourite,
     addProductToFavourite,
   };
-  return (
-    <FavouriteContext.Provider value={favouriteData}>
-      {children}
-    </FavouriteContext.Provider>
-  );
+  return <FavouriteContext.Provider value={favouriteData}>{children}</FavouriteContext.Provider>;
 };
 
 export default FavouriteContextProvider;

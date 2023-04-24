@@ -1,18 +1,12 @@
 import express from "express";
-import {
-  deleteUser,
-  getAllUsers,
-  getUser,
-  login,
-  register,
-  updateUser,
-} from "../controllers/User.controller.js";
+import { deleteUser, getAllUsers, getUser, login, verify, register, updateUser } from "../controllers/User.controller.js";
 import verifyAdmin from "../middleware/verifyAdmin.js";
 import verifyToken from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
 router.post("/login", login);
+router.post("/verify", verify);
 router.post("/register", register);
 //user logged in
 router.get("/", verifyToken, getUser);

@@ -48,20 +48,10 @@ export default function App() {
             <Route exact path="trang-suc/bong-tai" element={<Jewels />}></Route>
             <Route exact path="trang-suc/vong-tay" element={<Jewels />}></Route>
             <Route exact path="trang-suc/day-co" element={<Jewels />}></Route>
-            <Route
-              exact
-              path="trang-suc/kim-cuong"
-              element={<Jewels />}
-            ></Route>
+            <Route exact path="trang-suc/kim-cuong" element={<Jewels />}></Route>
             <Route exact path="trang-suc/ecz-cz" element={<Jewels />}></Route>{" "}
-            <Route
-              exact
-              path="trang-suc/khong-dinh-da"
-              element={<Jewels />}
-            ></Route>{" "}
-            <Route exact path="trang-suc/24k" element={<Jewels />}></Route>{" "}
-            <Route exact path="trang-suc/22k" element={<Jewels />}></Route>{" "}
-            <Route exact path="trang-suc/18k" element={<Jewels />}></Route>
+            <Route exact path="trang-suc/khong-dinh-da" element={<Jewels />}></Route> <Route exact path="trang-suc/24k" element={<Jewels />}></Route>{" "}
+            <Route exact path="trang-suc/22k" element={<Jewels />}></Route> <Route exact path="trang-suc/18k" element={<Jewels />}></Route>
             {/* dong ho */}
             <Route exact path="dong-ho/gucci" element={<Watches />}></Route>
             <Route exact path="dong-ho/citizen" element={<Watches />}></Route>
@@ -71,11 +61,7 @@ export default function App() {
             <Route exact path="dong-ho/unisex" element={<Watches />}></Route>
             <Route exact path="dong-ho/dong-ho" element={<Watches />}></Route>
             <Route exact path="dong-ho/mat-kinh" element={<Watches />}></Route>
-            <Route
-              exact
-              path="dong-ho/dong-ho-cap"
-              element={<Watches />}
-            ></Route>
+            <Route exact path="dong-ho/dong-ho-cap" element={<Watches />}></Route>
             <Route exact path="dong-ho/phu-kien" element={<Watches />}></Route>
             {/* qua tang */}
             <Route exact path="qua-tang/cho-nang" element={<Gifts />}></Route>
@@ -87,25 +73,18 @@ export default function App() {
             <Route exact path="lien-he/" element={<Contact />}></Route>
             {/* product detail */}
             <Route exact path="chi-tiet/:slug" element={<Product />}></Route>
-            {/* order detail user */}
-            <Route
-              exact
-              path="don-hang-cua-ban/"
-              element={<OrderDetail />}
-            ></Route>
-            {/* cart */}
-            <Route exact path="gio-hang-cua-ban/" element={<MyCart />}></Route>
-            {/* wishlist */}
             <Route path="/" element={<ProtectedRoute />}>
-              <Route
-                path="danh-sach-san-pham-yeu-thich/"
-                element={<Wishlist />}
-              ></Route>
+              {/* cart */}
+              <Route exact path="/gio-hang-cua-ban/" element={<MyCart />}></Route>
+              {/* order detail user */}
+              <Route exact path="/don-hang-cua-ban/" element={<OrderDetail />}></Route>
+              {/* wishlist */}
+              <Route path="/danh-sach-san-pham-yeu-thich/" element={<Wishlist />}></Route>
+              {/* payment */}
+              <Route path="/thanh-toan/" element={<Payment />}></Route>
             </Route>
-            {/* payment */}
-            <Route path="/" element={<ProtectedRoute />}>
-              <Route path="thanh-toan/" element={<Payment />}></Route>
-            </Route>
+            {/* <Route path="/" element={<ProtectedRoute />}>
+            </Route> */}
             {/* not found */}
             <Route exact path="*" element={<NotFound />}></Route>
           </Route>
@@ -113,30 +92,11 @@ export default function App() {
           {user && user.role === "admin" && (
             <Route exact path="/admin" element={<AdminLayout />}>
               <Route exact path="/admin" element={<HomeAdmin />}></Route>
-              <Route
-                exact
-                path="/admin/don-dat-hang/"
-                element={<OrderAdmin />}
-              ></Route>
-              <Route
-                exact
-                path="/admin/san-pham/"
-                element={<ProductAdmin />}
-              ></Route>
-              <Route
-                path="/admin/khach-hang/"
-                element={<CustomerAdmin />}
-              ></Route>
-              <Route
-                exact
-                path="/admin/trang-thai/"
-                element={<StatusAdmin />}
-              ></Route>
-              <Route
-                exact
-                path="/admin/cai-dat/"
-                element={<SettingAdmin />}
-              ></Route>
+              <Route exact path="/admin/don-dat-hang/" element={<OrderAdmin />}></Route>
+              <Route exact path="/admin/san-pham/" element={<ProductAdmin />}></Route>
+              <Route path="/admin/khach-hang/" element={<CustomerAdmin />}></Route>
+              <Route exact path="/admin/trang-thai/" element={<StatusAdmin />}></Route>
+              <Route exact path="/admin/cai-dat/" element={<SettingAdmin />}></Route>
             </Route>
           )}
         </Routes>

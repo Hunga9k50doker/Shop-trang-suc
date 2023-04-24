@@ -1,13 +1,7 @@
 import { createContext, useReducer, useEffect } from "react";
 import orderReducer from "../reducer/OrderReducer";
 import axios from "axios";
-import {
-  LOAD_ORDERS,
-  API_URL,
-  CREATE_ORDER,
-  FETCH_ONE_ORDER,
-  CHANGE_STATUS_ORDER,
-} from "./constant";
+import { LOAD_ORDERS, API_URL, CREATE_ORDER, FETCH_ONE_ORDER, CHANGE_STATUS_ORDER, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
 export const OrderContext = createContext();
 
 const OrderContextProvider = ({ children }) => {
@@ -91,7 +85,7 @@ const OrderContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadOrders();
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) loadOrders();
   }, []);
 
   const orderData = {
@@ -101,9 +95,7 @@ const OrderContextProvider = ({ children }) => {
     changeStatusOrder,
   };
 
-  return (
-    <OrderContext.Provider value={orderData}>{children}</OrderContext.Provider>
-  );
+  return <OrderContext.Provider value={orderData}>{children}</OrderContext.Provider>;
 };
 
 export default OrderContextProvider;

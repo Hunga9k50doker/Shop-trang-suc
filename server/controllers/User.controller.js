@@ -23,9 +23,7 @@ export const getUser = async (req, res) => {
   try {
     const user = await UserModel.findById(_id);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Người dùng không tồn tại" });
+      return res.status(404).json({ success: false, message: "Người dùng không tồn tại" });
     }
 
     const { password, ...rest } = user.toObject();
@@ -62,21 +60,33 @@ export const login = async (req, res) => {
   }
 };
 
+//login verify user
+
+export const verify = async (req, res) => {
+  const { username } = req.body;
+  try {
+    const user = await UserModel.findOne({ username });
+    console.log(username, user, req.body);
+    if (!user) {
+      return res.status(204).json({ success: true, message: "Người dùng chưa được xác thực." });
+    }
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 //register function
 
 export const register = async (req, res) => {
   const { username, password, repassword, name, telephone } = req.body;
   if (password !== repassword) {
-    return res
-      .status(200)
-      .json({ success: false, message: "Mật khẩu không khớp" });
+    return res.status(200).json({ success: false, message: "Mật khẩu không khớp" });
   }
   try {
     const user = await UserModel.findOne({ username });
     if (user) {
-      return res
-        .status(200)
-        .json({ success: false, message: "Tên đăng nhập đã tồn tại" });
+      return res.status(200).json({ success: false, message: "Tên đăng nhập đã tồn tại" });
     }
 
     const encryptedPassword = await argon2.hash(password);
@@ -114,9 +124,7 @@ export const deleteUser = async (req, res) => {
   try {
     let user = await UserModel.findById(id);
     if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Người dùng không tồn tại" });
+      return res.status(404).json({ success: false, message: "Người dùng không tồn tại" });
     }
     user = await UserModel.findByIdAndDelete(id);
     return res.status(200).json({ success: true, data: user });

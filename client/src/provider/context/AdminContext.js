@@ -1,12 +1,9 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer, useContext } from "react";
 import axios from "axios";
 import AdminReducer from "../reducer/AdminReducer";
-import {
-  API_URL,
-  FETCH_ALL_USERS,
-  DELETE_USER,
-  FETCH_ALL_ORDERS,
-} from "./constant";
+import { API_URL, FETCH_ALL_USERS, DELETE_USER, FETCH_ALL_ORDERS, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
+import { AuthContext } from "../../provider/context/AuthContext";
+
 export const AdminContext = createContext();
 
 const AdminContextProvider = ({ children }) => {
@@ -15,6 +12,9 @@ const AdminContextProvider = ({ children }) => {
     orders: [],
     loading: true,
   });
+  const {
+    authState: { user },
+  } = useContext(AuthContext);
 
   const loadAllUsers = async () => {
     try {
@@ -64,17 +64,17 @@ const AdminContextProvider = ({ children }) => {
     }
   };
   useEffect(() => {
-    loadAllUsers();
-    loadAllOrders();
-  }, []);
+    if (user && user.role === "admin") {
+      loadAllUsers();
+      loadAllOrders();
+    }
+  }, [user]);
   const adminData = {
     adminState,
     deleteUser,
   };
 
-  return (
-    <AdminContext.Provider value={adminData}>{children}</AdminContext.Provider>
-  );
+  return <AdminContext.Provider value={adminData}>{children}</AdminContext.Provider>;
 };
 
 export default AdminContextProvider;

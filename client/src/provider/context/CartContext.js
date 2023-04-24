@@ -1,13 +1,8 @@
 import { createContext, useReducer, useEffect } from "react";
 import { CartReducer } from "../reducer/CartReducer";
+import { LOCAL_STORAGE_TOKEN_NAME } from "./constant";
 import axios from "axios";
-import {
-  API_URL,
-  LOAD_CART,
-  DELETE_CART,
-  ADD_CART,
-  CHANGE_QUANTITY,
-} from "./constant";
+import { API_URL, LOAD_CART, DELETE_CART, ADD_CART, CHANGE_QUANTITY } from "./constant";
 import { toast } from "react-toastify";
 
 export const CartContext = createContext();
@@ -32,7 +27,7 @@ const CartContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    loadCartProduct();
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) loadCartProduct();
   }, []);
 
   const addProductToCart = async ({ id, quantity }, product) => {
@@ -98,9 +93,7 @@ const CartContextProvider = ({ children }) => {
     addProductToCart,
     changeQuantity,
   };
-  return (
-    <CartContext.Provider value={CartData}>{children}</CartContext.Provider>
-  );
+  return <CartContext.Provider value={CartData}>{children}</CartContext.Provider>;
 };
 
 export default CartContextProvider;

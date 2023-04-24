@@ -1,11 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useLayoutEffect,
-  useContext,
-} from "react";
+import React, { useEffect, useRef, useState, useLayoutEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import { ProductContext } from "../../provider/context/ProductContext";
@@ -14,18 +8,9 @@ import { CardItem } from "./CardItem";
 
 const Item = ({ e, props, loading }) => {
   return (
-    <div
-      data-aos="zoom-in"
-      className={`col pe-0  ${
-        props.classNameCol ? props.classNameCol : "col-xl-4 col-md-6 "
-      } col-sm-12 col-12`}
-    >
+    <div data-aos="zoom-in" className={`col pe-0  ${props.classNameCol ? props.classNameCol : "col-xl-4 col-md-6 "} col-sm-12 col-12`}>
       <Link style={{ width: "100%" }} to={`/chi-tiet/${to_slug(e._id)}`}>
-        {loading === true ? (
-          <Skeleton height="300px"></Skeleton>
-        ) : (
-          <CardItem item={e} />
-        )}
+        {loading === true ? <Skeleton height="300px"></Skeleton> : <CardItem item={e} />}
       </Link>
     </div>
   );
@@ -34,9 +19,7 @@ const InfinityList = ({ props, path }) => {
   const {
     productState: { products, loading },
   } = useContext(ProductContext);
-  const [filterProduct, setFilterProduct] = useState(
-    props.data ? props.data : products
-  );
+  const [filterProduct, setFilterProduct] = useState(props.data ? props.data : products);
   const perLoad = props.amount; // items each load
   const location = useLocation();
   const listRef = useRef(null);
@@ -58,11 +41,7 @@ const InfinityList = ({ props, path }) => {
         break;
       case "Nhẫn Cặp":
       case "nhan-cap":
-        setData(
-          products.filter(
-            (p) => p.isCouple === true && p.category.jewel_type === "Nhẫn"
-          )
-        );
+        setData(products.filter((p) => p.isCouple === true && p.category.jewel_type === "Nhẫn"));
         break;
       case "Lắc":
       case "lac":
@@ -90,31 +69,17 @@ const InfinityList = ({ props, path }) => {
         break;
       case "Không đính đá":
       case "khong-dinh-da":
-        setData(
-          products.filter((p) => p.category.jewel_line === "Không đính đá")
-        );
+        setData(products.filter((p) => p.category.jewel_line === "Không đính đá"));
         break;
       case "24k":
-        setData(
-          products.filter((p) =>
-            p.category.materialGold.find((e) => e === "24k")
-          )
-        );
+        setData(products.filter((p) => p.category.materialGold.find((e) => e === "24k")));
 
         break;
       case "22k":
-        setData(
-          products.filter((p) =>
-            p.category.materialGold.find((e) => e === "22k")
-          )
-        );
+        setData(products.filter((p) => p.category.materialGold.find((e) => e === "22k")));
         break;
       case "18k":
-        setData(
-          products.filter((p) =>
-            p.category.materialGold.find((e) => e === "18k")
-          )
-        );
+        setData(products.filter((p) => p.category.materialGold.find((e) => e === "18k")));
         break;
       case "Gucci":
       case "gucci":
@@ -130,22 +95,16 @@ const InfinityList = ({ props, path }) => {
         break;
       case "Nam":
       case "nam":
-        setData(
-          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nam")
-        );
+        setData(products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nam"));
 
         break;
       case "Nữ":
       case "nu":
-        setData(
-          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nữ")
-        );
+        setData(products.filter((p) => p.type === "Đồng hồ" && p.gender === "Nữ"));
         break;
       case "Unisex":
       case "unisex":
-        setData(
-          products.filter((p) => p.type === "Đồng hồ" && p.gender === "Unisex")
-        );
+        setData(products.filter((p) => p.type === "Đồng hồ" && p.gender === "Unisex"));
         break;
       case "Đồng hồ":
       case "dong-ho":
@@ -153,18 +112,11 @@ const InfinityList = ({ props, path }) => {
         break;
       case "Mắt kính":
       case "mat-kinh":
-        setData(
-          products.filter(
-            (p) =>
-              p.type === "Phụ kiện" && p.category.accessory_type === "Mắt kính"
-          )
-        );
+        setData(products.filter((p) => p.type === "Phụ kiện" && p.category.accessory_type === "Mắt kính"));
         break;
       case "Đồng hồ cặp":
       case "dong-ho-cap":
-        setData(
-          products.filter((p) => p.type === "Đồng hồ" && p.isCouple === true)
-        );
+        setData(products.filter((p) => p.type === "Đồng hồ" && p.isCouple === true));
         break;
       case "Phụ kiện":
       case "phu-kien":
@@ -271,10 +223,7 @@ const InfinityList = ({ props, path }) => {
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (listRef && listRef.current) {
-        if (
-          window.scrollY + window.innerHeight >=
-          listRef.current.clientHeight + listRef.current.offsetTop + 200
-        ) {
+        if (window.scrollY + window.innerHeight >= listRef.current.clientHeight + listRef.current.offsetTop + 200) {
           setLoad(true);
         }
       }
@@ -293,7 +242,6 @@ const InfinityList = ({ props, path }) => {
     getItems();
     setLoad(false);
   }, [load, index, data, props.data]);
-  console.log(data);
   return (
     <div className="row" ref={listRef}>
       {loading === false && data.length > 0 ? (
@@ -304,9 +252,7 @@ const InfinityList = ({ props, path }) => {
             return <Item key={id} e={e} props={props} loading={loading} />;
           })
       ) : (
-        <p style={{ marginTop: "8rem", textAlign: "center" }}>
-          Không tìm thấy sản phẩm phù hợp
-        </p>
+        <p style={{ marginTop: "8rem", textAlign: "center" }}>Không tìm thấy sản phẩm phù hợp</p>
       )}
     </div>
   );

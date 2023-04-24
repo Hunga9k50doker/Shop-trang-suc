@@ -145,10 +145,7 @@ const SideBarLeftAdmin = () => {
   };
   return (
     <div className="sidebar">
-      <div
-        ref={sidebarRef}
-        className={`sidebar__left__admin ${active ? "active" : ""}`}
-      >
+      <div ref={sidebarRef} className={`sidebar__left__admin ${active ? "active" : ""}`}>
         <i
           className="bx bxs-chevron-right show__menu__table__mobile"
           ref={showRef}
@@ -183,12 +180,7 @@ const SideBarLeftAdmin = () => {
         <ul className="sidebar__list pe-0">
           {arrItemAdmin.map((e, id) => (
             <li key={id} className="sidebar__item slidebar__left__item pe-0">
-              <NavLink
-                className={({ isActive }) =>
-                  isActive ? " selected  p-2 pe-0" : "  p-2 pe-0"
-                }
-                to={e.link}
-              >
+              <NavLink className={({ isActive }) => (isActive ? " selected  p-2 pe-0" : "  p-2 pe-0")} to={e.link}>
                 <p className="sidebar__item__icon">
                   <i className={e.icon}></i>
                 </p>
@@ -197,12 +189,7 @@ const SideBarLeftAdmin = () => {
             </li>
           ))}
         </ul>
-        <Link
-          onClick={logout}
-          to={"/"}
-          title="Đăng xuất"
-          className="sidebar__item__logout p-4"
-        >
+        <Link onClick={logout} to={"/"} title="Đăng xuất" className="sidebar__item__logout p-4">
           <i className="bx bx-log-out-circle m-2"></i>
           Đăng xuất
         </Link>
@@ -319,15 +306,11 @@ const SideBarFilter = ({ typeData, path }) => {
           setFilter({ ...filter, color: newColor });
           break;
         case "MATERIAL":
-          const newMaterial = filter.material.filter(
-            (e) => e !== item.material
-          );
+          const newMaterial = filter.material.filter((e) => e !== item.material);
           setFilter({ ...filter, material: newMaterial });
           break;
         case "MATERIALGOLD":
-          const newMaterialGold = filter.materialGold.filter(
-            (e) => e !== item.materialGold
-          );
+          const newMaterialGold = filter.materialGold.filter((e) => e !== item.materialGold);
           setFilter({ ...filter, materialGold: newMaterialGold });
           break;
         case "GENDER":
@@ -388,9 +371,7 @@ const SideBarFilter = ({ typeData, path }) => {
     if (filter.material.length > 0) {
       temp = temp.filter((e) => {
         if (e.category.material) {
-          const check = e.category.material.find((material) =>
-            filter.material.includes(material)
-          );
+          const check = e.category.material.find((material) => filter.material.includes(material));
           return check !== undefined;
         }
         return true;
@@ -399,9 +380,7 @@ const SideBarFilter = ({ typeData, path }) => {
     if (filter.materialGold.length > 0) {
       temp = temp.filter((e) => {
         if (e.category.materialGold.length > 0) {
-          const check = e.category.materialGold.find((materialGold) =>
-            filter.materialGold.includes(materialGold)
-          );
+          const check = e.category.materialGold.find((materialGold) => filter.materialGold.includes(materialGold));
           return check !== undefined;
         }
         return true;
@@ -410,9 +389,7 @@ const SideBarFilter = ({ typeData, path }) => {
     if (filter.gender.length > 0) {
       temp = temp.filter((e) => {
         const arrGender = Array.of(e.gender);
-        const check = arrGender.find((gender) =>
-          filter.gender.includes(gender)
-        );
+        const check = arrGender.find((gender) => filter.gender.includes(gender));
         return check !== undefined;
       });
     }
@@ -430,9 +407,6 @@ const SideBarFilter = ({ typeData, path }) => {
       <div className="row">
         <div className="col col-xl-3 col-md-3 col-sm-12">
           <div className="sidebar__right__filter">
-            {/* {console.log(productList)} */}
-            {/* {console.log(filter)} */}
-
             <div className="row row__header">
               <Filter title="Danh mục sản phẩm">
                 {arrAccodion.map((acc, i) => (
@@ -455,9 +429,7 @@ const SideBarFilter = ({ typeData, path }) => {
                     <CheckBox
                       typeInput={"checkbox"}
                       label={e.display}
-                      onChange={(input) =>
-                        filterSelect("MATERIAL", input.checked, e)
-                      }
+                      onChange={(input) => filterSelect("MATERIAL", input.checked, e)}
                       checked={filter.material.includes(e.material)}
                     />
                   </li>
@@ -471,9 +443,7 @@ const SideBarFilter = ({ typeData, path }) => {
                     <CheckBox
                       typeInput={"checkbox"}
                       label={e.display}
-                      onChange={(input) =>
-                        filterSelect("MATERIALGOLD", input.checked, e)
-                      }
+                      onChange={(input) => filterSelect("MATERIALGOLD", input.checked, e)}
                       checked={filter.materialGold.includes(e.materialGold)}
                     />
                   </li>
@@ -487,9 +457,7 @@ const SideBarFilter = ({ typeData, path }) => {
                     <CheckBox
                       typeInput={"checkbox"}
                       label={e.display}
-                      onChange={(input) =>
-                        filterSelect("GENDER", input.checked, e)
-                      }
+                      onChange={(input) => filterSelect("GENDER", input.checked, e)}
                       checked={filter.gender.includes(e.gender)}
                     />
                   </li>
@@ -503,9 +471,7 @@ const SideBarFilter = ({ typeData, path }) => {
                     <CheckBox
                       typeInput={"checkbox"}
                       label={e.display}
-                      onChange={(input) =>
-                        filterSelect("COLOR", input.checked, e)
-                      }
+                      onChange={(input) => filterSelect("COLOR", input.checked, e)}
                       checked={filter.color.includes(e.color)}
                     />
                   </li>
@@ -514,11 +480,7 @@ const SideBarFilter = ({ typeData, path }) => {
             </div>
             <div className="row">
               <div className="col-6 ">
-                <Button
-                  onClick={clearFilter}
-                  content="Xóa bộ lọc"
-                  classNameBtn="delete__filter mt-4"
-                />
+                <Button onClick={clearFilter} content="Xóa bộ lọc" classNameBtn="delete__filter mt-4" />
               </div>
             </div>
           </div>

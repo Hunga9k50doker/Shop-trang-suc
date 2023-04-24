@@ -27,13 +27,10 @@ export default function NotFound() {
   return (
     <Helmet title="Trang không tồn tại">
       <Style>
-        <div className="not__found mt-5">
+        <div className="not__found mt-5 pt-5">
           <h5>Trang này hiện không tồn tại</h5>
           <Link to="/">
-            <Button
-              content="Trở về trang chủ."
-              icon="bx bx-arrow-back bx-flip-vertical bx-flashing"
-            ></Button>
+            <Button content="Trở về trang chủ." icon="bx bx-arrow-back bx-flip-vertical bx-flashing"></Button>
           </Link>
         </div>
       </Style>

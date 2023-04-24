@@ -69,18 +69,14 @@ export default function OrderDetail() {
                           <td>{moment(e.createdAt).format("LLLL")}</td>
                           <td>{numberWithCommas(e.total)}</td>
                           <td>{e.status}</td>
-                          <td
-                            className="view__details"
-                            onClick={() => showOrderById(e._id)}
-                          >
+                          <td className="view__details" onClick={() => showOrderById(e._id)}>
                             Xem chi tiết
                           </td>
                           {viewDetail === e._id ? (
                             <Modal
                               setViewDetail={setViewDetail}
                               style={{
-                                backgroundImage:
-                                  "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
+                                backgroundImage: "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                               }}
                             >
                               {loadingOrder ? (
@@ -91,15 +87,9 @@ export default function OrderDetail() {
                                     <p>Tên khách hàng: {e.name}</p>
                                     <p> Số điện thoại: {e.phoneNumber}</p>
                                     <p> Địa chỉ: {e.address}</p>
+                                    <p>Thời gian đặt hàng: {moment(e.updatedAt).format("LLL")}</p>
                                     <p>
-                                      Thời gian đặt hàng:{" "}
-                                      {moment(e.updatedAt).format("LLL")}
-                                    </p>
-                                    <p>
-                                      Tổng tiền:{" "}
-                                      <strong>
-                                        {numberWithCommas(e.total)} vnđ
-                                      </strong>
+                                      Tổng tiền: <strong>{numberWithCommas(e.total)} vnđ</strong>
                                     </p>
                                     <p>
                                       Trạng thái:
@@ -107,9 +97,7 @@ export default function OrderDetail() {
                                     </p>
                                   </div>
                                   <div className="form__detail__body">
-                                    <h5 className="form__detail__body__title mt-5">
-                                      Thông tin chi tiết
-                                    </h5>
+                                    <h5 className="form__detail__body__title mt-5">Thông tin chi tiết</h5>
                                     <table>
                                       <thead>
                                         <tr>
@@ -123,24 +111,13 @@ export default function OrderDetail() {
                                         {order.map((o, i) => (
                                           <tr key={i}>
                                             <td></td>
-                                            <td>
-                                              {o.invoiceDetails.product[0].name}
-                                            </td>
+                                            <td>{o.invoiceDetails.product[0].name}</td>
                                             <td>{o.invoiceDetails.quantity}</td>
-                                            <td>
-                                              {numberWithCommas(
-                                                o.invoiceDetails.quantity *
-                                                  o.invoiceDetails.product[0]
-                                                    .price
-                                              )}
-                                            </td>
+                                            <td>{numberWithCommas(o.invoiceDetails.quantity * o.invoiceDetails.product[0].price)}</td>
                                           </tr>
                                         ))}
                                         <tr>
-                                          <td colSpan="4">
-                                            Tổng tiền:{" "}
-                                            {numberWithCommas(e.total)}
-                                          </td>
+                                          <td colSpan="4">Tổng tiền: {numberWithCommas(e.total)}</td>
                                         </tr>
                                       </tbody>
                                     </table>

@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../provider/context/AuthContext";
 
 import { Outlet } from "react-router-dom";
+import NotFound from "../pages/NotFound";
 
 const useAuth = () => {
   const {
@@ -17,8 +18,7 @@ const useAuth = () => {
 
 const ProtectedRoute = (props) => {
   const auth = useAuth();
-
-  return auth ? <Outlet /> : "Hello";
+  return auth ? <Outlet /> : <NotFound />;
 };
 
 export default ProtectedRoute;

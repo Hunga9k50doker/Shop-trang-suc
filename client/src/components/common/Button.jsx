@@ -8,6 +8,7 @@ export default function Button(props) {
   }, [active]);
   return (
     <button
+      type={props.type ?? "button"}
       ref={buttonRef}
       style={props.style}
       onClick={props.onClick ? () => props.onClick() : null}

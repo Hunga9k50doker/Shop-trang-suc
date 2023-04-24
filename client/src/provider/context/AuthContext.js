@@ -1,22 +1,11 @@
 import axios from "axios";
 import { createContext, useReducer, useLayoutEffect } from "react";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  GithubAuthProvider,
-} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { toast } from "react-toastify";
 import { Firebase } from "../../Firebase/firebase";
 import { setAuthToken } from "../../utils/setAuthToken";
 import authReducer from "../reducer/AuthReducer";
-import {
-  API_URL,
-  LOAD_USER,
-  UPDATE_USER,
-  LOCAL_STORAGE_TOKEN_NAME,
-} from "./constant";
+import { API_URL, LOAD_USER, UPDATE_USER, LOCAL_STORAGE_TOKEN_NAME } from "./constant";
 
 export const AuthContext = createContext();
 
@@ -26,7 +15,7 @@ export const AuthContextProvider = ({ children }) => {
     isLoginAuth: false,
     user: null,
     isAuthenticated: false,
-    loading: true,
+    loading: localStorage[LOCAL_STORAGE_TOKEN_NAME] ? true : false,
   });
 
   const loadUser = async () => {
@@ -56,6 +45,7 @@ export const AuthContextProvider = ({ children }) => {
       if (response.data.success) {
         localStorage.setItem(LOCAL_STORAGE_TOKEN_NAME, response.data.token);
         toast.success("Đăng nhập thành công!");
+        window.location.reload();
       } else {
         toast.error(`Đăng nhập thất bại: ${response.data.message}`);
       }
@@ -67,81 +57,54 @@ export const AuthContextProvider = ({ children }) => {
       });
     }
   };
+
+  const verify = async (user) => {
+    try {
+      const response = await axios.post(`${API_URL}/users/verify`, { username: user.username });
+      if (response.status === 200) {
+        await login({
+          username: user.username,
+          password: user.password,
+        });
+      } else if (response.status === 204) {
+        await register({
+          name: user.name,
+          username: user.username,
+          password: user.password,
+          repassword: user.password,
+          telephone: "",
+        });
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const LoginWithFirebase = async (type) => {
     const google_provider = new GoogleAuthProvider();
-    const facebook_provider = new FacebookAuthProvider();
-    const github_provider = new GithubAuthProvider();
     const auth = getAuth(Firebase);
     switch (type) {
       case "GOOGLE_LOGIN":
         await signInWithPopup(auth, google_provider)
-          .then((result) => {
-            if (result.user) {
-              localStorage.setItem(
-                LOCAL_STORAGE_TOKEN_NAME,
-                result.user.accessToken
-              );
-              authState.userAuth = result.user;
-              authState.isLoginAuth = true;
-              toast.success("Đăng nhập thành công!");
-            }
-            loadUser();
+          .then(async (result) => {
+            const user = {
+              name: result.user.displayName,
+              password: result.user.uid,
+              repassword: result.user.uid,
+              telephone: "",
+              username: result.user.email,
+            };
+            await verify(user);
           })
           .catch((error) => {
-            dispatch({
-              type: LOAD_USER,
-              payload: null,
-            });
-          });
-        break;
-      case "FACEBOOK_LOGIN":
-        await signInWithPopup(auth, facebook_provider)
-          .then((result) => {
-            if (result.user) {
-              localStorage.setItem(
-                LOCAL_STORAGE_TOKEN_NAME,
-                result.user.accessToken
-              );
-              authState.userAuth = result.user;
-              authState.isLoginAuth = true;
-              toast.success("Đăng nhập thành công!");
-            }
-            loadUser();
-          })
-          .catch((error) => {
-            console.log(error.message);
-            dispatch({
-              type: LOAD_USER,
-              payload: null,
-            });
-          });
-        break;
-      case "GITHUB_LOGIN":
-        await signInWithPopup(auth, github_provider)
-          .then((result) => {
-            if (result.user) {
-              localStorage.setItem(
-                LOCAL_STORAGE_TOKEN_NAME,
-                result.user.accessToken
-              );
-              authState.userAuth = result.user;
-              authState.isLoginAuth = true;
-              toast.success("Đăng nhập thành công!");
-            }
-            loadUser();
-          })
-          .catch((error) => {
-            console.log(error.message);
-            dispatch({
-              type: LOAD_USER,
-              payload: null,
-            });
+            throw error;
           });
         break;
       default:
         break;
     }
   };
+
   const register = async (user) => {
     try {
       const response = await axios.post(`${API_URL}/users/register`, user);
@@ -153,7 +116,7 @@ export const AuthContextProvider = ({ children }) => {
       } else {
         toast.error(`Đăng ký thất bại: ${response.data.message}`);
       }
-      await loadUser();
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
       dispatch({
@@ -179,11 +142,11 @@ export const AuthContextProvider = ({ children }) => {
 
   const logout = async () => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
-    await loadUser();
+    window.location.replace("/");
   };
 
   useLayoutEffect(() => {
-    loadUser();
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) loadUser();
   }, []);
 
   const authData = {
@@ -195,7 +158,5 @@ export const AuthContextProvider = ({ children }) => {
     updateUser,
   };
 
-  return (
-    <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>;
 };

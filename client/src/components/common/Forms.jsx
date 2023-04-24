@@ -12,11 +12,7 @@ import { theme_fb, theme_gg, theme_gh } from "../../assets/img";
 
 const FormContact = (props) => {
   return (
-    <form
-      action="#"
-      className="form  form__contact"
-      style={{ background: `url(${props.url})` }}
-    >
+    <form action="#" className="form  form__contact" style={{ background: `url(${props.url})` }}>
       <h3 className="form__title"> {props.title}</h3>
       <div className="form__body">
         <input
@@ -25,11 +21,7 @@ const FormContact = (props) => {
           placeholder={props.placeholder}
           className="form__input"
         />
-        <Button
-          classNameBtn="btn__submit"
-          icon="bx bxl-telegram"
-          content={props.content}
-        ></Button>
+        <Button classNameBtn="btn__submit" icon="bx bxl-telegram" content={props.content}></Button>
       </div>
     </form>
   );
@@ -61,9 +53,7 @@ const FormSearch = ({ active, setActive }) => {
           .filter((val) => {
             if (searchItem === "") {
               return val;
-            } else if (
-              val.name.toLowerCase().includes(searchItem.toLowerCase())
-            ) {
+            } else if (val.name.toLowerCase().includes(searchItem.toLowerCase())) {
               count++;
               item = count;
               return val;
@@ -105,11 +95,7 @@ const FormLogin = () => {
 
   return (
     <div className="form ">
-      <form
-        action="#"
-        onClick={(e) => e.stopPropagation()}
-        className="form__login p-4"
-      >
+      <form action="#" onClick={(e) => e.stopPropagation()} className="form__login p-4">
         <ul className="form__list">
           <li className="form__item m-2">
             <input
@@ -148,48 +134,7 @@ const FormLogin = () => {
             <Button content="Đăng nhập" classNameBtn="btn__submit" />
           </li>
           <li className="form__item form__item__login__auth m-2">
-            {theme_fb ? (
-              <img
-                disabled={true}
-                src={theme_fb}
-                alt=""
-                onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
-              />
-            ) : (
-              <i
-                disabled={true}
-                className="bx bxl-facebook-circle"
-                onClick={() => LoginWithFirebase("FACEBOOK_LOGIN")}
-              ></i>
-            )}
-            {theme_gg ? (
-              <img
-                disabled={true}
-                src={theme_gg}
-                alt=""
-                onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
-              />
-            ) : (
-              <i
-                disabled={true}
-                className="bx bxl-google"
-                onClick={() => LoginWithFirebase("GOOGLE_LOGIN")}
-              ></i>
-            )}
-            {theme_gh ? (
-              <img
-                disabled={true}
-                src={theme_gh}
-                alt=""
-                onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
-              />
-            ) : (
-              <i
-                disabled={true}
-                class="bx bxl-github"
-                onClick={() => LoginWithFirebase("GITHUB_LOGIN")}
-              ></i>
-            )}
+            <img disabled={true} src={theme_gg} alt="" onClick={() => LoginWithFirebase("GOOGLE_LOGIN")} />
           </li>
         </ul>
       </form>
@@ -212,21 +157,17 @@ const FormRegister = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleRegister = (e) => {
+
+  const onSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     register(user);
   };
 
   return (
     <div className="form">
-      <form
-        action="#"
-        onClick={(e) => e.stopPropagation()}
-        className="form__register p-4"
-      >
-        <p style={{ textAlign: "center", color: "red", width: "100%" }}>
-          Các trường ở dưới là bắt buộc
-        </p>
+      <form onSubmit={onSubmit} className="form__register p-4">
+        <p style={{ textAlign: "center", color: "red", width: "100%" }}>Các trường ở dưới là bắt buộc</p>
         <ul className="form__list">
           <li className="form__item m-2">
             <input
@@ -243,12 +184,11 @@ const FormRegister = () => {
           </li>
           <li className="form__item m-2">
             <input
-              type="text"
+              type="tel"
               className="form__number"
               required="required"
-              placeholder="Số điện thoại (9-11 số)"
-              minLength="9"
-              maxLength="11"
+              placeholder="Số điện thoại (0331314462)"
+              pattern="[0-9]{10}"
               name="telephone"
               onChange={handleChange}
             />
@@ -298,8 +238,8 @@ const FormRegister = () => {
               <strong className="label__login ms-1">Đăng nhập</strong>
             </p>
           </li>
-          <li className="form__item m-2" onClick={handleRegister}>
-            <Button content="Đăng ký" classNameBtn="btn__submit" />
+          <li className="form__item m-2">
+            <Button type={"submit"} content="Đăng ký" classNameBtn="btn__submit" />
           </li>
         </ul>
       </form>
@@ -324,10 +264,7 @@ const FormSubmit = () => {
       className="form__submit "
     >
       <h5 className="form__title">Liên hệ với chúng tôi</h5>
-      <p className="form__subtitle">
-        Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được
-        đánh dấu *
-      </p>
+      <p className="form__subtitle">Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</p>
       <div className="container">
         <div className="row">
           <div className="col col-xl-6 col-md-12 col-sm-12">
@@ -344,13 +281,7 @@ const FormSubmit = () => {
         </div>
         <div className="row">
           <div className="col col-xl-12 col-md-12 col-sm-12">
-            <textarea
-              name="text__content"
-              id="text__content"
-              cols="30"
-              rows="10"
-              placeholder="Nội dung*"
-            ></textarea>
+            <textarea name="text__content" id="text__content" cols="30" rows="10" placeholder="Nội dung*"></textarea>
           </div>
         </div>
         <div className="row">
@@ -366,9 +297,7 @@ const FormSubmit = () => {
 const FormConfirm = (props) => {
   return (
     <div className="form__confirm">
-      <h3 className="form__title">
-        {props.title ? props.title : "Bạn muốn xác nhận hành động này?"}
-      </h3>
+      <h3 className="form__title">{props.title ? props.title : "Bạn muốn xác nhận hành động này?"}</h3>
       <Button content="Xác nhận" />
       <Button content="Hủy" />
     </div>
@@ -377,11 +306,7 @@ const FormConfirm = (props) => {
 const FormEdit = (props) => {
   // const [isActive, setIsActive] = useState(false);
   return (
-    <form
-      className="form form__edit"
-      method="post"
-      onClick={(e) => e.preventDefault()}
-    >
+    <form className="form form__edit" method="post" onClick={(e) => e.preventDefault()}>
       <h3 className="form__title">{props.title}</h3>
       <ul className="form__list">{props.children}</ul>
     </form>
@@ -389,33 +314,15 @@ const FormEdit = (props) => {
 };
 const FormAdd = (props) => {
   return (
-    <form
-      onSubmit={(e) => props.onSubmit(e)}
-      action=""
-      method="post"
-      className="form form__add"
-    >
+    <form onSubmit={(e) => props.onSubmit(e)} action="" method="post" className="form form__add">
       <h3 className="form__title">{props.title}</h3>
       <ul className="form__list">{props.children}</ul>
       <div className="row">
-        <div
-          className="col"
-          style={{ display: "flex", justifyContent: "center" }}
-        >
+        <div className="col" style={{ display: "flex", justifyContent: "center" }}>
           <Button content="Thêm sản phẩm" onClick={props.handleClick} />
         </div>
       </div>
     </form>
   );
 };
-export {
-  FormContact,
-  FormSearch,
-  FormLogin,
-  FormRegister,
-  FormDetail,
-  FormSubmit,
-  FormConfirm,
-  FormEdit,
-  FormAdd,
-};
+export { FormContact, FormSearch, FormLogin, FormRegister, FormDetail, FormSubmit, FormConfirm, FormEdit, FormAdd };

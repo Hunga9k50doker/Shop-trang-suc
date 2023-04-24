@@ -6,6 +6,7 @@ import { AuthContext } from "../../provider/context/AuthContext";
 import { FormLogin, FormRegister, FormEdit } from "./Forms";
 import Modal from "./Modal";
 import Button from "./Button";
+import { LOCAL_STORAGE_TOKEN_NAME } from "../../provider/context/constant";
 export default function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
@@ -55,7 +56,7 @@ export default function Header() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [isLogin, isRegister]
   );
-  if (loading) return <Skeleton height="50px" />;
+  if (loading && localStorage[LOCAL_STORAGE_TOKEN_NAME]) return <Skeleton height="50px" />;
   const update = () => {
     updateUser(user._id, data);
   };
@@ -100,11 +101,7 @@ export default function Header() {
         ) : (
           <li className="my__account">
             <i className="bx bxs-user-circle"></i>
-            <p>
-              {user.name || userAuth.name
-                ? user.name || userAuth.name
-                : "NguyenHung2310"}
-            </p>
+            <p>{user.name || userAuth.name ? user.name || userAuth.name : "NguyenHung2310"}</p>
             <ul className="my__account__list">
               <Link to="/don-hang-cua-ban">
                 <li className="my__account__item">
@@ -112,10 +109,7 @@ export default function Header() {
                   Đơn hàng
                 </li>
               </Link>
-              <li
-                className="my__account__item"
-                onClick={() => setIsActiveForm(true)}
-              >
+              <li className="my__account__item" onClick={() => setIsActiveForm(true)}>
                 <i className="bx bx-cog me-2"></i>
                 Cài đặt
               </li>
@@ -133,30 +127,17 @@ export default function Header() {
             {isActiveForm ? (
               <Modal
                 style={{
-                  backgroundImage:
-                    "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
+                  backgroundImage: "linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%)",
                 }}
                 active={isActiveForm}
                 setActive={setIsActiveForm}
               >
                 <FormEdit title="Cập nhật thông tin người dùng">
                   <li className="form__item">
-                    <input
-                      type="text"
-                      placeholder="Họ và tên"
-                      defaultValue={data.name}
-                      onChange={(e) => handleChange(e)}
-                      className="name"
-                    />
+                    <input type="text" placeholder="Họ và tên" defaultValue={data.name} onChange={(e) => handleChange(e)} className="name" />
                   </li>
                   <li className="form__item">
-                    <input
-                      type="text"
-                      placeholder="Địa chỉ"
-                      defaultValue={data.address}
-                      onChange={(e) => handleChange(e)}
-                      className="address"
-                    />
+                    <input type="text" placeholder="Địa chỉ" defaultValue={data.address} onChange={(e) => handleChange(e)} className="address" />
                   </li>
                   <li className="form__item">
                     <input
