@@ -29,7 +29,7 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://be-jewelry.onrender.com/api"],
+    origin: true,
   })
 );
 //User router
