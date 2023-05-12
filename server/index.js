@@ -29,7 +29,7 @@ const upload = multer({ storage });
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: false,
   })
 );
 //User router
